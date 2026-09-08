@@ -23,9 +23,25 @@ trap cleanup EXIT
 # --- skill catalogue (auto-discovered from repo) ---
 declare -A SKILLS=(
   [1]="skills/web/production-web-app-launch"
+  [2]="skills/web/nextjs-performance"
+  [3]="skills/web/api-design-rest"
+  [4]="skills/typescript/typescript-strict-mode"
+  [5]="skills/testing/test-coverage-guidance"
+  [6]="skills/devops/git-commit-quality"
+  [7]="skills/devops/code-review-checklist"
+  [8]="skills/devops/dockerfile-best-practices"
+  [9]="skills/safety/env-secret-safety"
 )
 declare -A SKILL_LABELS=(
-  [1]="[web] production-web-app-launch — Production readiness audit for web apps"
+  [1]="[web]        production-web-app-launch   — Production readiness audit"
+  [2]="[web]        nextjs-performance          — Core Web Vitals & bundle optimisation"
+  [3]="[web]        api-design-rest             — REST API naming, status codes, pagination"
+  [4]="[typescript] typescript-strict-mode      — Strict types, no any, discriminated unions"
+  [5]="[testing]    test-coverage-guidance      — Unit/integration/E2E strategy & patterns"
+  [6]="[devops]     git-commit-quality          — Conventional Commits enforcement"
+  [7]="[devops]     code-review-checklist       — BLOCKER/MAJOR/MINOR PR review"
+  [8]="[devops]     dockerfile-best-practices   — Multi-stage, non-root, minimal images"
+  [9]="[safety]     env-secret-safety           — No hardcoded secrets, .env hygiene"
 )
 
 # --- download repo archive ---

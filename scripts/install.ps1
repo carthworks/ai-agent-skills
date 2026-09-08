@@ -16,7 +16,15 @@ $Dest   = ".agents\skills"
 
 # --- skill catalogue ---
 $Skills = @{
-    1 = @{ Path = "skills/web/production-web-app-launch"; Label = "[web] production-web-app-launch — Production readiness audit for web apps" }
+    1 = @{ Path = "skills/web/production-web-app-launch";          Label = "[web]        production-web-app-launch   — Production readiness audit" }
+    2 = @{ Path = "skills/web/nextjs-performance";                  Label = "[web]        nextjs-performance          — Core Web Vitals & bundle optimisation" }
+    3 = @{ Path = "skills/web/api-design-rest";                     Label = "[web]        api-design-rest             — REST API naming, status codes, pagination" }
+    4 = @{ Path = "skills/typescript/typescript-strict-mode";       Label = "[typescript] typescript-strict-mode      — Strict types, no any, discriminated unions" }
+    5 = @{ Path = "skills/testing/test-coverage-guidance";          Label = "[testing]    test-coverage-guidance      — Unit/integration/E2E strategy & patterns" }
+    6 = @{ Path = "skills/devops/git-commit-quality";               Label = "[devops]     git-commit-quality          — Conventional Commits enforcement" }
+    7 = @{ Path = "skills/devops/code-review-checklist";            Label = "[devops]     code-review-checklist       — BLOCKER/MAJOR/MINOR PR review" }
+    8 = @{ Path = "skills/devops/dockerfile-best-practices";        Label = "[devops]     dockerfile-best-practices   — Multi-stage, non-root, minimal images" }
+    9 = @{ Path = "skills/safety/env-secret-safety";                Label = "[safety]     env-secret-safety           — No hardcoded secrets, .env hygiene" }
 }
 
 function Write-Header { Write-Host "`n$args" -ForegroundColor Cyan }

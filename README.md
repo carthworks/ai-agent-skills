@@ -3,7 +3,7 @@
 > A curated collection of **SKILL.md** files for [Antigravity IDE](https://antigravity.dev) and compatible AI coding agents.
 > Drop any skill folder into your project and your AI agent gains specialised, focused capabilities instantly.
 
-![Skills](https://img.shields.io/badge/skills-1-blueviolet?style=flat-square)
+![Skills](https://img.shields.io/badge/skills-9-blueviolet?style=flat-square)
 ![License](https://img.shields.io/badge/license-Apache--2.0-green?style=flat-square)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)
 
@@ -26,7 +26,15 @@ that the agent reads on demand.
 
 | Skill | Category | Description |
 |-------|----------|-------------|
-| [production-web-app-launch](skills/web/production-web-app-launch/) | `web` | Audit and fix production-readiness gaps — accessibility, SEO, security, forms, mobile, deployment config, and more. Activates when you say "is this ready to ship", "pre-launch check", or similar. |
+| [production-web-app-launch](skills/web/production-web-app-launch/) | `web` | Audit and fix production-readiness gaps — accessibility, SEO, security, forms, mobile, deployment config. Activates on "is this ready to ship", "pre-launch check". |
+| [nextjs-performance](skills/web/nextjs-performance/) | `web` | Optimise Next.js for Core Web Vitals, bundle size, and perceived speed. Covers rendering strategy, `next/image`, fonts, code splitting, and App Router caching. |
+| [api-design-rest](skills/web/api-design-rest/) | `web` | Design clean, consistent REST APIs — URL naming, HTTP methods, status codes, error shapes, versioning, pagination, and auth patterns. |
+| [typescript-strict-mode](skills/typescript/typescript-strict-mode/) | `typescript` | Enforce TypeScript strict mode, eliminate `any`, use `unknown` + narrowing, discriminated unions, and utility types correctly. |
+| [test-coverage-guidance](skills/testing/test-coverage-guidance/) | `testing` | Decide what to unit, integration, and E2E test. Covers testing pyramid, AAA pattern, async testing, coverage targets, and CI setup. |
+| [git-commit-quality](skills/devops/git-commit-quality/) | `devops` | Enforce Conventional Commits. Blocks vague messages like "fix", "wip", "update". Generates well-formed commit messages with correct type, scope, and body. |
+| [code-review-checklist](skills/devops/code-review-checklist/) | `devops` | Structured PR review across correctness, security, performance, tests, and maintainability. Produces BLOCKER / MAJOR / MINOR findings with fixes. |
+| [dockerfile-best-practices](skills/devops/dockerfile-best-practices/) | `devops` | Write secure, minimal Dockerfiles — multi-stage builds, non-root user, layer caching, `.dockerignore`, and production docker-compose patterns. |
+| [env-secret-safety](skills/safety/env-secret-safety/) | `safety` | Prevent hardcoded secrets and API keys. Detects credential patterns, enforces `.env` hygiene, and guides safe secret storage across all cloud providers. |
 
 > Want to add your own? See [CONTRIBUTING.md](CONTRIBUTING.md).
 
