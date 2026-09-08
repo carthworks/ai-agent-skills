@@ -1,5 +1,5 @@
 # install.ps1 — Interactive skill installer for ai-agent-skills
-# Usage: irm https://raw.githubusercontent.com/YOUR_USERNAME/ai-agent-skills/main/scripts/install.ps1 | iex
+# Usage: irm https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.ps1 | iex
 #        or run directly: .\scripts\install.ps1 [-Skill "skills/web/production-web-app-launch"]
 
 param(
@@ -8,7 +8,7 @@ param(
 
 $ErrorActionPreference = "Stop"
 
-$Repo   = "YOUR_USERNAME/ai-agent-skills"
+$Repo   = "carthworks/ai-agent-skills"
 $Branch = "main"
 $ArchiveUrl = "https://github.com/$Repo/archive/refs/heads/$Branch.zip"
 $TmpDir = Join-Path $env:TEMP "ai-agent-skills-$(Get-Random)"

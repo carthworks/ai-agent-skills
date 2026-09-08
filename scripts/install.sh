@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # install.sh — Interactive skill installer for ai-agent-skills
-# Usage: curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/ai-agent-skills/main/scripts/install.sh | bash
+# Usage: curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh | bash
 #        or run directly: ./scripts/install.sh [skill-folder-path]
 
 set -euo pipefail
 
-REPO="YOUR_USERNAME/ai-agent-skills"
+REPO="carthworks/ai-agent-skills"
 BRANCH="main"
 BASE_URL="https://github.com/${REPO}/archive/refs/heads/${BRANCH}.tar.gz"
 TMP_DIR=$(mktemp -d)

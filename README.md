@@ -53,13 +53,13 @@ That's it. Commit the folder and every developer on your team gets the skill.
 **macOS / Linux (bash):**
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/ai-agent-skills/main/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh | bash
 ```
 
 **Windows (PowerShell):**
 
 ```powershell
-irm https://raw.githubusercontent.com/YOUR_USERNAME/ai-agent-skills/main/scripts/install.ps1 | iex
+irm https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.ps1 | iex
 ```
 
 Both scripts present an interactive menu — pick skills by number, they land in `.agents/skills/` automatically.
@@ -71,7 +71,7 @@ Both scripts present an interactive menu — pick skills by number, they land in
 Download only the skill folder(s) you want without cloning the whole repo:
 
 ```bash
-git clone --filter=blob:none --sparse https://github.com/YOUR_USERNAME/ai-agent-skills.git
+git clone --filter=blob:none --sparse https://github.com/carthworks/ai-agent-skills.git
 cd ai-agent-skills
 git sparse-checkout set skills/web/production-web-app-launch
 # then copy to your project:
@@ -128,3 +128,15 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) — the short version:
 ## License
 
 Apache-2.0 — see [LICENSE](LICENSE).
+
+---
+
+## Author
+
+**Karthikeyan T** · [@carthworks](https://github.com/carthworks)
+
+- ✉️ [tkarthikeyan@gmail.com](mailto:tkarthikeyan@gmail.com)
+- 💼 [Connect on LinkedIn](https://www.linkedin.com/in/carthworks)
+- 🐙 [github.com/carthworks](https://github.com/carthworks)
+
+> *Let's build a safer, more inclusive web.*
