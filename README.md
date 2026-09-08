@@ -7,6 +7,8 @@
 ![License](https://img.shields.io/badge/license-Apache--2.0-green?style=flat-square)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)
 
+![ai-agent-skills banner](ai-skil-set.png)
+
 ---
 
 ## What is a skill?
