@@ -1,0 +1,3 @@
+# The .agents/ directory is the local workspace config folder.
+# The canonical skill copies live under skills/<category>/<skill-name>/.
+.agents/
