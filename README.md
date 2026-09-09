@@ -65,7 +65,7 @@ That's it. Commit the folder and every developer on your team gets the skill.
 **macOS / Linux (bash):**
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh | bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh)"
 ```
 
 **Windows (PowerShell):**

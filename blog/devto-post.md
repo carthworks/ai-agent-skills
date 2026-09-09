@@ -128,7 +128,7 @@ cp -r ai-agent-skills/skills/devops/git-commit-quality .agents/skills/
 
 **One-liner (bash):**
 ```bash
-curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh | bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh)"
 ```
 
 **One-liner (PowerShell):**

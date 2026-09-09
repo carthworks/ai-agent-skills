@@ -69,15 +69,18 @@ echo ""
 echo "  a) Install all skills"
 echo "  q) Quit"
 echo ""
-# If stdin is not a terminal (e.g. curl | bash), read from /dev/tty
+# If stdin is not a terminal (e.g. curl | bash), try to read from /dev/tty or /dev/conin
+SELECTION=""
 if [ -t 0 ]; then
-  read -rp "$(bold 'Select skills to install (comma-separated numbers, or a/q): ')" SELECTION
-else
-  read -rp "$(bold 'Select skills to install (comma-separated numbers, or a/q): ')" SELECTION </dev/tty
+  read -rp "$(bold 'Select skills to install (comma-separated numbers, or a/q): ')" SELECTION || true
+elif [ -r /dev/tty ]; then
+  read -rp "$(bold 'Select skills to install (comma-separated numbers, or a/q): ')" SELECTION </dev/tty 2>/dev/null || true
+elif [ -r /dev/conin ]; then
+  read -rp "$(bold 'Select skills to install (comma-separated numbers, or a/q): ')" SELECTION </dev/conin 2>/dev/null || true
 fi
 
 if [[ -z "${SELECTION:-}" || "$SELECTION" == "q" ]]; then
-  dim "Aborted."
+  dim "No selection made or aborted. Exiting."
   exit 0
 fi
 
