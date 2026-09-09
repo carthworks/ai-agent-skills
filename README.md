@@ -135,6 +135,31 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) — the short version:
 
 ---
 
+## 📖 Blog & Articles
+
+Read about how skills work and why they matter:
+
+- **[I Built a Collection of AI Agent Skills — Here's How They Work](blog/devto-post.md)**
+  _A deep dive into the skill format, real examples, and why teams should commit `.agents/skills/` to their repos._
+
+---
+
+## 🗺️ Coming Soon
+
+Skills currently in development:
+
+| Skill | Category | Status |
+|-------|----------|--------|
+| `react-component-patterns` | `web` | 🔨 In progress |
+| `accessibility-audit` | `web` | 📋 Planned |
+| `ci-github-actions` | `devops` | 📋 Planned |
+| `database-migration-safety` | `safety` | 📋 Planned |
+| `openapi-spec-design` | `web` | 📋 Planned |
+
+> Have a skill idea? [Open an issue](https://github.com/carthworks/ai-agent-skills/issues) or submit a PR!
+
+---
+
 ## License
 
 Apache-2.0 — see [LICENSE](LICENSE).
