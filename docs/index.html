@@ -416,6 +416,23 @@
 
     .card-meta a:hover { color: var(--accent); }
 
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: -4px;
+    }
+
+    .tag-pill {
+      font-size: 0.68rem;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
     /* ── Empty state ────────────────────────────────────── */
     .empty {
       grid-column: 1 / -1;
@@ -578,31 +595,145 @@
     return CAT_COLORS[cat] || CAT_COLORS.general;
   }
 
+  // ── Initial / Static Skills Dataset ────────────────────────
+  // __INITIAL_SKILLS_START__
+  const INITIAL_SKILLS = [
+      {
+          "name": "code-review-checklist",
+          "description": "Provides a structured, thorough code review checklist covering correctness, security, performance, tests, and maintainability. Use this skill whenever asked to…",
+          "category": "devops",
+          "path": "skills/devops/code-review-checklist",
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": []
+      },
+      {
+          "name": "dockerfile-best-practices",
+          "description": "Guides writing secure, efficient, production-grade Dockerfiles and docker-compose files. Use when creating or reviewing a Dockerfile, docker-compose.yml, or .d…",
+          "category": "devops",
+          "path": "skills/devops/dockerfile-best-practices",
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": []
+      },
+      {
+          "name": "git-commit-quality",
+          "description": "Enforces high-quality git commit messages following Conventional Commits. Use this skill whenever the agent is about to run `git commit`, write a commit messag…",
+          "category": "devops",
+          "path": "skills/devops/git-commit-quality",
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": []
+      },
+      {
+          "name": "env-secret-safety",
+          "description": "Prevents hardcoded secrets, API keys, passwords, and credentials in source code. Use this skill whenever the agent is writing code that connects to external se…",
+          "category": "safety",
+          "path": "skills/safety/env-secret-safety",
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": []
+      },
+      {
+          "name": "test-coverage-guidance",
+          "description": "Guides what, when, and how to test code — choosing between unit, integration, and end-to-end tests. Use when writing tests, deciding test strategy, setting up …",
+          "category": "testing",
+          "path": "skills/testing/test-coverage-guidance",
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": []
+      },
+      {
+          "name": "typescript-strict-mode",
+          "description": "Enforces TypeScript strict mode configuration and type-safe coding patterns. Use when setting up a TypeScript project, reviewing tsconfig.json, fixing type err…",
+          "category": "typescript",
+          "path": "skills/typescript/typescript-strict-mode",
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": []
+      },
+      {
+          "name": "api-design-rest",
+          "description": "Guides designing clean, consistent, and developer-friendly REST APIs. Use when creating new API endpoints, reviewing API contracts, writing OpenAPI/Swagger spe…",
+          "category": "web",
+          "path": "skills/web/api-design-rest",
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": []
+      },
+      {
+          "name": "nextjs-performance",
+          "description": "Optimises Next.js applications for Core Web Vitals, bundle size, and perceived performance. Use when building, auditing, or debugging a Next.js app's performan…",
+          "category": "web",
+          "path": "skills/web/nextjs-performance",
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": []
+      },
+      {
+          "name": "production-web-app-launch",
+          "description": "Audit and fix production-readiness gaps in websites and web apps — accessibility, SEO, metadata, security, forms, errors, mobile, deployment config, and operat…",
+          "category": "web",
+          "path": "skills/web/production-web-app-launch",
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": []
+      },
+      {
+          "name": "web-trust-and-compliance",
+          "description": "Audit web applications and websites for legal compliance, consumer trust, privacy policies, terms of service, cookie consent, licensing, accessibility, and ant…",
+          "category": "web",
+          "path": "skills/web/web-trust-and-compliance",
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "compliance",
+              "privacy",
+              "trust",
+              "legal",
+              "accessibility",
+              "web"
+          ]
+      }
+  ];
+  // __INITIAL_SKILLS_END__
+
   // ── State ────────────────────────────────────────────────
-  let allSkills   = [];
+  let allSkills   = [...INITIAL_SKILLS];
   let activeFilter = 'all';
   let searchQuery  = '';
 
   // ── Fetch data ───────────────────────────────────────────
   async function loadSkills() {
-    try {
-      const res = await fetch('skills.json');
-      if (!res.ok) throw new Error('Not found');
-      const data = await res.json();
-      allSkills = data.skills || [];
-    } catch {
-      // Fallback: try to load from GitHub raw
-      try {
-        const res = await fetch('https://raw.githubusercontent.com/carthworks/ai-agent-skills/master/docs/skills.json');
-        const data = await res.json();
-        allSkills = data.skills || [];
-      } catch {
-        allSkills = [];
-      }
-    }
+    // Render immediate embedded dataset first
     buildFilters();
     render();
     updateStats();
+
+    // Async live update if hosted on server
+    try {
+      const res = await fetch('skills.json');
+      if (!res.ok) return;
+      const data = await res.json();
+      if (data.skills && data.skills.length > 0) {
+        allSkills = data.skills;
+        buildFilters();
+        render();
+        updateStats();
+      }
+    } catch {
+      // Fallback: loadSkills already initialized from INITIAL_SKILLS
+    }
   }
 
   // ── Filters ──────────────────────────────────────────────
@@ -638,7 +769,13 @@
     const q = searchQuery;
     const filtered = allSkills.filter(s => {
       if (activeFilter !== 'all' && s.category !== activeFilter) return false;
-      if (q && !s.name.includes(q) && !s.description.toLowerCase().includes(q) && !s.category.includes(q)) return false;
+      if (q) {
+        const matchesName = s.name.toLowerCase().includes(q);
+        const matchesDesc = s.description.toLowerCase().includes(q);
+        const matchesCat = s.category.toLowerCase().includes(q);
+        const matchesTags = s.tags && s.tags.some(t => t.toLowerCase().includes(q));
+        if (!matchesName && !matchesDesc && !matchesCat && !matchesTags) return false;
+      }
       return true;
     });
 
@@ -660,8 +797,11 @@
   function cardHTML(skill) {
     const c = catColor(skill.category);
     const installCmd = `cp -r ${skill.path} .agents/skills/`;
-    const ghUrl = `https://github.com/carthworks/ai-agent-skills/tree/master/${skill.path}`;
+    const ghUrl = `https://github.com/carthworks/ai-agent-skills/tree/main/${skill.path}`;
     const id = skill.name;
+    const tagsHTML = (skill.tags && skill.tags.length > 0)
+      ? `<div class="card-tags">${skill.tags.map(t => `<span class="tag-pill">#${escHtml(t)}</span>`).join('')}</div>`
+      : '';
     return `
       <div class="card">
         <div class="card-header">
@@ -669,6 +809,7 @@
           <span class="cat-badge" style="background:${c.bg};color:${c.text};border:1px solid ${c.border}">${escHtml(skill.category)}</span>
         </div>
         <p class="card-desc">${escHtml(skill.description)}</p>
+        ${tagsHTML}
         <div class="card-footer">
           <span class="install-snippet" title="${escAttr(installCmd)}">${escHtml(installCmd)}</span>
           <button class="card-copy" id="cp-${id}" onclick="copyInstall('${escAttr(installCmd)}','${id}')" title="Copy install command">📋</button>

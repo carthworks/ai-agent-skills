@@ -72,4 +72,23 @@ skills.sort((a, b) => {
 fs.mkdirSync(path.dirname(OUT_FILE), { recursive: true });
 fs.writeFileSync(OUT_FILE, JSON.stringify({ generated: new Date().toISOString(), skills }, null, 2));
 
-console.log(`✅ Generated docs/skills.json with ${skills.length} skills.`);
+// Also sync INITIAL_SKILLS in docs/index.html so it works without server / on file://
+const INDEX_HTML_PATH = path.join(ROOT, 'docs', 'index.html');
+if (fs.existsSync(INDEX_HTML_PATH)) {
+  let html = fs.readFileSync(INDEX_HTML_PATH, 'utf8');
+  const startMarker = '// __INITIAL_SKILLS_START__';
+  const endMarker = '// __INITIAL_SKILLS_END__';
+  const startIndex = html.indexOf(startMarker);
+  const endIndex = html.indexOf(endMarker);
+  if (startIndex !== -1 && endIndex !== -1) {
+    const formattedJson = JSON.stringify(skills, null, 4)
+      .split('\n')
+      .map((line, i) => i === 0 ? line : '  ' + line)
+      .join('\n');
+    const replacement = `${startMarker}\n  const INITIAL_SKILLS = ${formattedJson};\n  ${endMarker}`;
+    html = html.slice(0, startIndex) + replacement + html.slice(endIndex + endMarker.length);
+    fs.writeFileSync(INDEX_HTML_PATH, html, 'utf8');
+  }
+}
+
+console.log(`✅ Generated docs/skills.json and synced docs/index.html with ${skills.length} skills.`);

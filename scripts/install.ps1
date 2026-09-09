@@ -25,6 +25,7 @@ $Skills = @{
     7 = @{ Path = "skills/devops/code-review-checklist";            Label = "[devops]     code-review-checklist       — BLOCKER/MAJOR/MINOR PR review" }
     8 = @{ Path = "skills/devops/dockerfile-best-practices";        Label = "[devops]     dockerfile-best-practices   — Multi-stage, non-root, minimal images" }
     9 = @{ Path = "skills/safety/env-secret-safety";                Label = "[safety]     env-secret-safety           — No hardcoded secrets, .env hygiene" }
+    10 = @{ Path = "skills/web/web-trust-and-compliance";          Label = "[web]        web-trust-and-compliance    — Legal, privacy, consent & anti-dark-pattern audit" }
 }
 
 function Write-Header { Write-Host "`n$args" -ForegroundColor Cyan }

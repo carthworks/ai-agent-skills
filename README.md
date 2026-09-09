@@ -3,7 +3,7 @@
 > A curated collection of **SKILL.md** files for [Antigravity IDE](https://antigravity.dev) and compatible AI coding agents.
 > Drop any skill folder into your project and your AI agent gains specialised, focused capabilities instantly.
 
-![Skills](https://img.shields.io/badge/skills-9-blueviolet?style=flat-square)
+![Skills](https://img.shields.io/badge/skills-10-blueviolet?style=flat-square)
 ![License](https://img.shields.io/badge/license-Apache--2.0-green?style=flat-square)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)
 ![CI](https://github.com/carthworks/ai-agent-skills/actions/workflows/validate.yml/badge.svg)
@@ -29,6 +29,7 @@ that the agent reads on demand.
 | Skill | Category | Description |
 |-------|----------|-------------|
 | [production-web-app-launch](skills/web/production-web-app-launch/) | `web` | Audit and fix production-readiness gaps — accessibility, SEO, security, forms, mobile, deployment config. Activates on "is this ready to ship", "pre-launch check". |
+| [web-trust-and-compliance](skills/web/web-trust-and-compliance/) | `web` | Audit legal compliance, privacy policy, cookie/form consent, TOS, refund policy, anti-dark-pattern, pricing transparency, asset licensing, and accessibility. |
 | [nextjs-performance](skills/web/nextjs-performance/) | `web` | Optimise Next.js for Core Web Vitals, bundle size, and perceived speed. Covers rendering strategy, `next/image`, fonts, code splitting, and App Router caching. |
 | [api-design-rest](skills/web/api-design-rest/) | `web` | Design clean, consistent REST APIs — URL naming, HTTP methods, status codes, error shapes, versioning, pagination, and auth patterns. |
 | [typescript-strict-mode](skills/typescript/typescript-strict-mode/) | `typescript` | Enforce TypeScript strict mode, eliminate `any`, use `unknown` + narrowing, discriminated unions, and utility types correctly. |
@@ -97,11 +98,20 @@ cp -r skills/web/production-web-app-launch ../.agents/skills/
 ```
 skills/
 ├── web/
-│   └── production-web-app-launch/   ← SKILL.md + references/
-├── python/
-├── safety/
-├── data/
-└── devops/
+│   ├── production-web-app-launch/
+│   ├── web-trust-and-compliance/
+│   ├── nextjs-performance/
+│   └── api-design-rest/
+├── typescript/
+│   └── typescript-strict-mode/
+├── testing/
+│   └── test-coverage-guidance/
+├── devops/
+│   ├── git-commit-quality/
+│   ├── code-review-checklist/
+│   └── dockerfile-best-practices/
+└── safety/
+    └── env-secret-safety/
 
 scripts/
 ├── install.sh    ← Bash interactive installer

@@ -31,6 +31,7 @@ declare -A SKILLS=(
   [7]="skills/devops/code-review-checklist"
   [8]="skills/devops/dockerfile-best-practices"
   [9]="skills/safety/env-secret-safety"
+  [10]="skills/web/web-trust-and-compliance"
 )
 declare -A SKILL_LABELS=(
   [1]="[web]        production-web-app-launch   — Production readiness audit"
@@ -42,6 +43,7 @@ declare -A SKILL_LABELS=(
   [7]="[devops]     code-review-checklist       — BLOCKER/MAJOR/MINOR PR review"
   [8]="[devops]     dockerfile-best-practices   — Multi-stage, non-root, minimal images"
   [9]="[safety]     env-secret-safety           — No hardcoded secrets, .env hygiene"
+  [10]="[web]        web-trust-and-compliance    — Legal, privacy, consent & anti-dark-pattern audit"
 )
 
 # --- download repo archive ---

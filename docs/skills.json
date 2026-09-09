@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-09T02:32:37.614Z",
+  "generated": "2026-09-09T13:55:51.158Z",
   "skills": [
     {
       "name": "code-review-checklist",
@@ -90,6 +90,23 @@
       "version": "v1",
       "publisher": "carthworks",
       "tags": []
+    },
+    {
+      "name": "web-trust-and-compliance",
+      "description": "Audit web applications and websites for legal compliance, consumer trust, privacy policies, terms of service, cookie consent, licensing, accessibility, and ant…",
+      "category": "web",
+      "path": "skills/web/web-trust-and-compliance",
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": [
+        "compliance",
+        "privacy",
+        "trust",
+        "legal",
+        "accessibility",
+        "web"
+      ]
     }
   ]
 }
