@@ -82,12 +82,12 @@ try {
     }
 
     foreach ($key in $Keys) {
-        $keyInt = [int]$key
-        if (-not $Skills.ContainsKey($keyInt)) {
+        $parsed = 0
+        if (-not [int]::TryParse($key, [ref]$parsed) -or -not $Skills.ContainsKey($parsed)) {
             Write-Warn "Unknown selection: $key — skipping"
             continue
         }
-        $SkillPath = $Skills[$keyInt].Path
+        $SkillPath = $Skills[$parsed].Path
         $SkillName = Split-Path $SkillPath -Leaf
         $SkillSrc  = Join-Path $ExtractedRoot ($SkillPath -replace "/", "\")
         $SkillDest = Join-Path $Dest $SkillName

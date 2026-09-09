@@ -69,9 +69,14 @@ echo ""
 echo "  a) Install all skills"
 echo "  q) Quit"
 echo ""
-read -rp "$(bold 'Select skills to install (comma-separated numbers, or a/q): ')" SELECTION
+# If stdin is not a terminal (e.g. curl | bash), read from /dev/tty
+if [ -t 0 ]; then
+  read -rp "$(bold 'Select skills to install (comma-separated numbers, or a/q): ')" SELECTION
+else
+  read -rp "$(bold 'Select skills to install (comma-separated numbers, or a/q): ')" SELECTION </dev/tty
+fi
 
-if [[ "$SELECTION" == "q" ]]; then
+if [[ -z "${SELECTION:-}" || "$SELECTION" == "q" ]]; then
   dim "Aborted."
   exit 0
 fi
