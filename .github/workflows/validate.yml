@@ -1,0 +1,44 @@
+name: Validate Skills
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  validate:
+    name: Validate SKILL.md frontmatter
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate all SKILL.md files
+        run: npm run validate
+
+      - name: Check YAML parseable (syntax check)
+        run: |
+          find skills community -name 'SKILL.md' 2>/dev/null | while read f; do
+            node -e "
+              const fs = require('fs');
+              const matter = require('gray-matter');
+              try {
+                matter(fs.readFileSync('$f', 'utf8'));
+                process.stdout.write('✓ $f\n');
+              } catch(e) {
+                process.stderr.write('✗ $f: ' + e.message + '\n');
+                process.exit(1);
+              }
+            "
+          done

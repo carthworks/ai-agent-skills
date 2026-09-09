@@ -1,0 +1,24 @@
+{
+  "name": "ai-agent-skills",
+  "version": "1.0.0",
+  "description": "A curated collection of SKILL.md files for AI coding agents",
+  "private": false,
+  "scripts": {
+    "validate": "node tests/validate-skills.js",
+    "generate": "node scripts/generate-catalogue.js",
+    "build": "npm run validate && npm run generate",
+    "test": "npm run validate"
+  },
+  "keywords": ["ai", "llm", "coding-agent", "antigravity", "developer-tools", "skills"],
+  "license": "Apache-2.0",
+  "dependencies": {},
+  "devDependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "gray-matter": "^4.0.3",
+    "glob": "^11.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

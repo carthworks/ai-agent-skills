@@ -1,0 +1,95 @@
+{
+  "generated": "2026-09-09T02:32:37.614Z",
+  "skills": [
+    {
+      "name": "code-review-checklist",
+      "description": "Provides a structured, thorough code review checklist covering correctness, security, performance, tests, and maintainability. Use this skill whenever asked to…",
+      "category": "devops",
+      "path": "skills/devops/code-review-checklist",
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": []
+    },
+    {
+      "name": "dockerfile-best-practices",
+      "description": "Guides writing secure, efficient, production-grade Dockerfiles and docker-compose files. Use when creating or reviewing a Dockerfile, docker-compose.yml, or .d…",
+      "category": "devops",
+      "path": "skills/devops/dockerfile-best-practices",
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": []
+    },
+    {
+      "name": "git-commit-quality",
+      "description": "Enforces high-quality git commit messages following Conventional Commits. Use this skill whenever the agent is about to run `git commit`, write a commit messag…",
+      "category": "devops",
+      "path": "skills/devops/git-commit-quality",
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": []
+    },
+    {
+      "name": "env-secret-safety",
+      "description": "Prevents hardcoded secrets, API keys, passwords, and credentials in source code. Use this skill whenever the agent is writing code that connects to external se…",
+      "category": "safety",
+      "path": "skills/safety/env-secret-safety",
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": []
+    },
+    {
+      "name": "test-coverage-guidance",
+      "description": "Guides what, when, and how to test code — choosing between unit, integration, and end-to-end tests. Use when writing tests, deciding test strategy, setting up …",
+      "category": "testing",
+      "path": "skills/testing/test-coverage-guidance",
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": []
+    },
+    {
+      "name": "typescript-strict-mode",
+      "description": "Enforces TypeScript strict mode configuration and type-safe coding patterns. Use when setting up a TypeScript project, reviewing tsconfig.json, fixing type err…",
+      "category": "typescript",
+      "path": "skills/typescript/typescript-strict-mode",
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": []
+    },
+    {
+      "name": "api-design-rest",
+      "description": "Guides designing clean, consistent, and developer-friendly REST APIs. Use when creating new API endpoints, reviewing API contracts, writing OpenAPI/Swagger spe…",
+      "category": "web",
+      "path": "skills/web/api-design-rest",
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": []
+    },
+    {
+      "name": "nextjs-performance",
+      "description": "Optimises Next.js applications for Core Web Vitals, bundle size, and perceived performance. Use when building, auditing, or debugging a Next.js app's performan…",
+      "category": "web",
+      "path": "skills/web/nextjs-performance",
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": []
+    },
+    {
+      "name": "production-web-app-launch",
+      "description": "Audit and fix production-readiness gaps in websites and web apps — accessibility, SEO, metadata, security, forms, errors, mobile, deployment config, and operat…",
+      "category": "web",
+      "path": "skills/web/production-web-app-launch",
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": []
+    }
+  ]
+}

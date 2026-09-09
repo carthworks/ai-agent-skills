@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Agent Skills — Marketplace</title>
+  <meta name="description" content="A curated collection of drop-in SKILL.md files that give your AI coding agent specialised, focused capabilities." />
+  <meta property="og:title" content="AI Agent Skills Marketplace" />
+  <meta property="og:description" content="Drop-in skills for AI coding agents. Browse, copy, install." />
+  <meta property="og:url" content="https://carthworks.github.io/ai-agent-skills/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & tokens ─────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #08090e;
+      --surface:   #0f1117;
+      --surface2:  #161921;
+      --border:    rgba(255,255,255,0.07);
+      --border-h:  rgba(139,92,246,0.5);
+      --text:      #e2e8f0;
+      --text-dim:  #6b7280;
+      --text-mute: #374151;
+      --accent:    #8b5cf6;
+      --accent-2:  #06b6d4;
+      --green:     #10b981;
+      --yellow:    #f59e0b;
+
+      --cat-web:        #3b82f6;
+      --cat-devops:     #8b5cf6;
+      --cat-typescript: #06b6d4;
+      --cat-testing:    #10b981;
+      --cat-safety:     #ef4444;
+      --cat-general:    #6b7280;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* ── Layout ─────────────────────────────────────────── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── Header ─────────────────────────────────────────── */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 20px 0;
+      position: sticky;
+      top: 0;
+      background: rgba(8,9,14,0.92);
+      backdrop-filter: blur(16px);
+      z-index: 100;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .logo-icon {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+
+    .logo-text {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+
+    .logo-text span { color: var(--accent); }
+
+    .header-search {
+      flex: 1;
+      min-width: 200px;
+      max-width: 420px;
+      position: relative;
+    }
+
+    .header-search input {
+      width: 100%;
+      padding: 9px 16px 9px 40px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .header-search input:focus { border-color: var(--accent); }
+    .header-search input::placeholder { color: var(--text-dim); }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      pointer-events: none;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: auto;
+    }
+
+    .btn-ghost {
+      padding: 8px 14px;
+      border-radius: 7px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-dim);
+      font-size: 0.8rem;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.18s;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--border-h);
+      color: var(--text);
+      background: rgba(139,92,246,0.06);
+    }
+
+    /* ── Hero ───────────────────────────────────────────── */
+    .hero {
+      padding: 72px 0 48px;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(139,92,246,0.3);
+      background: rgba(139,92,246,0.08);
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 500;
+      margin-bottom: 24px;
+      letter-spacing: 0.02em;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #fff 40%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      color: var(--text-dim);
+      max-width: 560px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+
+    .hero-install {
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+
+    .hero-install code {
+      padding: 11px 18px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      color: var(--accent-2);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .copy-btn {
+      padding: 11px 14px;
+      background: var(--surface);
+      border: none;
+      border-left: 1px solid var(--border);
+      color: var(--text-dim);
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.18s;
+      flex-shrink: 0;
+    }
+
+    .copy-btn:hover { background: rgba(139,92,246,0.12); color: var(--accent); }
+    .copy-btn.copied { color: var(--green); }
+
+    /* ── Stats bar ──────────────────────────────────────── */
+    .stats {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      padding: 24px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .stat { text-align: center; }
+    .stat-value { font-size: 1.6rem; font-weight: 700; color: var(--text); line-height: 1; }
+    .stat-label { font-size: 0.75rem; color: var(--text-dim); margin-top: 2px; }
+
+    /* ── Filters ────────────────────────────────────────── */
+    .filters {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 32px 0 24px;
+      flex-wrap: wrap;
+    }
+
+    .filter-label { font-size: 0.8rem; color: var(--text-dim); margin-right: 4px; }
+
+    .filter-chip {
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-dim);
+      font-size: 0.8rem;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: all 0.18s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .filter-chip:hover { border-color: var(--border-h); color: var(--text); }
+
+    .filter-chip.active {
+      background: rgba(139,92,246,0.15);
+      border-color: var(--accent);
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .filter-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── Grid ───────────────────────────────────────────── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
+      padding-bottom: 80px;
+    }
+
+    /* ── Skill card ─────────────────────────────────────── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      cursor: default;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 0% 0%, rgba(139,92,246,0.05) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .card:hover {
+      border-color: var(--border-h);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    .card:hover::before { opacity: 1; }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .card-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text);
+      word-break: break-word;
+    }
+
+    .cat-badge {
+      padding: 3px 9px;
+      border-radius: 12px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+
+    .card-desc {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      line-height: 1.6;
+      flex: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .install-snippet {
+      flex: 1;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 7px 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--accent-2);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-copy {
+      padding: 7px 9px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-dim);
+      cursor: pointer;
+      font-size: 0.78rem;
+      transition: all 0.18s;
+      flex-shrink: 0;
+    }
+
+    .card-copy:hover { border-color: var(--border-h); color: var(--accent); }
+    .card-copy.copied { color: var(--green); border-color: var(--green); }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.72rem;
+      color: var(--text-mute);
+    }
+
+    .card-meta a {
+      color: var(--text-mute);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .card-meta a:hover { color: var(--accent); }
+
+    /* ── Empty state ────────────────────────────────────── */
+    .empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 80px 0;
+    }
+
+    .empty-icon { font-size: 3rem; margin-bottom: 16px; }
+    .empty h3 { font-size: 1.1rem; color: var(--text); margin-bottom: 8px; }
+    .empty p  { font-size: 0.875rem; color: var(--text-dim); }
+
+    /* ── Footer ─────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 0;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── Toast ──────────────────────────────────────────── */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--surface2);
+      border: 1px solid var(--green);
+      color: var(--green);
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(.34,1.56,.64,1);
+      z-index: 999;
+      white-space: nowrap;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ── Responsive ─────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .hero { padding: 48px 0 32px; }
+      .grid { grid-template-columns: 1fr; }
+      .stats { gap: 20px; }
+      .header-search { min-width: 0; width: 100%; max-width: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="container">
+    <div class="header-inner">
+      <a href="https://github.com/carthworks/ai-agent-skills" class="logo">
+        <div class="logo-icon">🧠</div>
+        <span class="logo-text">ai-agent-<span>skills</span></span>
+      </a>
+      <div class="header-search">
+        <span class="search-icon">🔍</span>
+        <input id="search" type="search" placeholder="Search skills…" autocomplete="off" />
+      </div>
+      <div class="header-actions">
+        <a href="https://github.com/carthworks/ai-agent-skills" class="btn-ghost" target="_blank" rel="noopener">
+          ⭐ Star on GitHub
+        </a>
+        <a href="https://github.com/carthworks/ai-agent-skills/blob/master/CONTRIBUTING.md" class="btn-ghost" target="_blank" rel="noopener">
+          + Contribute
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">✨ Open Source · Apache-2.0 · Free Forever</div>
+    <h1>Supercharge Your AI<br>Coding Agent</h1>
+    <p>Drop-in <code style="font-family:JetBrains Mono,monospace;color:var(--accent-2);font-size:0.95em">SKILL.md</code> files that give your AI agent specialised, consistent behaviour — instantly.</p>
+    <div class="hero-install">
+      <code id="hero-cmd">curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh | bash</code>
+      <button class="copy-btn" onclick="copyHero(this)" title="Copy install command">📋</button>
+    </div>
+  </div>
+</section>
+
+<!-- Stats -->
+<section class="stats">
+  <div class="container" style="display:contents">
+    <div class="stat">
+      <div class="stat-value" id="stat-total">—</div>
+      <div class="stat-label">Skills</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" id="stat-cats">—</div>
+      <div class="stat-label">Categories</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">Free</div>
+      <div class="stat-label">Always</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">&lt;10s</div>
+      <div class="stat-label">To Install</div>
+    </div>
+  </div>
+</section>
+
+<!-- Filters + Grid -->
+<div class="container">
+  <div class="filters" id="filters">
+    <span class="filter-label">Filter:</span>
+    <button class="filter-chip active" data-cat="all" onclick="setFilter('all', this)">All</button>
+  </div>
+
+  <div class="grid" id="grid">
+    <div class="empty">
+      <div class="empty-icon">⏳</div>
+      <h3>Loading skills…</h3>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <p>
+      Built by <a href="https://github.com/carthworks" target="_blank">@carthworks</a> ·
+      <a href="https://github.com/carthworks/ai-agent-skills" target="_blank">View on GitHub</a> ·
+      <a href="https://github.com/carthworks/ai-agent-skills/blob/master/CONTRIBUTING.md" target="_blank">Contribute a skill</a> ·
+      Apache-2.0
+    </p>
+    <p style="margin-top:6px;color:var(--text-mute)"><em>Let's build a safer, more inclusive web.</em></p>
+  </div>
+</footer>
+
+<div class="toast" id="toast">✅ Copied!</div>
+
+<script>
+  // ── Category colours ────────────────────────────────────
+  const CAT_COLORS = {
+    web:        { bg: 'rgba(59,130,246,0.15)', text: '#60a5fa', border: 'rgba(59,130,246,0.3)' },
+    devops:     { bg: 'rgba(139,92,246,0.15)', text: '#a78bfa', border: 'rgba(139,92,246,0.3)' },
+    typescript: { bg: 'rgba(6,182,212,0.15)',  text: '#22d3ee', border: 'rgba(6,182,212,0.3)'  },
+    testing:    { bg: 'rgba(16,185,129,0.15)', text: '#34d399', border: 'rgba(16,185,129,0.3)' },
+    safety:     { bg: 'rgba(239,68,68,0.15)',  text: '#f87171', border: 'rgba(239,68,68,0.3)'  },
+    general:    { bg: 'rgba(107,114,128,0.15)',text: '#9ca3af', border: 'rgba(107,114,128,0.3)' },
+  };
+
+  function catColor(cat) {
+    return CAT_COLORS[cat] || CAT_COLORS.general;
+  }
+
+  // ── State ────────────────────────────────────────────────
+  let allSkills   = [];
+  let activeFilter = 'all';
+  let searchQuery  = '';
+
+  // ── Fetch data ───────────────────────────────────────────
+  async function loadSkills() {
+    try {
+      const res = await fetch('skills.json');
+      if (!res.ok) throw new Error('Not found');
+      const data = await res.json();
+      allSkills = data.skills || [];
+    } catch {
+      // Fallback: try to load from GitHub raw
+      try {
+        const res = await fetch('https://raw.githubusercontent.com/carthworks/ai-agent-skills/master/docs/skills.json');
+        const data = await res.json();
+        allSkills = data.skills || [];
+      } catch {
+        allSkills = [];
+      }
+    }
+    buildFilters();
+    render();
+    updateStats();
+  }
+
+  // ── Filters ──────────────────────────────────────────────
+  function buildFilters() {
+    const cats = [...new Set(allSkills.map(s => s.category))].sort();
+    const container = document.getElementById('filters');
+    for (const cat of cats) {
+      const c = catColor(cat);
+      const btn = document.createElement('button');
+      btn.className = 'filter-chip';
+      btn.dataset.cat = cat;
+      btn.onclick = () => setFilter(cat, btn);
+      btn.innerHTML = `<span class="filter-dot" style="background:${c.text}"></span>${cat}`;
+      container.appendChild(btn);
+    }
+  }
+
+  function setFilter(cat, el) {
+    activeFilter = cat;
+    document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    render();
+  }
+
+  // ── Search ───────────────────────────────────────────────
+  document.getElementById('search').addEventListener('input', e => {
+    searchQuery = e.target.value.toLowerCase();
+    render();
+  });
+
+  // ── Render ───────────────────────────────────────────────
+  function render() {
+    const q = searchQuery;
+    const filtered = allSkills.filter(s => {
+      if (activeFilter !== 'all' && s.category !== activeFilter) return false;
+      if (q && !s.name.includes(q) && !s.description.toLowerCase().includes(q) && !s.category.includes(q)) return false;
+      return true;
+    });
+
+    const grid = document.getElementById('grid');
+
+    if (filtered.length === 0) {
+      grid.innerHTML = `
+        <div class="empty">
+          <div class="empty-icon">🔍</div>
+          <h3>No skills found</h3>
+          <p>Try a different search term or category.</p>
+        </div>`;
+      return;
+    }
+
+    grid.innerHTML = filtered.map(skill => cardHTML(skill)).join('');
+  }
+
+  function cardHTML(skill) {
+    const c = catColor(skill.category);
+    const installCmd = `cp -r ${skill.path} .agents/skills/`;
+    const ghUrl = `https://github.com/carthworks/ai-agent-skills/tree/master/${skill.path}`;
+    const id = skill.name;
+    return `
+      <div class="card">
+        <div class="card-header">
+          <span class="card-name">${escHtml(skill.name)}</span>
+          <span class="cat-badge" style="background:${c.bg};color:${c.text};border:1px solid ${c.border}">${escHtml(skill.category)}</span>
+        </div>
+        <p class="card-desc">${escHtml(skill.description)}</p>
+        <div class="card-footer">
+          <span class="install-snippet" title="${escAttr(installCmd)}">${escHtml(installCmd)}</span>
+          <button class="card-copy" id="cp-${id}" onclick="copyInstall('${escAttr(installCmd)}','${id}')" title="Copy install command">📋</button>
+        </div>
+        <div class="card-meta">
+          <span>v${escHtml(skill.version)}</span>
+          <span>·</span>
+          <span>${escHtml(skill.license)}</span>
+          <span>·</span>
+          <a href="${escAttr(ghUrl)}" target="_blank" rel="noopener">View on GitHub ↗</a>
+        </div>
+      </div>`;
+  }
+
+  // ── Stats ────────────────────────────────────────────────
+  function updateStats() {
+    document.getElementById('stat-total').textContent = allSkills.length;
+    const cats = new Set(allSkills.map(s => s.category));
+    document.getElementById('stat-cats').textContent = cats.size;
+  }
+
+  // ── Copy helpers ─────────────────────────────────────────
+  function showToast(msg = '✅ Copied!') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2200);
+  }
+
+  function copyToClipboard(text) {
+    return navigator.clipboard?.writeText(text) ?? Promise.reject();
+  }
+
+  function copyHero(btn) {
+    const cmd = document.getElementById('hero-cmd').textContent;
+    copyToClipboard(cmd).then(() => {
+      btn.textContent = '✅';
+      btn.classList.add('copied');
+      showToast('Install command copied!');
+      setTimeout(() => { btn.textContent = '📋'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+
+  function copyInstall(cmd, id) {
+    copyToClipboard(cmd).then(() => {
+      const btn = document.getElementById('cp-' + id);
+      if (btn) { btn.textContent = '✅'; btn.classList.add('copied'); setTimeout(() => { btn.textContent = '📋'; btn.classList.remove('copied'); }, 2000); }
+      showToast('Copied!');
+    });
+  }
+
+  // ── Utils ────────────────────────────────────────────────
+  function escHtml(s) {
+    return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function escAttr(s) { return escHtml(s); }
+
+  // ── Boot ─────────────────────────────────────────────────
+  loadSkills();
+</script>
+</body>
+</html>

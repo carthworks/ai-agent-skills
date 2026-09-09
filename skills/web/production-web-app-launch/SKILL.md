@@ -1,6 +1,10 @@
 ---
 name: production-web-app-launch
 description: Audit and fix production-readiness gaps in websites and web apps — accessibility, SEO, metadata, security, forms, errors, mobile, deployment config, and operational concerns. Use this whenever someone is preparing a web project for launch, deployment, or public release, and also when they say things like "is this ready to ship", "can I go live", "review before I publish", "pre-launch check", or ask for a production readiness review — even if they never use the word "audit". Applies to static sites, React/Next/Vue/Angular apps, full-stack apps, SaaS products, dashboards, ecommerce, landing pages, and portfolios, and to already-live sites being reviewed after the fact.
+license: Apache-2.0
+metadata:
+  version: v1
+  publisher: carthworks
 ---
 
 # Production Web App Launch

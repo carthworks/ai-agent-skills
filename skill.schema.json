@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/carthworks/ai-agent-skills/blob/master/skill.schema.json",
+  "title": "SKILL.md Frontmatter Schema",
+  "description": "Validates the YAML frontmatter block at the top of every SKILL.md file in the ai-agent-skills repository.",
+  "type": "object",
+  "required": ["name", "description", "license", "metadata"],
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Unique skill identifier in kebab-case. Must match the folder name.",
+      "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$",
+      "minLength": 3,
+      "maxLength": 64,
+      "examples": ["git-commit-quality", "production-web-app-launch"]
+    },
+    "description": {
+      "type": "string",
+      "description": "Activation condition for the skill. Should state clearly when to use and when NOT to use it. This is read by the AI agent to decide whether to load the skill.",
+      "minLength": 20,
+      "maxLength": 1000
+    },
+    "license": {
+      "type": "string",
+      "description": "SPDX license identifier.",
+      "enum": [
+        "Apache-2.0",
+        "MIT",
+        "BSD-2-Clause",
+        "BSD-3-Clause",
+        "ISC",
+        "GPL-3.0",
+        "LGPL-3.0",
+        "MPL-2.0",
+        "CC-BY-4.0",
+        "CC0-1.0"
+      ]
+    },
+    "metadata": {
+      "type": "object",
+      "required": ["version", "publisher"],
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "Skill version. Use semver or simple vN format.",
+          "pattern": "^v?[0-9]+(\\.[0-9]+)*(\\.[0-9]+)?$",
+          "examples": ["v1", "v1.2", "v2.0.1"]
+        },
+        "publisher": {
+          "type": "string",
+          "description": "GitHub username or organisation of the skill author.",
+          "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9-]{0,37}[a-zA-Z0-9])?$",
+          "examples": ["carthworks", "my-org"]
+        },
+        "tags": {
+          "type": "array",
+          "description": "Optional list of tags for discoverability.",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "maxItems": 10,
+          "uniqueItems": true
+        },
+        "minAgentVersion": {
+          "type": "string",
+          "description": "Optional minimum agent version required.",
+          "examples": ["1.0.0"]
+        }
+      }
+    }
+  }
+}

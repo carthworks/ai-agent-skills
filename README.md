@@ -6,6 +6,8 @@
 ![Skills](https://img.shields.io/badge/skills-9-blueviolet?style=flat-square)
 ![License](https://img.shields.io/badge/license-Apache--2.0-green?style=flat-square)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)
+![CI](https://github.com/carthworks/ai-agent-skills/actions/workflows/validate.yml/badge.svg)
+[![Marketplace](https://img.shields.io/badge/marketplace-live-blueviolet?style=flat-square)](https://carthworks.github.io/ai-agent-skills/)
 
 ![ai-agent-skills banner](ai-skil-set.png)
 

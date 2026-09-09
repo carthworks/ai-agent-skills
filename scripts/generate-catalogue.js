@@ -1,0 +1,75 @@
+#!/usr/bin/env node
+/**
+ * generate-catalogue.js
+ * Reads all SKILL.md files and outputs docs/skills.json for the marketplace page.
+ * Run: node scripts/generate-catalogue.js
+ */
+
+const fs   = require('fs');
+const path = require('path');
+const matter = require('gray-matter');
+
+const ROOT      = path.resolve(__dirname, '..');
+const OUT_FILE  = path.join(ROOT, 'docs', 'skills.json');
+const SKILL_DIR = path.join(ROOT, 'skills');
+
+function findSkillFiles(dir) {
+  const results = [];
+  if (!fs.existsSync(dir)) return results;
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) results.push(...findSkillFiles(full));
+    else if (entry.name === 'SKILL.md') results.push(full);
+  }
+  return results;
+}
+
+function extractCategory(filePath) {
+  // skills/<category>/<name>/SKILL.md  →  category
+  const rel = path.relative(SKILL_DIR, filePath);
+  const parts = rel.split(path.sep);
+  return parts.length >= 2 ? parts[0] : 'general';
+}
+
+function truncate(str, max = 160) {
+  if (!str) return '';
+  const flat = str.replace(/\n/g, ' ').trim();
+  return flat.length > max ? flat.slice(0, max - 1) + '…' : flat;
+}
+
+const skillFiles = findSkillFiles(SKILL_DIR);
+const skills = [];
+
+for (const filePath of skillFiles) {
+  try {
+    const raw = fs.readFileSync(filePath, 'utf8');
+    const { data: fm } = matter(raw);
+    const category = extractCategory(filePath);
+    const rel = path.relative(ROOT, path.dirname(filePath)).replace(/\\/g, '/');
+
+    skills.push({
+      name:        fm.name        || path.basename(path.dirname(filePath)),
+      description: truncate(fm.description),
+      category,
+      path:        rel,
+      license:     fm.license     || 'Apache-2.0',
+      version:     fm.metadata?.version   || 'v1',
+      publisher:   fm.metadata?.publisher || 'carthworks',
+      tags:        fm.metadata?.tags      || [],
+    });
+  } catch (e) {
+    console.error(`Warning: could not parse ${filePath}: ${e.message}`);
+  }
+}
+
+// Sort: by category, then by name
+skills.sort((a, b) => {
+  if (a.category < b.category) return -1;
+  if (a.category > b.category) return 1;
+  return a.name.localeCompare(b.name);
+});
+
+fs.mkdirSync(path.dirname(OUT_FILE), { recursive: true });
+fs.writeFileSync(OUT_FILE, JSON.stringify({ generated: new Date().toISOString(), skills }, null, 2));
+
+console.log(`✅ Generated docs/skills.json with ${skills.length} skills.`);
