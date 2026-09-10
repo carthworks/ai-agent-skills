@@ -1,0 +1,16 @@
+{
+  "name": "docker",
+  "category": "devops",
+  "description": "Inspect and manage Docker containers, images, volumes, and networks. Tail real-time container logs and troubleshoot docker-compose environments.",
+  "license": "Apache-2.0",
+  "command": "npx",
+  "args": ["-y", "@modelcontextprotocol/server-docker"],
+  "env": {},
+  "metadata": {
+    "version": "v1",
+    "publisher": "carthworks",
+    "tags": ["docker", "containers", "devops", "infra", "compose"],
+    "runtime": "node",
+    "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/docker"
+  }
+}

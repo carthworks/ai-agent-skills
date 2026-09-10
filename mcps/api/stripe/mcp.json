@@ -1,0 +1,18 @@
+{
+  "name": "stripe",
+  "category": "api",
+  "description": "Inspect and manage Stripe resources in test mode: query payments, customers, subscriptions, products, prices, and verify webhook delivery events.",
+  "license": "MIT",
+  "command": "npx",
+  "args": ["-y", "@stripe/mcp"],
+  "env": {
+    "STRIPE_SECRET_KEY": "<your-stripe-test-key>"
+  },
+  "metadata": {
+    "version": "v1",
+    "publisher": "carthworks",
+    "tags": ["stripe", "payments", "billing", "checkout", "api"],
+    "runtime": "node",
+    "officialUrl": "https://github.com/stripe/agent-toolkit"
+  }
+}

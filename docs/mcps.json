@@ -1,0 +1,312 @@
+{
+  "generated": "2026-09-10T02:59:39.356Z",
+  "mcps": [
+    {
+      "name": "fetch",
+      "description": "Fetch web content, test REST and GraphQL endpoints, download API schemas, and inspect remote HTTP headers directly inside AI coding workflows.",
+      "category": "api",
+      "path": "mcps/api/fetch",
+      "license": "MIT",
+      "command": "uvx",
+      "args": [
+        "mcp-server-fetch"
+      ],
+      "env": {},
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": [
+        "fetch",
+        "http",
+        "api",
+        "curl",
+        "rest"
+      ],
+      "runtime": "python",
+      "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/fetch"
+    },
+    {
+      "name": "stripe",
+      "description": "Inspect and manage Stripe resources in test mode: query payments, customers, subscriptions, products, prices, and verify webhook delivery events.",
+      "category": "api",
+      "path": "mcps/api/stripe",
+      "license": "MIT",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@stripe/mcp"
+      ],
+      "env": {
+        "STRIPE_SECRET_KEY": "<your-stripe-test-key>"
+      },
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": [
+        "stripe",
+        "payments",
+        "billing",
+        "checkout",
+        "api"
+      ],
+      "runtime": "node",
+      "officialUrl": "https://github.com/stripe/agent-toolkit"
+    },
+    {
+      "name": "chrome-devtools",
+      "description": "Inspect live web pages with Chrome DevTools: query DOM elements, capture network traffic, evaluate JavaScript, take screenshots, and troubleshoot UI console er…",
+      "category": "browser",
+      "path": "mcps/browser/chrome-devtools",
+      "license": "Apache-2.0",
+      "command": "npx",
+      "args": [
+        "-y",
+        "chrome-devtools-mcp"
+      ],
+      "env": {},
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": [
+        "browser",
+        "chrome",
+        "devtools",
+        "qa",
+        "frontend"
+      ],
+      "runtime": "node",
+      "officialUrl": "https://github.com/carthworks/ai-agent-skills"
+    },
+    {
+      "name": "playwright",
+      "description": "Headless browser automation with Playwright: execute end-to-end clicks, form fills, multi-page user journeys, PDF generation, and automated cross-browser testi…",
+      "category": "browser",
+      "path": "mcps/browser/playwright",
+      "license": "MIT",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-puppeteer"
+      ],
+      "env": {},
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": [
+        "playwright",
+        "puppeteer",
+        "e2e",
+        "testing",
+        "browser"
+      ],
+      "runtime": "node",
+      "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/puppeteer"
+    },
+    {
+      "name": "postgres",
+      "description": "Read-only and migration database inspection for PostgreSQL: query schemas, inspect tables, view foreign keys, and run analytical queries without schema halluci…",
+      "category": "data",
+      "path": "mcps/data/postgres",
+      "license": "MIT",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgres",
+        "postgresql://user:password@localhost:5432/dbname"
+      ],
+      "env": {
+        "DATABASE_URL": "postgresql://user:password@localhost:5432/dbname"
+      },
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": [
+        "postgres",
+        "sql",
+        "database",
+        "data",
+        "schema"
+      ],
+      "runtime": "node",
+      "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/postgres"
+    },
+    {
+      "name": "redis",
+      "description": "Inspect and manage Redis instances: query keys, inspect TTLs, view data types (hashes, lists, sets, streams), debug caching layers, and monitor pub/sub message…",
+      "category": "data",
+      "path": "mcps/data/redis",
+      "license": "MIT",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-redis",
+        "redis://localhost:6379"
+      ],
+      "env": {
+        "REDIS_URL": "redis://localhost:6379"
+      },
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": [
+        "redis",
+        "cache",
+        "kv",
+        "queues",
+        "data"
+      ],
+      "runtime": "node",
+      "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/redis"
+    },
+    {
+      "name": "supabase",
+      "description": "Manage Supabase projects: inspect PostgreSQL tables, query Auth users, review Storage buckets, inspect Edge Functions, and check database migrations.",
+      "category": "data",
+      "path": "mcps/data/supabase",
+      "license": "MIT",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@supabase/mcp-server"
+      ],
+      "env": {
+        "SUPABASE_ACCESS_TOKEN": "<your-supabase-access-token>"
+      },
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": [
+        "supabase",
+        "postgres",
+        "auth",
+        "database",
+        "baas"
+      ],
+      "runtime": "node",
+      "officialUrl": "https://github.com/supabase-community/supabase-mcp"
+    },
+    {
+      "name": "cloudflare",
+      "description": "Manage Cloudflare resources: inspect DNS records, manage Worker scripts, query KV namespaces, D1 databases, and R2 object storage buckets.",
+      "category": "devops",
+      "path": "mcps/devops/cloudflare",
+      "license": "MIT",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@cloudflare/mcp-server-cloudflare"
+      ],
+      "env": {
+        "CLOUDFLARE_API_TOKEN": "<your-cloudflare-api-token>",
+        "CLOUDFLARE_ACCOUNT_ID": "<your-cloudflare-account-id>"
+      },
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": [
+        "cloudflare",
+        "workers",
+        "dns",
+        "r2",
+        "devops"
+      ],
+      "runtime": "node",
+      "officialUrl": "https://github.com/cloudflare/mcp-server-cloudflare"
+    },
+    {
+      "name": "docker",
+      "description": "Inspect and manage Docker containers, images, volumes, and networks. Tail real-time container logs and troubleshoot docker-compose environments.",
+      "category": "devops",
+      "path": "mcps/devops/docker",
+      "license": "Apache-2.0",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-docker"
+      ],
+      "env": {},
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": [
+        "docker",
+        "containers",
+        "devops",
+        "infra",
+        "compose"
+      ],
+      "runtime": "node",
+      "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/docker"
+    },
+    {
+      "name": "github",
+      "description": "Interact with GitHub repositories: search and read code, manage pull requests, create and update issues, inspect commits, and manage branches directly from the…",
+      "category": "planning",
+      "path": "mcps/planning/github",
+      "license": "MIT",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "<your-github-token>"
+      },
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": [
+        "git",
+        "github",
+        "prs",
+        "issues",
+        "planning"
+      ],
+      "runtime": "node",
+      "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/github"
+    },
+    {
+      "name": "linear",
+      "description": "Query, create, and update Linear issues, search project roadmaps, track bug cycles, and manage team sprints directly inside development workflows.",
+      "category": "planning",
+      "path": "mcps/planning/linear",
+      "license": "MIT",
+      "command": "npx",
+      "args": [
+        "-y",
+        "linear-mcp-server"
+      ],
+      "env": {
+        "LINEAR_API_KEY": "<your-linear-api-key>"
+      },
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": [
+        "linear",
+        "issues",
+        "tickets",
+        "planning",
+        "pm"
+      ],
+      "runtime": "node",
+      "officialUrl": "https://github.com/jerhadf/linear-mcp-server"
+    },
+    {
+      "name": "sentry",
+      "description": "Retrieve and inspect real-time application crash reports, error stack traces, breadcrumbs, and issue telemetry directly from Sentry projects.",
+      "category": "quality",
+      "path": "mcps/quality/sentry",
+      "license": "MIT",
+      "command": "uvx",
+      "args": [
+        "mcp-server-sentry",
+        "--auth-token",
+        "<your-sentry-auth-token>"
+      ],
+      "env": {
+        "SENTRY_AUTH_TOKEN": "<your-sentry-auth-token>"
+      },
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": [
+        "sentry",
+        "monitoring",
+        "errors",
+        "debug",
+        "quality"
+      ],
+      "runtime": "python",
+      "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/sentry"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "playwright",
+  "category": "browser",
+  "description": "Headless browser automation with Playwright: execute end-to-end clicks, form fills, multi-page user journeys, PDF generation, and automated cross-browser testing.",
+  "license": "MIT",
+  "command": "npx",
+  "args": ["-y", "@modelcontextprotocol/server-puppeteer"],
+  "env": {},
+  "metadata": {
+    "version": "v1",
+    "publisher": "carthworks",
+    "tags": ["playwright", "puppeteer", "e2e", "testing", "browser"],
+    "runtime": "node",
+    "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/puppeteer"
+  }
+}

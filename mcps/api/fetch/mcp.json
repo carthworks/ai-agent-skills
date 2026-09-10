@@ -1,0 +1,16 @@
+{
+  "name": "fetch",
+  "category": "api",
+  "description": "Fetch web content, test REST and GraphQL endpoints, download API schemas, and inspect remote HTTP headers directly inside AI coding workflows.",
+  "license": "MIT",
+  "command": "uvx",
+  "args": ["mcp-server-fetch"],
+  "env": {},
+  "metadata": {
+    "version": "v1",
+    "publisher": "carthworks",
+    "tags": ["fetch", "http", "api", "curl", "rest"],
+    "runtime": "python",
+    "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/fetch"
+  }
+}

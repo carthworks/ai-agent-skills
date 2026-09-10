@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 /**
  * generate-catalogue.js
- * Reads all SKILL.md files and outputs docs/skills.json for the marketplace page.
- * Run: node scripts/generate-catalogue.js
+ * Reads all SKILL.md and mcp.json files and outputs:
+ * - docs/skills.json
+ * - docs/mcps.json
+ * - Synchronizes INITIAL_SKILLS & INITIAL_MCPS into docs/index.html
  */
 
 const fs   = require('fs');
@@ -10,23 +12,25 @@ const path = require('path');
 const matter = require('gray-matter');
 
 const ROOT      = path.resolve(__dirname, '..');
-const OUT_FILE  = path.join(ROOT, 'docs', 'skills.json');
+const SKILLS_OUT_FILE = path.join(ROOT, 'docs', 'skills.json');
+const MCPS_OUT_FILE   = path.join(ROOT, 'docs', 'mcps.json');
 const SKILL_DIR = path.join(ROOT, 'skills');
+const MCP_DIR   = path.join(ROOT, 'mcps');
+const INDEX_HTML_PATH = path.join(ROOT, 'docs', 'index.html');
 
-function findSkillFiles(dir) {
+function findFiles(dir, filename) {
   const results = [];
   if (!fs.existsSync(dir)) return results;
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const full = path.join(dir, entry.name);
-    if (entry.isDirectory()) results.push(...findSkillFiles(full));
-    else if (entry.name === 'SKILL.md') results.push(full);
+    if (entry.isDirectory()) results.push(...findFiles(full, filename));
+    else if (entry.name === filename) results.push(full);
   }
   return results;
 }
 
-function extractCategory(filePath) {
-  // skills/<category>/<name>/SKILL.md  →  category
-  const rel = path.relative(SKILL_DIR, filePath);
+function extractCategory(baseDir, filePath) {
+  const rel = path.relative(baseDir, filePath);
   const parts = rel.split(path.sep);
   return parts.length >= 2 ? parts[0] : 'general';
 }
@@ -37,14 +41,15 @@ function truncate(str, max = 160) {
   return flat.length > max ? flat.slice(0, max - 1) + '…' : flat;
 }
 
-const skillFiles = findSkillFiles(SKILL_DIR);
+// ── 1. Process Skills ────────────────────────────────────────────────────────
+const skillFiles = findFiles(SKILL_DIR, 'SKILL.md');
 const skills = [];
 
 for (const filePath of skillFiles) {
   try {
     const raw = fs.readFileSync(filePath, 'utf8');
     const { data: fm } = matter(raw);
-    const category = extractCategory(filePath);
+    const category = extractCategory(SKILL_DIR, filePath);
     const rel = path.relative(ROOT, path.dirname(filePath)).replace(/\\/g, '/');
 
     skills.push({
@@ -62,33 +67,79 @@ for (const filePath of skillFiles) {
   }
 }
 
-// Sort: by category, then by name
 skills.sort((a, b) => {
   if (a.category < b.category) return -1;
   if (a.category > b.category) return 1;
   return a.name.localeCompare(b.name);
 });
 
-fs.mkdirSync(path.dirname(OUT_FILE), { recursive: true });
-fs.writeFileSync(OUT_FILE, JSON.stringify({ generated: new Date().toISOString(), skills }, null, 2));
+fs.mkdirSync(path.dirname(SKILLS_OUT_FILE), { recursive: true });
+fs.writeFileSync(SKILLS_OUT_FILE, JSON.stringify({ generated: new Date().toISOString(), skills }, null, 2));
 
-// Also sync INITIAL_SKILLS in docs/index.html so it works without server / on file://
-const INDEX_HTML_PATH = path.join(ROOT, 'docs', 'index.html');
-if (fs.existsSync(INDEX_HTML_PATH)) {
-  let html = fs.readFileSync(INDEX_HTML_PATH, 'utf8');
-  const startMarker = '// __INITIAL_SKILLS_START__';
-  const endMarker = '// __INITIAL_SKILLS_END__';
-  const startIndex = html.indexOf(startMarker);
-  const endIndex = html.indexOf(endMarker);
-  if (startIndex !== -1 && endIndex !== -1) {
-    const formattedJson = JSON.stringify(skills, null, 4)
-      .split('\n')
-      .map((line, i) => i === 0 ? line : '  ' + line)
-      .join('\n');
-    const replacement = `${startMarker}\n  const INITIAL_SKILLS = ${formattedJson};\n  ${endMarker}`;
-    html = html.slice(0, startIndex) + replacement + html.slice(endIndex + endMarker.length);
-    fs.writeFileSync(INDEX_HTML_PATH, html, 'utf8');
+// ── 2. Process MCPs ──────────────────────────────────────────────────────────
+const mcpFiles = findFiles(MCP_DIR, 'mcp.json');
+const mcps = [];
+
+for (const filePath of mcpFiles) {
+  try {
+    const raw = fs.readFileSync(filePath, 'utf8');
+    const data = JSON.parse(raw);
+    const category = data.category || extractCategory(MCP_DIR, filePath);
+    const rel = path.relative(ROOT, path.dirname(filePath)).replace(/\\/g, '/');
+
+    mcps.push({
+      name:        data.name        || path.basename(path.dirname(filePath)),
+      description: truncate(data.description),
+      category,
+      path:        rel,
+      license:     data.license     || 'MIT',
+      command:     data.command     || 'npx',
+      args:        data.args        || [],
+      env:         data.env         || {},
+      version:     data.metadata?.version   || 'v1',
+      publisher:   data.metadata?.publisher || 'carthworks',
+      tags:        data.metadata?.tags      || [],
+      runtime:     data.metadata?.runtime   || 'node',
+      officialUrl: data.metadata?.officialUrl || '',
+    });
+  } catch (e) {
+    console.error(`Warning: could not parse MCP ${filePath}: ${e.message}`);
   }
 }
 
-console.log(`✅ Generated docs/skills.json and synced docs/index.html with ${skills.length} skills.`);
+mcps.sort((a, b) => {
+  if (a.category < b.category) return -1;
+  if (a.category > b.category) return 1;
+  return a.name.localeCompare(b.name);
+});
+
+fs.writeFileSync(MCPS_OUT_FILE, JSON.stringify({ generated: new Date().toISOString(), mcps }, null, 2));
+
+// ── 3. Sync into docs/index.html ────────────────────────────────────────────
+if (fs.existsSync(INDEX_HTML_PATH)) {
+  let html = fs.readFileSync(INDEX_HTML_PATH, 'utf8');
+  
+  // Sync Skills
+  const sStart = '// __INITIAL_SKILLS_START__';
+  const sEnd = '// __INITIAL_SKILLS_END__';
+  const sIdx1 = html.indexOf(sStart);
+  const sIdx2 = html.indexOf(sEnd);
+  if (sIdx1 !== -1 && sIdx2 !== -1) {
+    const jsonFormatted = JSON.stringify(skills, null, 4).split('\n').map((l, i) => i === 0 ? l : '  ' + l).join('\n');
+    html = html.slice(0, sIdx1) + `${sStart}\n  const INITIAL_SKILLS = ${jsonFormatted};\n  ${sEnd}` + html.slice(sIdx2 + sEnd.length);
+  }
+
+  // Sync MCPs
+  const mStart = '// __INITIAL_MCPS_START__';
+  const mEnd = '// __INITIAL_MCPS_END__';
+  const mIdx1 = html.indexOf(mStart);
+  const mIdx2 = html.indexOf(mEnd);
+  if (mIdx1 !== -1 && mIdx2 !== -1) {
+    const jsonFormatted = JSON.stringify(mcps, null, 4).split('\n').map((l, i) => i === 0 ? l : '  ' + l).join('\n');
+    html = html.slice(0, mIdx1) + `${mStart}\n  const INITIAL_MCPS = ${jsonFormatted};\n  ${mEnd}` + html.slice(mIdx2 + mEnd.length);
+  }
+
+  fs.writeFileSync(INDEX_HTML_PATH, html, 'utf8');
+}
+
+console.log(`✅ Generated docs/skills.json (${skills.length} skills) & docs/mcps.json (${mcps.length} MCPs), synced docs/index.html.`);

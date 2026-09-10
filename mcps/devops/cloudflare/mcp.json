@@ -1,0 +1,19 @@
+{
+  "name": "cloudflare",
+  "category": "devops",
+  "description": "Manage Cloudflare resources: inspect DNS records, manage Worker scripts, query KV namespaces, D1 databases, and R2 object storage buckets.",
+  "license": "MIT",
+  "command": "npx",
+  "args": ["-y", "@cloudflare/mcp-server-cloudflare"],
+  "env": {
+    "CLOUDFLARE_API_TOKEN": "<your-cloudflare-api-token>",
+    "CLOUDFLARE_ACCOUNT_ID": "<your-cloudflare-account-id>"
+  },
+  "metadata": {
+    "version": "v1",
+    "publisher": "carthworks",
+    "tags": ["cloudflare", "workers", "dns", "r2", "devops"],
+    "runtime": "node",
+    "officialUrl": "https://github.com/cloudflare/mcp-server-cloudflare"
+  }
+}

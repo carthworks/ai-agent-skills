@@ -1,0 +1,16 @@
+{
+  "name": "chrome-devtools",
+  "category": "browser",
+  "description": "Inspect live web pages with Chrome DevTools: query DOM elements, capture network traffic, evaluate JavaScript, take screenshots, and troubleshoot UI console errors.",
+  "license": "Apache-2.0",
+  "command": "npx",
+  "args": ["-y", "chrome-devtools-mcp"],
+  "env": {},
+  "metadata": {
+    "version": "v1",
+    "publisher": "carthworks",
+    "tags": ["browser", "chrome", "devtools", "qa", "frontend"],
+    "runtime": "node",
+    "officialUrl": "https://github.com/carthworks/ai-agent-skills"
+  }
+}

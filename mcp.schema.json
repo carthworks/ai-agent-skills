@@ -1,0 +1,88 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/carthworks/ai-agent-skills/blob/main/mcp.schema.json",
+  "title": "MCP Server Definition Schema",
+  "description": "Validates mcp.json files for Model Context Protocol servers in the ai-agent-skills repository.",
+  "type": "object",
+  "required": ["name", "category", "description", "license", "command", "args", "metadata"],
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$",
+      "minLength": 3,
+      "maxLength": 64,
+      "description": "Unique MCP identifier in kebab-case."
+    },
+    "category": {
+      "type": "string",
+      "enum": ["planning", "data", "api", "browser", "devops", "quality", "general"],
+      "description": "Functional category of the MCP server."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 1000,
+      "description": "Clear explanation of what capabilities this MCP server provides to an AI agent."
+    },
+    "license": {
+      "type": "string",
+      "enum": [
+        "Apache-2.0",
+        "MIT",
+        "BSD-2-Clause",
+        "BSD-3-Clause",
+        "ISC",
+        "GPL-3.0",
+        "MPL-2.0",
+        "CC-BY-4.0",
+        "CC0-1.0"
+      ]
+    },
+    "command": {
+      "type": "string",
+      "description": "Executable binary command (e.g. npx, uvx, node, docker, python)."
+    },
+    "args": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Command line arguments passed to the server binary."
+    },
+    "env": {
+      "type": "object",
+      "additionalProperties": { "type": "string" },
+      "description": "Environment variable template placeholders."
+    },
+    "metadata": {
+      "type": "object",
+      "required": ["version", "publisher"],
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "type": "string",
+          "pattern": "^v?[0-9]+(\\.[0-9]+)*(\\.[0-9]+)?$"
+        },
+        "publisher": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9-]{0,37}[a-zA-Z0-9])?$"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "maxItems": 10,
+          "uniqueItems": true
+        },
+        "runtime": {
+          "type": "string",
+          "enum": ["node", "python", "docker", "binary"]
+        },
+        "officialUrl": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

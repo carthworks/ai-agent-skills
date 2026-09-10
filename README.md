@@ -1,9 +1,10 @@
 # ai-agent-skills
 
-> A curated collection of **SKILL.md** files for [Antigravity IDE](https://antigravity.dev) and compatible AI coding agents.
-> Drop any skill folder into your project and your AI agent gains specialised, focused capabilities instantly.
+> A curated collection of **SKILL.md** workflows and **Model Context Protocol (MCP)** server configurations for [Antigravity IDE](https://antigravity.dev), Claude Desktop, Cursor, and modern AI coding agents.
+> Drop skills into your workspace to teach your agent specialised workflows, and plug in MCP servers to give your agent live runtime superpowers (databases, browser inspection, APIs, cloud deployments).
 
 ![Skills](https://img.shields.io/badge/skills-10-blueviolet?style=flat-square)
+![MCPs](https://img.shields.io/badge/MCPs-12-blue?style=flat-square)
 ![License](https://img.shields.io/badge/license-Apache--2.0-green?style=flat-square)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)
 ![CI](https://github.com/carthworks/ai-agent-skills/actions/workflows/validate.yml/badge.svg)
@@ -13,14 +14,77 @@
 
 ---
 
-## What is a skill?
+## 🧠 What is a skill?
 
-A **skill** is a markdown file (`SKILL.md`) that teaches your AI agent a specialised workflow.
+A **skill** is a markdown file (`SKILL.md`) that teaches your AI agent a specialised workflow and reasoning checklist.
 When you drop a skill into `.agents/skills/<skill-name>/`, the agent automatically discovers and applies it
-at the right moment — no prompting required.
+at the right moment — no manual prompting required.
 
 Skills can also include `references/` subdirectories with supporting cheat-sheets and reference documents
 that the agent reads on demand.
+
+---
+
+## 🔌 What is MCP & How to use MCP Servers?
+
+The **Model Context Protocol (MCP)** is an open standard that connects AI coding agents directly to live external tools, databases, APIs, browser sessions, and container runtimes.
+
+While **Skills** teach the agent *how* to reason and *what* to check, **MCP Servers** give the agent the *tools* to execute actions in real time:
+
+| Superpower | What the Agent Can Do |
+|---|---|
+| **Live Database Access** | Inspect schemas, foreign keys, run queries with `postgres` or `supabase` without hallucinating column names. |
+| **Interactive Browser QA** | Open headless pages, inspect live DOM, capture console errors with `chrome-devtools` or `playwright`. |
+| **API & Webhook Testing** | Test endpoints, inspect headers, and query third-party APIs with `fetch` or `stripe`. |
+| **Release & Project Ops** | Create PRs, inspect commits, and manage sprints with `github`, `linear`, `docker`, and `sentry`. |
+
+---
+
+### How to Configure MCP Servers in Your Agent
+
+Every MCP definition in this repository includes a standard command and configuration block. Copy and paste the JSON configuration into your agent's config file:
+
+#### 1. In Antigravity IDE
+Add the server definition to your workspace `.agents/mcp_config.json` or global `~/.gemini/config/mcp_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["-y", "chrome-devtools-mcp"]
+    },
+    "postgres": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres", "postgresql://user:password@localhost:5432/mydb"]
+    },
+    "fetch": {
+      "command": "uvx",
+      "args": ["mcp-server-fetch"]
+    }
+  }
+}
+```
+
+#### 2. In Claude Desktop
+Open Settings → Developer → Edit Config (`claude_desktop_config.json`) and paste the `mcpServers` block.
+
+#### 3. In Cursor
+Open **Settings → Features → MCP**, click **Add New MCP Server**, enter the name, command (`npx`/`uvx`), and arguments.
+
+#### 4. Running directly via CLI (Testing & Debugging)
+You can test any MCP server directly from your terminal:
+
+```bash
+# Node.js MCP server (no install needed)
+npx -y @modelcontextprotocol/server-github
+
+# Python MCP server via uvx (fast, isolated)
+uvx mcp-server-fetch
+
+# Chrome DevTools debugging server
+npx -y chrome-devtools-mcp
+```
 
 ---
 
@@ -38,6 +102,27 @@ that the agent reads on demand.
 | [code-review-checklist](skills/devops/code-review-checklist/) | `devops` | Structured PR review across correctness, security, performance, tests, and maintainability. Produces BLOCKER / MAJOR / MINOR findings with fixes. |
 | [dockerfile-best-practices](skills/devops/dockerfile-best-practices/) | `devops` | Write secure, minimal Dockerfiles — multi-stage builds, non-root user, layer caching, `.dockerignore`, and production docker-compose patterns. |
 | [env-secret-safety](skills/safety/env-secret-safety/) | `safety` | Prevent hardcoded secrets and API keys. Detects credential patterns, enforces `.env` hygiene, and guides safe secret storage across all cloud providers. |
+
+---
+
+## 🔌 Model Context Protocol (MCP) Catalogue
+
+Curated Model Context Protocol servers for product development:
+
+| Server | Category | Command / Runtime | Description |
+|---|---|---|---|
+| [github](mcps/planning/github/mcp.json) | `planning` | `npx @modelcontextprotocol/server-github` | Search code, manage pull requests, create/update issues and inspect commits. |
+| [linear](mcps/planning/linear/mcp.json) | `planning` | `npx linear-mcp-server` | Query, create, and update Linear issues, search project roadmaps and sprints. |
+| [chrome-devtools](mcps/browser/chrome-devtools/mcp.json) | `browser` | `npx chrome-devtools-mcp` | Inspect live DOM, capture network logs, take screenshots, troubleshoot UI console errors. |
+| [playwright](mcps/browser/playwright/mcp.json) | `browser` | `npx @modelcontextprotocol/server-puppeteer` | Headless browser automation, end-to-end clicks, form fills, multi-page flows. |
+| [postgres](mcps/data/postgres/mcp.json) | `data` | `npx @modelcontextprotocol/server-postgres` | Inspect database schemas, table definitions, foreign keys, and run queries without hallucinations. |
+| [supabase](mcps/data/supabase/mcp.json) | `data` | `npx @supabase/mcp-server` | Manage Supabase Postgres tables, Auth users, Storage buckets, and Edge Functions. |
+| [redis](mcps/data/redis/mcp.json) | `data` | `npx @modelcontextprotocol/server-redis` | Query cache keys, inspect TTLs, view data types (hashes/sets/streams), debug caching. |
+| [fetch](mcps/api/fetch/mcp.json) | `api` | `uvx mcp-server-fetch` | Fetch web content, test REST and GraphQL endpoints, download API schemas. |
+| [stripe](mcps/api/stripe/mcp.json) | `api` | `npx @stripe/mcp` | Inspect Stripe test-mode charges, customers, subscriptions, and verify webhooks. |
+| [docker](mcps/devops/docker/mcp.json) | `devops` | `npx @modelcontextprotocol/server-docker` | Inspect containers, images, volumes, and tail live logs in docker-compose. |
+| [cloudflare](mcps/devops/cloudflare/mcp.json) | `devops` | `npx @cloudflare/mcp-server-cloudflare` | Inspect DNS records, Workers, KV namespaces, D1 databases, and R2 storage buckets. |
+| [sentry](mcps/quality/sentry/mcp.json) | `quality` | `uvx mcp-server-sentry` | Retrieve live stack traces, crash reports, error breadcrumbs, and issue telemetry. |
 
 > Want to add your own? See [CONTRIBUTING.md](CONTRIBUTING.md).
 

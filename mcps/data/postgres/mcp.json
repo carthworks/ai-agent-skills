@@ -1,0 +1,18 @@
+{
+  "name": "postgres",
+  "category": "data",
+  "description": "Read-only and migration database inspection for PostgreSQL: query schemas, inspect tables, view foreign keys, and run analytical queries without schema hallucination.",
+  "license": "MIT",
+  "command": "npx",
+  "args": ["-y", "@modelcontextprotocol/server-postgres", "postgresql://user:password@localhost:5432/dbname"],
+  "env": {
+    "DATABASE_URL": "postgresql://user:password@localhost:5432/dbname"
+  },
+  "metadata": {
+    "version": "v1",
+    "publisher": "carthworks",
+    "tags": ["postgres", "sql", "database", "data", "schema"],
+    "runtime": "node",
+    "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/postgres"
+  }
+}

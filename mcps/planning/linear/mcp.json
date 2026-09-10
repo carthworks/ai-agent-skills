@@ -1,0 +1,18 @@
+{
+  "name": "linear",
+  "category": "planning",
+  "description": "Query, create, and update Linear issues, search project roadmaps, track bug cycles, and manage team sprints directly inside development workflows.",
+  "license": "MIT",
+  "command": "npx",
+  "args": ["-y", "linear-mcp-server"],
+  "env": {
+    "LINEAR_API_KEY": "<your-linear-api-key>"
+  },
+  "metadata": {
+    "version": "v1",
+    "publisher": "carthworks",
+    "tags": ["linear", "issues", "tickets", "planning", "pm"],
+    "runtime": "node",
+    "officialUrl": "https://github.com/jerhadf/linear-mcp-server"
+  }
+}

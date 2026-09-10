@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Agent Skills — Marketplace</title>
-  <meta name="description" content="A curated collection of drop-in SKILL.md files that give your AI coding agent specialised, focused capabilities." />
-  <meta property="og:title" content="AI Agent Skills Marketplace" />
-  <meta property="og:description" content="Drop-in skills for AI coding agents. Browse, copy, install." />
+  <title>AI Agent Skills & MCP Marketplace</title>
+  <meta name="description" content="A curated collection of drop-in SKILL.md and Model Context Protocol (MCP) servers that give your AI coding agent specialised, focused capabilities." />
+  <meta property="og:title" content="AI Agent Skills & MCP Marketplace" />
+  <meta property="og:description" content="Drop-in skills and MCP servers for AI coding agents. Browse, copy, install." />
   <meta property="og:url" content="https://carthworks.github.io/ai-agent-skills/" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -34,6 +34,12 @@
       --cat-testing:    #10b981;
       --cat-safety:     #ef4444;
       --cat-general:    #6b7280;
+
+      --cat-planning:   #f59e0b;
+      --cat-data:       #06b6d4;
+      --cat-api:        #ec4899;
+      --cat-browser:    #3b82f6;
+      --cat-quality:    #10b981;
     }
 
     html { scroll-behavior: smooth; }
@@ -156,7 +162,7 @@
 
     /* ── Hero ───────────────────────────────────────────── */
     .hero {
-      padding: 72px 0 48px;
+      padding: 72px 0 40px;
       text-align: center;
     }
 
@@ -190,7 +196,7 @@
     .hero p {
       font-size: 1.05rem;
       color: var(--text-dim);
-      max-width: 560px;
+      max-width: 620px;
       margin: 0 auto 32px;
       line-height: 1.7;
     }
@@ -247,12 +253,58 @@
     .stat-value { font-size: 1.6rem; font-weight: 700; color: var(--text); line-height: 1; }
     .stat-label { font-size: 0.75rem; color: var(--text-dim); margin-top: 2px; }
 
+    /* ── Tab Switcher ─────────────────────────────────────── */
+    .tab-nav {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin: 36px 0 16px;
+    }
+
+    .tab-btn {
+      padding: 10px 24px;
+      border-radius: 30px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-dim);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .tab-btn:hover {
+      border-color: var(--border-h);
+      color: var(--text);
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, rgba(139,92,246,0.22), rgba(6,182,212,0.22));
+      border-color: var(--accent);
+      color: #fff;
+      box-shadow: 0 0 24px rgba(139,92,246,0.25);
+    }
+
+    .tab-count {
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--accent-2);
+      font-weight: 700;
+    }
+
     /* ── Filters ────────────────────────────────────────── */
     .filters {
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 32px 0 24px;
+      padding: 16px 0 24px;
       flex-wrap: wrap;
     }
 
@@ -291,12 +343,12 @@
     /* ── Grid ───────────────────────────────────────────── */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
       gap: 16px;
       padding-bottom: 80px;
     }
 
-    /* ── Skill card ─────────────────────────────────────── */
+    /* ── Card ─────────────────────────────────────── */
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -337,10 +389,17 @@
 
     .card-name {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.88rem;
-      font-weight: 500;
+      font-size: 0.9rem;
+      font-weight: 600;
       color: var(--text);
       word-break: break-word;
+    }
+
+    .header-badges {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
     }
 
     .cat-badge {
@@ -353,8 +412,19 @@
       flex-shrink: 0;
     }
 
+    .runtime-badge {
+      font-size: 0.7rem;
+      padding: 3px 8px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      font-family: 'JetBrains Mono', monospace;
+      text-transform: lowercase;
+    }
+
     .card-desc {
-      font-size: 0.82rem;
+      font-size: 0.83rem;
       color: var(--text-dim);
       line-height: 1.6;
       flex: 1;
@@ -362,6 +432,23 @@
       -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
       overflow: hidden;
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: -4px;
+    }
+
+    .tag-pill {
+      font-size: 0.68rem;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      font-family: 'JetBrains Mono', monospace;
     }
 
     .card-footer {
@@ -386,15 +473,20 @@
     }
 
     .card-copy {
-      padding: 7px 9px;
+      padding: 7px 10px;
       background: var(--surface2);
       border: 1px solid var(--border);
       border-radius: 6px;
       color: var(--text-dim);
       cursor: pointer;
       font-size: 0.78rem;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
       transition: all 0.18s;
       flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
     }
 
     .card-copy:hover { border-color: var(--border-h); color: var(--accent); }
@@ -415,23 +507,6 @@
     }
 
     .card-meta a:hover { color: var(--accent); }
-
-    .card-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-      margin-top: -4px;
-    }
-
-    .tag-pill {
-      font-size: 0.68rem;
-      padding: 2px 7px;
-      border-radius: 4px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      color: var(--text-dim);
-      font-family: 'JetBrains Mono', monospace;
-    }
 
     /* ── Empty state ────────────────────────────────────── */
     .empty {
@@ -501,13 +576,13 @@
       </a>
       <div class="header-search">
         <span class="search-icon">🔍</span>
-        <input id="search" type="search" placeholder="Search skills…" autocomplete="off" />
+        <input id="search" type="search" placeholder="Search skills & MCPs…" autocomplete="off" />
       </div>
       <div class="header-actions">
         <a href="https://github.com/carthworks/ai-agent-skills" class="btn-ghost" target="_blank" rel="noopener">
           ⭐ Star on GitHub
         </a>
-        <a href="https://github.com/carthworks/ai-agent-skills/blob/master/CONTRIBUTING.md" class="btn-ghost" target="_blank" rel="noopener">
+        <a href="https://github.com/carthworks/ai-agent-skills/blob/main/CONTRIBUTING.md" class="btn-ghost" target="_blank" rel="noopener">
           + Contribute
         </a>
       </div>
@@ -520,7 +595,7 @@
   <div class="container">
     <div class="hero-badge">✨ Open Source · Apache-2.0 · Free Forever</div>
     <h1>Supercharge Your AI<br>Coding Agent</h1>
-    <p>Drop-in <code style="font-family:JetBrains Mono,monospace;color:var(--accent-2);font-size:0.95em">SKILL.md</code> files that give your AI agent specialised, consistent behaviour — instantly.</p>
+    <p>A curated marketplace of drop-in <code style="font-family:JetBrains Mono,monospace;color:var(--accent-2);font-size:0.95em">SKILL.md</code> workflows and <strong>Model Context Protocol (MCP)</strong> servers for AI coding agents.</p>
     <div class="hero-install">
       <code id="hero-cmd">bash -c "$(curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh)"</code>
       <button class="copy-btn" onclick="copyHero(this)" title="Copy install command">📋</button>
@@ -532,11 +607,15 @@
 <section class="stats">
   <div class="container" style="display:contents">
     <div class="stat">
-      <div class="stat-value" id="stat-total">—</div>
+      <div class="stat-value" id="stat-skills">10</div>
       <div class="stat-label">Skills</div>
     </div>
     <div class="stat">
-      <div class="stat-value" id="stat-cats">—</div>
+      <div class="stat-value" id="stat-mcps">12</div>
+      <div class="stat-label">MCP Servers</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" id="stat-cats">6</div>
       <div class="stat-label">Categories</div>
     </div>
     <div class="stat">
@@ -550,6 +629,18 @@
   </div>
 </section>
 
+<!-- Tab Switcher -->
+<div class="container">
+  <div class="tab-nav">
+    <button class="tab-btn active" id="tab-skills" onclick="switchTab('skills')">
+      🧠 Skills <span class="tab-count" id="count-skills">10</span>
+    </button>
+    <button class="tab-btn" id="tab-mcps" onclick="switchTab('mcps')">
+      🔌 MCP Servers <span class="tab-count" id="count-mcps">12</span>
+    </button>
+  </div>
+</div>
+
 <!-- Filters + Grid -->
 <div class="container">
   <div class="filters" id="filters">
@@ -560,7 +651,7 @@
   <div class="grid" id="grid">
     <div class="empty">
       <div class="empty-icon">⏳</div>
-      <h3>Loading skills…</h3>
+      <h3>Loading catalogue…</h3>
     </div>
   </div>
 </div>
@@ -571,7 +662,7 @@
     <p>
       Built by <a href="https://github.com/carthworks" target="_blank">@carthworks</a> ·
       <a href="https://github.com/carthworks/ai-agent-skills" target="_blank">View on GitHub</a> ·
-      <a href="https://github.com/carthworks/ai-agent-skills/blob/master/CONTRIBUTING.md" target="_blank">Contribute a skill</a> ·
+      <a href="https://github.com/carthworks/ai-agent-skills/blob/main/CONTRIBUTING.md" target="_blank">Contribute</a> ·
       Apache-2.0
     </p>
     <p style="margin-top:6px;color:var(--text-mute)"><em>Let's build a safer, more inclusive web.</em></p>
@@ -588,6 +679,11 @@
     typescript: { bg: 'rgba(6,182,212,0.15)',  text: '#22d3ee', border: 'rgba(6,182,212,0.3)'  },
     testing:    { bg: 'rgba(16,185,129,0.15)', text: '#34d399', border: 'rgba(16,185,129,0.3)' },
     safety:     { bg: 'rgba(239,68,68,0.15)',  text: '#f87171', border: 'rgba(239,68,68,0.3)'  },
+    planning:   { bg: 'rgba(245,158,11,0.15)', text: '#fbbf24', border: 'rgba(245,158,11,0.3)' },
+    data:       { bg: 'rgba(6,182,212,0.15)',  text: '#22d3ee', border: 'rgba(6,182,212,0.3)'  },
+    api:        { bg: 'rgba(236,72,153,0.15)', text: '#f472b6', border: 'rgba(236,72,153,0.3)' },
+    browser:    { bg: 'rgba(59,130,246,0.15)', text: '#60a5fa', border: 'rgba(59,130,246,0.3)' },
+    quality:    { bg: 'rgba(16,185,129,0.15)', text: '#34d399', border: 'rgba(16,185,129,0.3)' },
     general:    { bg: 'rgba(107,114,128,0.15)',text: '#9ca3af', border: 'rgba(107,114,128,0.3)' },
   };
 
@@ -595,7 +691,7 @@
     return CAT_COLORS[cat] || CAT_COLORS.general;
   }
 
-  // ── Initial / Static Skills Dataset ────────────────────────
+  // ── Initial / Static Datasets ──────────────────────────────
   // __INITIAL_SKILLS_START__
   const INITIAL_SKILLS = [
       {
@@ -708,42 +804,381 @@
   ];
   // __INITIAL_SKILLS_END__
 
+  // __INITIAL_MCPS_START__
+  const INITIAL_MCPS = [
+      {
+          "name": "fetch",
+          "description": "Fetch web content, test REST and GraphQL endpoints, download API schemas, and inspect remote HTTP headers directly inside AI coding workflows.",
+          "category": "api",
+          "path": "mcps/api/fetch",
+          "license": "MIT",
+          "command": "uvx",
+          "args": [
+              "mcp-server-fetch"
+          ],
+          "env": {},
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "fetch",
+              "http",
+              "api",
+              "curl",
+              "rest"
+          ],
+          "runtime": "python",
+          "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/fetch"
+      },
+      {
+          "name": "stripe",
+          "description": "Inspect and manage Stripe resources in test mode: query payments, customers, subscriptions, products, prices, and verify webhook delivery events.",
+          "category": "api",
+          "path": "mcps/api/stripe",
+          "license": "MIT",
+          "command": "npx",
+          "args": [
+              "-y",
+              "@stripe/mcp"
+          ],
+          "env": {
+              "STRIPE_SECRET_KEY": "<your-stripe-test-key>"
+          },
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "stripe",
+              "payments",
+              "billing",
+              "checkout",
+              "api"
+          ],
+          "runtime": "node",
+          "officialUrl": "https://github.com/stripe/agent-toolkit"
+      },
+      {
+          "name": "chrome-devtools",
+          "description": "Inspect live web pages with Chrome DevTools: query DOM elements, capture network traffic, evaluate JavaScript, take screenshots, and troubleshoot UI console er…",
+          "category": "browser",
+          "path": "mcps/browser/chrome-devtools",
+          "license": "Apache-2.0",
+          "command": "npx",
+          "args": [
+              "-y",
+              "chrome-devtools-mcp"
+          ],
+          "env": {},
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "browser",
+              "chrome",
+              "devtools",
+              "qa",
+              "frontend"
+          ],
+          "runtime": "node",
+          "officialUrl": "https://github.com/carthworks/ai-agent-skills"
+      },
+      {
+          "name": "playwright",
+          "description": "Headless browser automation with Playwright: execute end-to-end clicks, form fills, multi-page user journeys, PDF generation, and automated cross-browser testi…",
+          "category": "browser",
+          "path": "mcps/browser/playwright",
+          "license": "MIT",
+          "command": "npx",
+          "args": [
+              "-y",
+              "@modelcontextprotocol/server-puppeteer"
+          ],
+          "env": {},
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "playwright",
+              "puppeteer",
+              "e2e",
+              "testing",
+              "browser"
+          ],
+          "runtime": "node",
+          "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/puppeteer"
+      },
+      {
+          "name": "postgres",
+          "description": "Read-only and migration database inspection for PostgreSQL: query schemas, inspect tables, view foreign keys, and run analytical queries without schema halluci…",
+          "category": "data",
+          "path": "mcps/data/postgres",
+          "license": "MIT",
+          "command": "npx",
+          "args": [
+              "-y",
+              "@modelcontextprotocol/server-postgres",
+              "postgresql://user:password@localhost:5432/dbname"
+          ],
+          "env": {
+              "DATABASE_URL": "postgresql://user:password@localhost:5432/dbname"
+          },
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "postgres",
+              "sql",
+              "database",
+              "data",
+              "schema"
+          ],
+          "runtime": "node",
+          "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/postgres"
+      },
+      {
+          "name": "redis",
+          "description": "Inspect and manage Redis instances: query keys, inspect TTLs, view data types (hashes, lists, sets, streams), debug caching layers, and monitor pub/sub message…",
+          "category": "data",
+          "path": "mcps/data/redis",
+          "license": "MIT",
+          "command": "npx",
+          "args": [
+              "-y",
+              "@modelcontextprotocol/server-redis",
+              "redis://localhost:6379"
+          ],
+          "env": {
+              "REDIS_URL": "redis://localhost:6379"
+          },
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "redis",
+              "cache",
+              "kv",
+              "queues",
+              "data"
+          ],
+          "runtime": "node",
+          "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/redis"
+      },
+      {
+          "name": "supabase",
+          "description": "Manage Supabase projects: inspect PostgreSQL tables, query Auth users, review Storage buckets, inspect Edge Functions, and check database migrations.",
+          "category": "data",
+          "path": "mcps/data/supabase",
+          "license": "MIT",
+          "command": "npx",
+          "args": [
+              "-y",
+              "@supabase/mcp-server"
+          ],
+          "env": {
+              "SUPABASE_ACCESS_TOKEN": "<your-supabase-access-token>"
+          },
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "supabase",
+              "postgres",
+              "auth",
+              "database",
+              "baas"
+          ],
+          "runtime": "node",
+          "officialUrl": "https://github.com/supabase-community/supabase-mcp"
+      },
+      {
+          "name": "cloudflare",
+          "description": "Manage Cloudflare resources: inspect DNS records, manage Worker scripts, query KV namespaces, D1 databases, and R2 object storage buckets.",
+          "category": "devops",
+          "path": "mcps/devops/cloudflare",
+          "license": "MIT",
+          "command": "npx",
+          "args": [
+              "-y",
+              "@cloudflare/mcp-server-cloudflare"
+          ],
+          "env": {
+              "CLOUDFLARE_API_TOKEN": "<your-cloudflare-api-token>",
+              "CLOUDFLARE_ACCOUNT_ID": "<your-cloudflare-account-id>"
+          },
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "cloudflare",
+              "workers",
+              "dns",
+              "r2",
+              "devops"
+          ],
+          "runtime": "node",
+          "officialUrl": "https://github.com/cloudflare/mcp-server-cloudflare"
+      },
+      {
+          "name": "docker",
+          "description": "Inspect and manage Docker containers, images, volumes, and networks. Tail real-time container logs and troubleshoot docker-compose environments.",
+          "category": "devops",
+          "path": "mcps/devops/docker",
+          "license": "Apache-2.0",
+          "command": "npx",
+          "args": [
+              "-y",
+              "@modelcontextprotocol/server-docker"
+          ],
+          "env": {},
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "docker",
+              "containers",
+              "devops",
+              "infra",
+              "compose"
+          ],
+          "runtime": "node",
+          "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/docker"
+      },
+      {
+          "name": "github",
+          "description": "Interact with GitHub repositories: search and read code, manage pull requests, create and update issues, inspect commits, and manage branches directly from the…",
+          "category": "planning",
+          "path": "mcps/planning/github",
+          "license": "MIT",
+          "command": "npx",
+          "args": [
+              "-y",
+              "@modelcontextprotocol/server-github"
+          ],
+          "env": {
+              "GITHUB_PERSONAL_ACCESS_TOKEN": "<your-github-token>"
+          },
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "git",
+              "github",
+              "prs",
+              "issues",
+              "planning"
+          ],
+          "runtime": "node",
+          "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/github"
+      },
+      {
+          "name": "linear",
+          "description": "Query, create, and update Linear issues, search project roadmaps, track bug cycles, and manage team sprints directly inside development workflows.",
+          "category": "planning",
+          "path": "mcps/planning/linear",
+          "license": "MIT",
+          "command": "npx",
+          "args": [
+              "-y",
+              "linear-mcp-server"
+          ],
+          "env": {
+              "LINEAR_API_KEY": "<your-linear-api-key>"
+          },
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "linear",
+              "issues",
+              "tickets",
+              "planning",
+              "pm"
+          ],
+          "runtime": "node",
+          "officialUrl": "https://github.com/jerhadf/linear-mcp-server"
+      },
+      {
+          "name": "sentry",
+          "description": "Retrieve and inspect real-time application crash reports, error stack traces, breadcrumbs, and issue telemetry directly from Sentry projects.",
+          "category": "quality",
+          "path": "mcps/quality/sentry",
+          "license": "MIT",
+          "command": "uvx",
+          "args": [
+              "mcp-server-sentry",
+              "--auth-token",
+              "<your-sentry-auth-token>"
+          ],
+          "env": {
+              "SENTRY_AUTH_TOKEN": "<your-sentry-auth-token>"
+          },
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "sentry",
+              "monitoring",
+              "errors",
+              "debug",
+              "quality"
+          ],
+          "runtime": "python",
+          "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/sentry"
+      }
+  ];
+  // __INITIAL_MCPS_END__
+
   // ── State ────────────────────────────────────────────────
-  let allSkills   = [...INITIAL_SKILLS];
+  let currentTab   = 'skills'; // 'skills' | 'mcps'
+  let allSkills    = [...INITIAL_SKILLS];
+  let allMcps      = [...INITIAL_MCPS];
   let activeFilter = 'all';
   let searchQuery  = '';
 
+  // ── Tab Switcher ─────────────────────────────────────────
+  function switchTab(tab) {
+    currentTab = tab;
+    activeFilter = 'all';
+    document.getElementById('tab-skills').classList.toggle('active', tab === 'skills');
+    document.getElementById('tab-mcps').classList.toggle('active', tab === 'mcps');
+    const heroCmd = document.getElementById('hero-cmd');
+    if (heroCmd) {
+      if (tab === 'skills') {
+        heroCmd.textContent = 'bash -c "$(curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh)"';
+      } else {
+        heroCmd.textContent = 'npx -y @modelcontextprotocol/server-github';
+      }
+    }
+    buildFilters();
+    render();
+  }
+
   // ── Fetch data ───────────────────────────────────────────
-  async function loadSkills() {
-    // Render immediate embedded dataset first
+  async function loadData() {
     buildFilters();
     render();
     updateStats();
 
-    // Async live update if hosted on server
     try {
-      const res = await fetch('skills.json');
-      if (!res.ok) return;
-      const data = await res.json();
-      if (data.skills && data.skills.length > 0) {
-        allSkills = data.skills;
-        buildFilters();
-        render();
-        updateStats();
+      const [resSkills, resMcps] = await Promise.all([
+        fetch('skills.json').catch(() => null),
+        fetch('mcps.json').catch(() => null)
+      ]);
+      if (resSkills && resSkills.ok) {
+        const sData = await resSkills.json();
+        if (sData.skills) allSkills = sData.skills;
       }
+      if (resMcps && resMcps.ok) {
+        const mData = await resMcps.json();
+        if (mData.mcps) allMcps = mData.mcps;
+      }
+      buildFilters();
+      render();
+      updateStats();
     } catch {
-      // Fallback: loadSkills already initialized from INITIAL_SKILLS
+      // Offline / standalone mode: initialized from embedded arrays
     }
   }
 
   // ── Filters ──────────────────────────────────────────────
   function buildFilters() {
-    const cats = [...new Set(allSkills.map(s => s.category))].sort();
+    const list = (currentTab === 'skills') ? allSkills : allMcps;
+    const cats = [...new Set(list.map(s => s.category))].sort();
     const container = document.getElementById('filters');
+    container.innerHTML = `<span class="filter-label">Filter:</span><button class="filter-chip ${activeFilter === 'all' ? 'active' : ''}" data-cat="all" onclick="setFilter('all', this)">All</button>`;
+    
     for (const cat of cats) {
       const c = catColor(cat);
       const btn = document.createElement('button');
-      btn.className = 'filter-chip';
+      btn.className = `filter-chip ${activeFilter === cat ? 'active' : ''}`;
       btn.dataset.cat = cat;
       btn.onclick = () => setFilter(cat, btn);
       btn.innerHTML = `<span class="filter-dot" style="background:${c.text}"></span>${cat}`;
@@ -767,12 +1202,13 @@
   // ── Render ───────────────────────────────────────────────
   function render() {
     const q = searchQuery;
-    const filtered = allSkills.filter(s => {
+    const items = (currentTab === 'skills') ? allSkills : allMcps;
+    const filtered = items.filter(s => {
       if (activeFilter !== 'all' && s.category !== activeFilter) return false;
       if (q) {
-        const matchesName = s.name.toLowerCase().includes(q);
-        const matchesDesc = s.description.toLowerCase().includes(q);
-        const matchesCat = s.category.toLowerCase().includes(q);
+        const matchesName = (s.name || '').toLowerCase().includes(q);
+        const matchesDesc = (s.description || '').toLowerCase().includes(q);
+        const matchesCat  = (s.category || '').toLowerCase().includes(q);
         const matchesTags = s.tags && s.tags.some(t => t.toLowerCase().includes(q));
         if (!matchesName && !matchesDesc && !matchesCat && !matchesTags) return false;
       }
@@ -785,16 +1221,20 @@
       grid.innerHTML = `
         <div class="empty">
           <div class="empty-icon">🔍</div>
-          <h3>No skills found</h3>
-          <p>Try a different search term or category.</p>
+          <h3>No ${currentTab === 'skills' ? 'skills' : 'MCP servers'} found</h3>
+          <p>Try a different search term or filter category.</p>
         </div>`;
       return;
     }
 
-    grid.innerHTML = filtered.map(skill => cardHTML(skill)).join('');
+    if (currentTab === 'skills') {
+      grid.innerHTML = filtered.map(skill => skillCardHTML(skill)).join('');
+    } else {
+      grid.innerHTML = filtered.map(mcp => mcpCardHTML(mcp)).join('');
+    }
   }
 
-  function cardHTML(skill) {
+  function skillCardHTML(skill) {
     const c = catColor(skill.category);
     const installCmd = `cp -r ${skill.path} .agents/skills/`;
     const ghUrl = `https://github.com/carthworks/ai-agent-skills/tree/main/${skill.path}`;
@@ -806,7 +1246,9 @@
       <div class="card">
         <div class="card-header">
           <span class="card-name">${escHtml(skill.name)}</span>
-          <span class="cat-badge" style="background:${c.bg};color:${c.text};border:1px solid ${c.border}">${escHtml(skill.category)}</span>
+          <div class="header-badges">
+            <span class="cat-badge" style="background:${c.bg};color:${c.text};border:1px solid ${c.border}">${escHtml(skill.category)}</span>
+          </div>
         </div>
         <p class="card-desc">${escHtml(skill.description)}</p>
         ${tagsHTML}
@@ -824,10 +1266,57 @@
       </div>`;
   }
 
+  function mcpCardHTML(mcp) {
+    const c = catColor(mcp.category);
+    const runCmd = `${mcp.command} ${mcp.args.join(' ')}`;
+    const ghUrl = mcp.officialUrl || `https://github.com/carthworks/ai-agent-skills/tree/main/${mcp.path}`;
+    const id = `mcp-${mcp.name}`;
+    const tagsHTML = (mcp.tags && mcp.tags.length > 0)
+      ? `<div class="card-tags">${mcp.tags.map(t => `<span class="tag-pill">#${escHtml(t)}</span>`).join('')}</div>`
+      : '';
+
+    const configSnippet = JSON.stringify({
+      mcpServers: {
+        [mcp.name]: {
+          command: mcp.command,
+          args: mcp.args,
+          ...(Object.keys(mcp.env || {}).length > 0 ? { env: mcp.env } : {})
+        }
+      }
+    }, null, 2);
+
+    return `
+      <div class="card">
+        <div class="card-header">
+          <span class="card-name">${escHtml(mcp.name)}</span>
+          <div class="header-badges">
+            <span class="runtime-badge">${escHtml(mcp.runtime || 'node')}</span>
+            <span class="cat-badge" style="background:${c.bg};color:${c.text};border:1px solid ${c.border}">${escHtml(mcp.category)}</span>
+          </div>
+        </div>
+        <p class="card-desc">${escHtml(mcp.description)}</p>
+        ${tagsHTML}
+        <div class="card-footer">
+          <span class="install-snippet" title="${escAttr(runCmd)}">${escHtml(runCmd)}</span>
+          <button class="card-copy" id="cp-${id}" onclick="copyMcpConfig('${escAttr(configSnippet)}','${id}')" title="Copy MCP Configuration">📋 Config</button>
+        </div>
+        <div class="card-meta">
+          <span>v${escHtml(mcp.version)}</span>
+          <span>·</span>
+          <span>${escHtml(mcp.license)}</span>
+          <span>·</span>
+          <a href="${escAttr(ghUrl)}" target="_blank" rel="noopener">Documentation ↗</a>
+        </div>
+      </div>`;
+  }
+
   // ── Stats ────────────────────────────────────────────────
   function updateStats() {
-    document.getElementById('stat-total').textContent = allSkills.length;
-    const cats = new Set(allSkills.map(s => s.category));
+    document.getElementById('stat-skills').textContent = allSkills.length;
+    document.getElementById('stat-mcps').textContent = allMcps.length;
+    document.getElementById('count-skills').textContent = allSkills.length;
+    document.getElementById('count-mcps').textContent = allMcps.length;
+    const cats = new Set([...allSkills.map(s => s.category), ...allMcps.map(m => m.category)]);
     document.getElementById('stat-cats').textContent = cats.size;
   }
 
@@ -857,7 +1346,15 @@
     copyToClipboard(cmd).then(() => {
       const btn = document.getElementById('cp-' + id);
       if (btn) { btn.textContent = '✅'; btn.classList.add('copied'); setTimeout(() => { btn.textContent = '📋'; btn.classList.remove('copied'); }, 2000); }
-      showToast('Copied!');
+      showToast('Install command copied!');
+    });
+  }
+
+  function copyMcpConfig(jsonStr, id) {
+    copyToClipboard(jsonStr).then(() => {
+      const btn = document.getElementById('cp-' + id);
+      if (btn) { btn.textContent = '✅ Copied'; btn.classList.add('copied'); setTimeout(() => { btn.textContent = '📋 Config'; btn.classList.remove('copied'); }, 2000); }
+      showToast('MCP JSON config copied to clipboard!');
     });
   }
 
@@ -868,7 +1365,7 @@
   function escAttr(s) { return escHtml(s); }
 
   // ── Boot ─────────────────────────────────────────────────
-  loadSkills();
+  loadData();
 </script>
 </body>
 </html>

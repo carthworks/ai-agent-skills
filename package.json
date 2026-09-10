@@ -4,7 +4,9 @@
   "description": "A curated collection of SKILL.md files for AI coding agents",
   "private": false,
   "scripts": {
-    "validate": "node tests/validate-skills.js",
+    "validate:skills": "node tests/validate-skills.js",
+    "validate:mcps": "node tests/validate-mcps.js",
+    "validate": "node tests/validate-skills.js && node tests/validate-mcps.js",
     "generate": "node scripts/generate-catalogue.js",
     "build": "npm run validate && npm run generate",
     "test": "npm run validate"

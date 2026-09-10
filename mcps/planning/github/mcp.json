@@ -1,0 +1,18 @@
+{
+  "name": "github",
+  "category": "planning",
+  "description": "Interact with GitHub repositories: search and read code, manage pull requests, create and update issues, inspect commits, and manage branches directly from the agent.",
+  "license": "MIT",
+  "command": "npx",
+  "args": ["-y", "@modelcontextprotocol/server-github"],
+  "env": {
+    "GITHUB_PERSONAL_ACCESS_TOKEN": "<your-github-token>"
+  },
+  "metadata": {
+    "version": "v1",
+    "publisher": "carthworks",
+    "tags": ["git", "github", "prs", "issues", "planning"],
+    "runtime": "node",
+    "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/github"
+  }
+}

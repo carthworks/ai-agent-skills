@@ -1,0 +1,18 @@
+{
+  "name": "redis",
+  "category": "data",
+  "description": "Inspect and manage Redis instances: query keys, inspect TTLs, view data types (hashes, lists, sets, streams), debug caching layers, and monitor pub/sub messages.",
+  "license": "MIT",
+  "command": "npx",
+  "args": ["-y", "@modelcontextprotocol/server-redis", "redis://localhost:6379"],
+  "env": {
+    "REDIS_URL": "redis://localhost:6379"
+  },
+  "metadata": {
+    "version": "v1",
+    "publisher": "carthworks",
+    "tags": ["redis", "cache", "kv", "queues", "data"],
+    "runtime": "node",
+    "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/redis"
+  }
+}
