@@ -555,6 +555,118 @@
       transform: translateX(-50%) translateY(0);
     }
 
+    /* ── Modal ──────────────────────────────────────────── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s cubic-bezier(.34,1.56,.64,1);
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      max-width: 680px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 28px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 0.18s;
+    }
+
+    .modal-close:hover {
+      color: var(--text);
+      border-color: var(--border-h);
+    }
+
+    .modal h2 {
+      font-size: 1.35rem;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .modal p {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      margin-bottom: 14px;
+      line-height: 1.6;
+    }
+
+    .modal-section {
+      margin-top: 18px;
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+    }
+
+    .modal-section h3 {
+      font-size: 0.95rem;
+      color: var(--accent-2);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .modal pre {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--accent-2);
+      overflow-x: auto;
+      margin-bottom: 12px;
+    }
+
+    .modal-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 500;
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .modal-cta:hover { opacity: 0.9; text-decoration: none; }
+
     /* ── Responsive ─────────────────────────────────────── */
     @media (max-width: 640px) {
       .hero { padding: 48px 0 32px; }
@@ -579,6 +691,9 @@
         <input id="search" type="search" placeholder="Search skills & MCPs…" autocomplete="off" />
       </div>
       <div class="header-actions">
+        <button class="btn-ghost" onclick="openMcpModal()" title="How to Use MCP Servers & CLIs">
+          🔌 How to use MCP
+        </button>
         <a href="https://github.com/carthworks/ai-agent-skills" class="btn-ghost" target="_blank" rel="noopener">
           ⭐ Star on GitHub
         </a>
@@ -641,6 +756,13 @@
   </div>
 </div>
 
+<!-- MCP Quick Help Banner -->
+<div class="container" id="mcp-banner" style="display:none; text-align:center; margin-bottom:12px;">
+  <span style="font-size:0.83rem; color:var(--text-dim); background:var(--surface); border:1px solid var(--border); padding:6px 16px; border-radius:20px; display:inline-flex; align-items:center; gap:8px;">
+    💡 Need help connecting MCP servers to your agent? <a href="javascript:void(0)" onclick="openMcpModal()" style="color:var(--accent-2); font-weight:600; text-decoration:underline;">How to Use MCP Servers & CLIs ↗</a>
+  </span>
+</div>
+
 <!-- Filters + Grid -->
 <div class="container">
   <div class="filters" id="filters">
@@ -656,12 +778,61 @@
   </div>
 </div>
 
+<!-- MCP Guide Modal -->
+<div class="modal-overlay" id="mcp-modal" onclick="closeMcpModalOnBackdrop(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeMcpModal()" title="Close modal">✕</button>
+    <h2>🔌 How to Use MCP Servers & CLIs</h2>
+    <p>The <strong>Model Context Protocol (MCP)</strong> connects your AI coding agent directly to live databases, web browsers, API endpoints, and cloud infrastructure.</p>
+    
+    <div class="modal-section">
+      <h3>⚡ 1. Direct Terminal & CLI Execution</h3>
+      <p>Test or run any MCP server on demand with no manual installation:</p>
+      <pre><code># Node.js MCP Servers (Node 18+)
+npx -y @modelcontextprotocol/server-github
+npx -y chrome-devtools-mcp
+
+# Python MCP Servers via uvx
+uvx mcp-server-fetch
+uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
+    </div>
+
+    <div class="modal-section">
+      <h3>🛠️ 2. Agent Configuration Presets</h3>
+      <p>Click <strong>📋 Config</strong> on any MCP card to copy the JSON snippet, then paste it into your agent's config:</p>
+      <pre><code>// Antigravity IDE: .agents/mcp_config.json
+// Claude Desktop: claude_desktop_config.json
+// Cursor: Settings → Features → MCP
+{
+  "mcpServers": {
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["-y", "chrome-devtools-mcp"]
+    },
+    "postgres": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres", "postgresql://user:pass@localhost:5432/mydb"]
+    }
+  }
+}</code></pre>
+    </div>
+
+    <div class="modal-section" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+      <span style="font-size:0.85rem; color:var(--text-dim);">Read full documentation and setup guide on GitHub:</span>
+      <a class="modal-cta" href="https://github.com/carthworks/ai-agent-skills#what-is-mcp--how-to-use-mcp-servers" target="_blank" rel="noopener">
+        View Full Guide on GitHub ↗
+      </a>
+    </div>
+  </div>
+</div>
+
 <!-- Footer -->
 <footer>
   <div class="container">
     <p>
       Built by <a href="https://github.com/carthworks" target="_blank">@carthworks</a> ·
       <a href="https://github.com/carthworks/ai-agent-skills" target="_blank">View on GitHub</a> ·
+      <a href="https://github.com/carthworks/ai-agent-skills#what-is-mcp--how-to-use-mcp-servers" target="_blank">How to Use MCP Servers & CLIs</a> ·
       <a href="https://github.com/carthworks/ai-agent-skills/blob/main/CONTRIBUTING.md" target="_blank">Contribute</a> ·
       Apache-2.0
     </p>
@@ -1356,6 +1527,19 @@
       if (btn) { btn.textContent = '✅ Copied'; btn.classList.add('copied'); setTimeout(() => { btn.textContent = '📋 Config'; btn.classList.remove('copied'); }, 2000); }
       showToast('MCP JSON config copied to clipboard!');
     });
+  }
+
+  // ── Modal helpers ────────────────────────────────────────
+  function openMcpModal() {
+    document.getElementById('mcp-modal').classList.add('open');
+  }
+
+  function closeMcpModal() {
+    document.getElementById('mcp-modal').classList.remove('open');
+  }
+
+  function closeMcpModalOnBackdrop(e) {
+    if (e.target.id === 'mcp-modal') closeMcpModal();
   }
 
   // ── Utils ────────────────────────────────────────────────
