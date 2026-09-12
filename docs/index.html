@@ -8,6 +8,7 @@
   <meta property="og:title" content="Developer Agent Stack — Skills, MCPs, Subagents, Rules & Plugins" />
   <meta property="og:description" content="Drop-in Skills, MCPs, Subagents, Rules & Plugins for AI coding agents. Browse, copy, install." />
   <meta property="og:url" content="https://carthworks.github.io/ai-agent-skills/" />
+  <link rel="icon" id="dynamic-favicon" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
@@ -2700,11 +2701,182 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
     requestAnimationFrame(render);
   }
 
+  // ── Interactive Dynamic Favicon Engine ───────────────────
+  function initInteractiveFavicon() {
+    const favicon = document.getElementById('dynamic-favicon');
+    if (!favicon) return;
+
+    const fCanvas = document.createElement('canvas');
+    fCanvas.width = 64;
+    fCanvas.height = 64;
+    const fCtx = fCanvas.getContext('2d');
+    if (!fCtx) return;
+
+    const PALETTE = [
+      { r: 99, g: 102, b: 241, name: 'Electric Indigo' },
+      { r: 6, g: 182, b: 212, name: 'Cyan' },
+      { r: 139, g: 92, b: 246, name: 'Royal Violet' },
+      { r: 16, g: 185, b: 129, name: 'Cyber Emerald' },
+      { r: 245, g: 158, b: 11, name: 'Amber Gold' },
+      { r: 236, g: 72, b: 153, name: 'Rose Pink' }
+    ];
+
+    let colorIdxFrom = 0;
+    let colorIdxTo = 1;
+    let colorT = 0;
+    let lastColorSwitch = performance.now();
+    let rot = 0;
+    let orbitAngle = 0;
+    let pulseSpeed = 1.0;
+    let extraPulse = 0;
+    let isHidden = false;
+    let lastDrawTime = 0;
+
+    // Trigger pulse on user clicks / interactions
+    window.addEventListener('click', () => {
+      extraPulse = 1.0;
+      pulseSpeed = 2.4;
+    });
+
+    window.addEventListener('pointermove', () => {
+      if (pulseSpeed < 1.4) pulseSpeed += 0.08;
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      isHidden = document.hidden;
+      if (!isHidden) {
+        extraPulse = 1.2;
+        pulseSpeed = 2.0;
+      }
+    });
+
+    function drawFavicon(now) {
+      // Throttle rendering for battery efficiency (~14 fps when visible, ~1.5 fps when hidden)
+      const interval = isHidden ? 600 : 70;
+      if (now - lastDrawTime < interval) {
+        requestAnimationFrame(drawFavicon);
+        return;
+      }
+      lastDrawTime = now;
+
+      // Color lerp
+      const elapsedColor = now - lastColorSwitch;
+      if (elapsedColor > 4200) {
+        colorIdxFrom = colorIdxTo;
+        colorIdxTo = (colorIdxTo + 1 + Math.floor(Math.random() * (PALETTE.length - 1))) % PALETTE.length;
+        lastColorSwitch = now;
+        colorT = 0;
+      } else if (elapsedColor > 2600) {
+        const p = (elapsedColor - 2600) / 1600;
+        colorT = 0.5 - 0.5 * Math.cos(p * Math.PI);
+      } else {
+        colorT = 0;
+      }
+
+      const c1 = PALETTE[colorIdxFrom];
+      const c2 = PALETTE[colorIdxTo];
+      const r = Math.round(c1.r + (c2.r - c1.r) * colorT);
+      const g = Math.round(c1.g + (c2.g - c1.g) * colorT);
+      const b = Math.round(c1.b + (c2.b - c1.b) * colorT);
+
+      // Rotation & Pulses
+      pulseSpeed += (1.0 - pulseSpeed) * 0.06;
+      extraPulse = Math.max(0, extraPulse - 0.05);
+      rot += 0.06 * pulseSpeed;
+      orbitAngle += 0.1 * pulseSpeed;
+
+      const cx = 32;
+      const cy = 32;
+      const R = 20;
+
+      fCtx.clearRect(0, 0, 64, 64);
+
+      // 1. Outer Circular Container Glow
+      const bgGrad = fCtx.createRadialGradient(cx, cy, 0, cx, cy, 31);
+      bgGrad.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${0.35 + extraPulse * 0.4})`);
+      bgGrad.addColorStop(0.7, `rgba(15, 23, 42, 0.95)`);
+      bgGrad.addColorStop(1, `rgba(8, 10, 16, 0.98)`);
+      fCtx.fillStyle = bgGrad;
+      fCtx.beginPath();
+      fCtx.arc(cx, cy, 30, 0, Math.PI * 2);
+      fCtx.fill();
+
+      // Border ring
+      fCtx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${0.7 + extraPulse * 0.3})`;
+      fCtx.lineWidth = 2.0;
+      fCtx.stroke();
+
+      // 2. 3D Wireframe Cyber Globe (Latitudes & Meridians)
+      fCtx.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.5)`;
+      fCtx.lineWidth = 1.4;
+
+      // Latitudes
+      const lats = [-0.5, 0, 0.5];
+      lats.forEach(lat => {
+        const ringRad = Math.sqrt(1 - lat * lat) * R;
+        fCtx.beginPath();
+        fCtx.ellipse(cx, cy + lat * R * 0.8, ringRad, ringRad * 0.38, rot * 0.3, 0, Math.PI * 2);
+        fCtx.stroke();
+      });
+
+      // Rotating Longitude meridian
+      fCtx.beginPath();
+      const lonW = Math.abs(Math.cos(rot)) * R;
+      fCtx.ellipse(cx, cy, Math.max(1, lonW), R, 0, 0, Math.PI * 2);
+      fCtx.stroke();
+
+      // 3. Central Glowing Core
+      const coreGrad = fCtx.createRadialGradient(cx, cy, 0, cx, cy, 10);
+      coreGrad.addColorStop(0, '#ffffff');
+      coreGrad.addColorStop(0.4, `rgba(${r}, ${g}, ${b}, 0.9)`);
+      coreGrad.addColorStop(1, 'rgba(0,0,0,0)');
+      fCtx.fillStyle = coreGrad;
+      fCtx.beginPath();
+      fCtx.arc(cx, cy, 10, 0, Math.PI * 2);
+      fCtx.fill();
+
+      // 4. Orbiting Satellite Node
+      const orbitRx = R * 1.35;
+      const orbitRy = R * 0.55;
+      const satX = cx + Math.cos(orbitAngle) * orbitRx;
+      const satY = cy + Math.sin(orbitAngle) * orbitRy;
+
+      // Satellite glow
+      const satGrad = fCtx.createRadialGradient(satX, satY, 0, satX, satY, 6);
+      satGrad.addColorStop(0, '#ffffff');
+      satGrad.addColorStop(0.5, `rgba(${r}, ${g}, ${b}, 1)`);
+      satGrad.addColorStop(1, 'rgba(0,0,0,0)');
+      fCtx.fillStyle = satGrad;
+      fCtx.beginPath();
+      fCtx.arc(satX, satY, 5, 0, Math.PI * 2);
+      fCtx.fill();
+
+      // Interactive Click Wave Ripple
+      if (extraPulse > 0.05) {
+        fCtx.strokeStyle = `rgba(255, 255, 255, ${extraPulse})`;
+        fCtx.lineWidth = 1.5;
+        fCtx.beginPath();
+        fCtx.arc(cx, cy, 28 * (1 - extraPulse * 0.3), 0, Math.PI * 2);
+        fCtx.stroke();
+      }
+
+      // Update Favicon Link
+      try {
+        favicon.href = fCanvas.toDataURL('image/png');
+      } catch (e) {}
+
+      requestAnimationFrame(drawFavicon);
+    }
+
+    requestAnimationFrame(drawFavicon);
+  }
+
   // ── Boot ─────────────────────────────────────────────────
   initTheme();
   loadData();
   logDeveloperDetails();
   initHeroGlobeGalaxy();
+  initInteractiveFavicon();
 </script>
 </body>
 </html>
