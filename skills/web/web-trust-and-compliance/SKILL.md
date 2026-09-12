@@ -1,6 +1,6 @@
 ---
 name: web-trust-and-compliance
-description: Audit web applications and websites for legal compliance, consumer trust, privacy policies, terms of service, cookie consent, licensing, accessibility, and anti-dark-pattern practices. Use when auditing or preparing a site for launch, legal compliance review, privacy check, removing dark patterns, hidden fees, fake reviews, or verifying copyright and business details. Don't use for generic backend performance tuning or non-web tasks.
+description: Audit web applications and websites for legal compliance, consumer trust, privacy policies, terms of service / terms & conditions, cancellation/refund policies, about & contact pages, pricing & support information, cookie consent, licensing, accessibility, and anti-dark-pattern practices. Use when auditing or preparing a site for launch, legal compliance review, privacy check, trust verification, removing dark patterns, hidden fees, fake reviews, or verifying copyright and business details. Don't use for generic backend performance tuning or non-web tasks.
 license: Apache-2.0
 metadata:
   version: v1
@@ -20,73 +20,95 @@ metadata:
 
 Transform websites and web applications into legally sound, privacy-respecting, transparent, and trustworthy digital products before or after launch.
 
-Inspect the live codebase, assets, pages, forms, and scripts to uncover legal vulnerabilities, privacy leaks, deceptive UI designs (dark patterns), hidden pricing tricks, fake social proof, and asset licensing issues.
+Inspect the live codebase, assets, pages, forms, and scripts to uncover legal vulnerabilities, privacy leaks, deceptive UI designs (dark patterns), hidden pricing tricks, fake social proof, missing trust pages (About, Contact, Privacy, Terms, Cancellation/Refund, Pricing/Support), and asset licensing issues.
 
 ---
 
-## The 14 Core Compliance & Trust Pillars
+## The 6 Essential Trust Anchors & Core Pillars
 
-Every audit evaluates the following 14 critical checkpoints:
+Every consumer-facing website and web app must provide clear, easily discoverable trust anchors and meet compliance standards:
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                       14 PILLARS OF TRUST & COMPLIANCE                      │
-├──────────────────────────┬──────────────────────────┬───────────────────────┤
-│ 1. Legal & Governance    │ 2. Privacy & Data Ethics │ 3. Consumer Trust & UX│
-│ • Terms of Service (TOS) │ • Privacy Policy         │ • Anti-Dark Patterns  │
-│ • Cookie Policy          │ • Cookie & Form Consent  │ • No Hidden Fees      │
-│ • Refund/Return Policy   │ • SDK & Tracking Audit   │ • No Fake Reviews     │
-│ • Business Disclosures   │ • Data Minimization      │ • Substantiated Claims│
-├──────────────────────────┴──────────────────────────┴───────────────────────┤
-│ 4. Intellectual Property & Assets     5. Core Accessibility                 │
-│ • Licenses, Copyright & Trademarks    • Alt Text, Contrast & Keyboard Nav   │
-└─────────────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────────────────────┐
+│                           CORE TRUST ANCHORS & COMPLIANCE                               │
+├───────────────────────────────┬───────────────────────────────┬─────────────────────────┤
+│ 1. Essential Trust Pages      │ 2. Legal & Governance         │ 3. Privacy & Ethics     │
+│ • About Page (/about)         │ • Terms & Conditions (T&C/TOS)│ • Privacy Policy        │
+│ • Contact Page (/contact)     │ • Cancellation/Refund Policy  │ • Cookie & Form Consent │
+│ • Pricing & Support Info      │ • Business & Tax Disclosures  │ • Data Minimization     │
+├───────────────────────────────┼───────────────────────────────┼─────────────────────────┤
+│ 4. Consumer Protection & UX   │ 5. Intellectual Property      │ 6. Core Accessibility   │
+│ • Anti-Dark Patterns / FTC    │ • Licenses & Copyright        │ • WCAG 2.1 AA Standards │
+│ • Upfront Transparent Pricing │ • Font & Stock Asset Audits   │ • Alt Text & Contrast   │
+│ • Authentic Social Proof      │ • Third-Party Trademarks      │ • Keyboard Navigation   │
+└───────────────────────────────┴───────────────────────────────┴─────────────────────────┘
 ```
 
 ---
 
-## 1. Legal Policies & Corporate Disclosures
+## 1. Essential Trust Pages & Legal Policies
 
-### 1.1 Privacy Policy
-- **Requirement**: A dedicated, publicly accessible Privacy Policy page linked from the global footer and every form/signup page.
+### 1.1 About Page & Company Identity
+- **Requirement**: A dedicated, publicly accessible About page (`/about` or `/about-us`) linked from the primary navigation and/or global footer.
 - **Content Checklist**:
-  - Exact types of personal data collected (e.g. email, IP, cookies, telemetry).
-  - Legal basis and purpose for processing (GDPR Art. 6 / CCPA / CPRA).
-  - Third-party data recipients (analytics, CDNs, payment processors).
-  - Data retention duration and storage locations.
-  - User rights instructions (access, rectification, erasure/deletion, portability).
-  - Contact details of Data Protection Officer (DPO) or privacy team.
+  - Clear narrative on company background, origin, and core mission.
+  - Identification of the operating entity, founders, leadership team, or managing organization.
+  - Physical headquarters / operating country / jurisdiction to establish legitimate corporate presence.
+  - Verifiable business credentials, certifications, or regulatory registrations where applicable.
 
-### 1.2 Terms of Service (TOS) / Terms of Use
-- **Requirement**: Comprehensive terms governing user rights, limitations, account usage, and liability.
+### 1.2 Contact Page & Direct Support Channels
+- **Requirement**: A dedicated Contact page (`/contact`, `/contact-us`, or `/support`) easily accessible from the header and footer with functioning, verified communication channels.
 - **Content Checklist**:
-  - Acceptable use rules and prohibited behaviors.
-  - User-generated content ownership, intellectual property rights, and DMCA notice procedure.
-  - Limitation of liability, warranty disclaimers, and dispute resolution / governing law clause.
-  - Clear account termination conditions.
+  - Direct, monitored contact email address (e.g. `support@domain.com`, `contact@domain.com`).
+  - Physical registered business address and mailing location.
+  - Telephone support number or live chat widget where available.
+  - Working contact form with clear submission confirmation, error handling, and privacy consent note.
+  - Stated support hours of operation and expected response time SLA (e.g., "We respond within 24 hours on business days").
 
-### 1.3 Cookie Policy
-- **Requirement**: Distinct cookie declaration or detailed privacy section.
+### 1.3 Privacy Policy
+- **Requirement**: A dedicated, comprehensive Privacy Policy page (`/privacy` or `/privacy-policy`) linked in the global footer, signup pages, contact forms, and checkout steps.
 - **Content Checklist**:
-  - Categorization of cookies: Strictly Necessary, Functional, Analytics/Performance, Advertising/Targeting.
-  - Specific cookie tables: cookie name, provider, purpose, and expiration lifespan.
-  - Plain instructions on how users can withdraw or adjust cookie preferences anytime.
+  - Exact categories of personal data collected (e.g., names, emails, IP addresses, telemetry, device identifiers).
+  - Legal bases and explicit purposes for processing under applicable privacy regulations (GDPR Art. 6, CCPA/CPRA, etc.).
+  - Third-party data recipients and sub-processors (analytics, CDNs, hosting providers, payment processors).
+  - Data retention periods and international data transfer safeguards.
+  - Explicit user rights and instructions for exercising them (access, correction, export, deletion, opt-out).
+  - Direct contact details for the Data Protection Officer (DPO) or privacy compliance team.
 
-### 1.4 Refund & Cancellation Policy
-- **Requirement**: Clear, unambiguous refund and cancellation terms linked in footer and checkout step.
+### 1.4 Terms & Conditions (T&C) / Terms of Service (TOS)
+- **Requirement**: A comprehensive Terms & Conditions / Terms of Service agreement (`/terms`, `/terms-and-conditions`, or `/tos`) linked in the global footer, registration forms, and purchase flows.
 - **Content Checklist**:
-  - Eligibility windows (e.g. 14-day statutory right of withdrawal, 30-day money-back guarantee).
-  - Subscription cancellation procedure (must be self-serve and straightforward).
-  - Processing timeline and payment method for refunds.
-  - Explicit terms for non-refundable items or digital downloads.
+  - Acceptable use policies, account responsibilities, and prohibited activities.
+  - Intellectual property rights, license grants, and user-generated content terms.
+  - Warranty disclaimers, limitation of liability, and indemnification provisions.
+  - Governing law, jurisdiction, and dispute resolution mechanisms (e.g., arbitration or venue selection).
+  - Termination clauses detailing suspension or cancellation of user accounts.
 
-### 1.5 Business Identity & Contact Details
-- **Requirement**: Transparency regarding the operating legal entity.
+### 1.5 Cancellation & Refund Policy
+- **Requirement**: A clear, unambiguous Cancellation and Refund Policy (`/refund`, `/cancellation`, or `/refund-policy`) linked in the global footer, pricing pages, and checkout workflows.
 - **Content Checklist**:
-  - Full registered business/company name and legal structure (LLC, Inc, Ltd, GmbH, etc.).
-  - Physical registered business address (not just a P.O. Box where required by jurisdiction).
-  - Business registration number / Company number / Tax ID (VAT, GST, EIN, etc.).
-  - Direct, functioning contact channels (email, phone, or live support contact form).
+  - Explicit refund eligibility window (e.g., 14-day statutory right of withdrawal, 30-day money-back guarantee).
+  - Clear, step-by-step self-serve cancellation instructions (FTC Click-to-Cancel compliance: cancellation must be as easy as signing up).
+  - Detailed refund processing timelines (e.g., "Refunds processed within 5-7 business days") and payout methods.
+  - Clearly articulated terms for non-refundable items, prorated billing, digital downloads, or service tiers.
+
+### 1.6 Pricing & Support Information
+- **Requirement**: Transparent pricing breakdowns and comprehensive customer support information available upfront on pricing pages (`/pricing`), product pages, and help centers (`/help`, `/support`).
+- **Content Checklist**:
+  - **Pricing Transparency**:
+    - Itemized tier pricing, billing intervals (monthly vs. annual), recurring renewal terms, and trial conversion dates.
+    - Upfront disclosure of applicable taxes, VAT, currency, and zero hidden checkout fees (no drip pricing).
+  - **Support Information**:
+    - Direct access to support portals, FAQs, ticketing systems, documentation, or knowledge base.
+    - Clearly communicated support availability, escalation paths, and service level agreements (SLAs).
+
+### 1.7 Cookie Policy & Business Disclosures
+- **Requirement**: Detailed cookie disclosures and verified legal entity identification.
+- **Content Checklist**:
+  - Categorization of cookies (Strictly Necessary, Functional, Analytics/Performance, Advertising/Targeting).
+  - Table of active cookies: name, provider, purpose, and expiration lifespan.
+  - Clear instructions and mechanisms for users to update or revoke cookie preferences at any time.
+  - Full registered corporate legal name, entity type (LLC, Inc, Ltd, GmbH, etc.), and official registration/tax IDs (VAT, GST, EIN).
 
 ---
 
@@ -128,12 +150,13 @@ Every audit evaluates the following 14 critical checkpoints:
   - **Forced Continuity**: Free trials converting silently without prior notice or easy cancellation before billing.
   - **Fake Urgency / Scarcity**: Fabricated countdown timers, fake stock counters ("Only 2 left!"), or fake live purchase toasts ("Someone in Seattle just bought this!").
 
-### 3.2 Transparent Pricing (Remove Hidden Fees & Drip Pricing)
-- **Requirement**: Complete, upfront price clarity across the entire user journey.
+### 3.2 Transparent Pricing & Support Information
+- **Requirement**: Complete, upfront price clarity across the entire user journey with accessible support guidance.
 - **Audit Rules**:
   - All mandatory fees (service charges, booking fees, processing fees, mandatory taxes) must be displayed upfront on product/pricing pages, not revealed at the final checkout step.
   - Subscription frequencies must be explicit (e.g. "$120/year billed annually", not simply "$10/mo" in giant text with tiny annual billing disclaimer).
-  - Renewal terms and price increases after promotional periods must be prominent.
+  - Renewal terms, trial conversion dates, and price increases after promotional periods must be prominent.
+  - Accessible customer support channels, SLAs, and troubleshooting links must be linked alongside pricing plans and purchase confirmations.
 
 ### 3.3 Authentic Social Proof (Remove Fake Reviews & Testimonials)
 - **Requirement**: All reviews, testimonials, ratings, and endorsements must represent real, verifiable experiences.
@@ -177,18 +200,25 @@ Every audit evaluates the following 14 critical checkpoints:
 ## Step-by-Step Audit Workflow
 
 ### Phase 1 — Codebase & Asset Inventory
-1. Scan project routes, footer components, and navigation menus for legal links (`/privacy`, `/terms`, `/cookies`, `/refunds`, `/contact`).
+1. Scan project routes, navigation menus, and global footers for essential trust pages and legal links:
+   - About page: `/about`, `/about-us`
+   - Contact page: `/contact`, `/contact-us`
+   - Privacy Policy: `/privacy`, `/privacy-policy`
+   - Terms & Conditions / Terms of Service: `/terms`, `/terms-and-conditions`, `/tos`
+   - Cancellation & Refund Policy: `/refund`, `/cancellation`, `/refund-policy`
+   - Pricing & Support Information: `/pricing`, `/support`, `/help`, `/faq`
 2. Inspect package dependencies, scripts, and asset directories (`/public`, `/assets`, `/images`, `/fonts`).
 3. Audit forms, newsletter signups, modals, and checkout / billing components.
 
 ### Phase 2 — Triage & Severity Classification
 Group all findings into the standard severity levels:
-- **BLOCKER**: Missing Privacy Policy / TOS on live transaction or data-collection site; non-compliant payment data collection; deceptive forced subscriptions; illegal copyright infringement.
-- **HIGH**: Pre-ticked consent boxes; analytics firing before cookie consent; hidden checkout fees / drip pricing; fake reviews or unsubstantiated guarantees; inaccessible forms.
+- **BLOCKER**: Missing Privacy Policy / Terms & Conditions on live transaction or data-collection site; non-compliant payment data collection; deceptive forced subscriptions; hidden checkout fees; illegal copyright infringement.
+- **HIGH**: Missing Cancellation/Refund policy or About/Contact pages; pre-ticked consent boxes; analytics firing before cookie consent; fake reviews or unsubstantiated guarantees; inaccessible forms.
 - **MEDIUM**: Missing business registration number / physical address; missing cookie category toggles; missing font license documentation; confirm-shaming copy; color contrast failures.
 - **LOW**: Minor copy clarity polish, missing aria labels on decorative icons.
 
 ### Phase 3 — Remediation & Code Fixes
+- Add missing trust pages and routes (About, Contact, Privacy Policy, Terms & Conditions, Cancellation/Refund Policy, Pricing/Support Info).
 - Fix accessibility attributes (`alt`, `aria-label`, focus rings).
 - Remove deceptive copy, pre-checked checkboxes, and fake urgency timers.
 - Generate compliant boilerplate templates for missing policy routes if requested.
@@ -211,20 +241,26 @@ Group all findings into the standard severity levels:
 
 | # | Pillar | Finding | Severity | Status | Recommended Fix |
 |---|--------|---------|----------|--------|-----------------|
-| 1 | Privacy Policy | Missing DPO contact & retention details | MEDIUM | OPEN | Add retention clause & contact email |
-| 2 | Cookie Consent | Google Analytics loads before consent | HIGH | OPEN | Wrap script injection in consent gate |
-| 3 | Dark Patterns | Confirm-shaming on discount modal | HIGH | FIXED | Replace with neutral "No thanks" |
-| 4 | Hidden Fees | $5 handling fee added only on Step 3 | BLOCKER| OPEN | Display total itemized cost on Step 1 |
-| 5 | Accessibility | Low contrast on secondary button (#888 on #fff)| MEDIUM | FIXED | Increase text contrast to #4b5563 (4.8:1)|
+| 1 | About & Contact | Missing direct contact email & company origin | HIGH | OPEN | Create /contact & /about with physical address & email |
+| 2 | Privacy Policy | Missing DPO contact & retention details | MEDIUM | OPEN | Add retention clause & contact email |
+| 3 | Terms & Conditions | Missing limitation of liability & governing law | BLOCKER | OPEN | Add standard governing law and liability caps |
+| 4 | Cancellation/Refund | No self-serve cancellation flow documented | HIGH | OPEN | Add transparent refund timelines & 1-click cancel steps |
+| 5 | Pricing & Support | $5 handling fee added only on Step 3 | BLOCKER | OPEN | Display total itemized cost and support SLA upfront |
+| 6 | Cookie Consent | Google Analytics loads before consent | HIGH | OPEN | Wrap script injection in consent gate |
+| 7 | Dark Patterns | Confirm-shaming on discount modal | HIGH | FIXED | Replace with neutral "No thanks" |
+| 8 | Accessibility | Low contrast on secondary button (#888 on #fff)| MEDIUM | FIXED | Increase text contrast to #4b5563 (4.8:1)|
 
 ---
 
 ## Detailed Findings & Action Items
 
-### 1. Legal & Regulatory Compliance
-- [x] Privacy Policy URL linked across all layouts.
-- [ ] Terms of Service updated with limitation of liability and governing law.
-- [ ] Registered business address and entity identifier added to footer / contact page.
+### 1. Essential Pages & Legal Policies
+- [ ] **About Page**: Add company narrative, leadership/team info, and operating location.
+- [ ] **Contact Page**: Provide working email, physical address, support hours, and contact form.
+- [ ] **Privacy Policy**: Link Privacy Policy across all footers, signups, and checkout steps.
+- [ ] **Terms & Conditions**: Update with acceptable use, dispute resolution, and liability limits.
+- [ ] **Cancellation/Refund Policy**: Publish explicit return windows and self-serve cancellation process.
+- [ ] **Pricing & Support Information**: Ensure all pricing is upfront and support channels/SLAs are accessible.
 
 ### 2. Privacy & Consent
 - [ ] Remove pre-checked marketing checkboxes on checkout form.

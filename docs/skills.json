@@ -93,7 +93,7 @@
     },
     {
       "name": "web-trust-and-compliance",
-      "description": "Audit web applications and websites for legal compliance, consumer trust, privacy policies, terms of service, cookie consent, licensing, accessibility, and ant…",
+      "description": "Audit web applications and websites for legal compliance, consumer trust, privacy policies, terms of service / terms & conditions, cancellation/refund policies, a…",
       "category": "web",
       "path": "skills/web/web-trust-and-compliance",
       "license": "Apache-2.0",
