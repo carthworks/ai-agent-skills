@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Agent Skills & MCP Marketplace</title>
-  <meta name="description" content="A curated collection of drop-in SKILL.md and Model Context Protocol (MCP) servers that give your AI coding agent specialised, focused capabilities." />
-  <meta property="og:title" content="AI Agent Skills & MCP Marketplace" />
-  <meta property="og:description" content="Drop-in skills and MCP servers for AI coding agents. Browse, copy, install." />
+  <title>Developer Agent Stack — Skills, MCPs, Subagents, Rules & Plugins</title>
+  <meta name="description" content="A curated collection of drop-in Skills, MCP servers, Subagents, Behavioral Rules, and Plugins that give your AI coding agent specialized, production-grade capabilities." />
+  <meta property="og:title" content="Developer Agent Stack — Skills, MCPs, Subagents, Rules & Plugins" />
+  <meta property="og:description" content="Drop-in Skills, MCPs, Subagents, Rules & Plugins for AI coding agents. Browse, copy, install." />
   <meta property="og:url" content="https://carthworks.github.io/ai-agent-skills/" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -34,12 +34,12 @@
       --cat-testing:    #10b981;
       --cat-safety:     #ef4444;
       --cat-general:    #6b7280;
-
       --cat-planning:   #f59e0b;
       --cat-data:       #06b6d4;
       --cat-api:        #ec4899;
       --cat-browser:    #3b82f6;
       --cat-quality:    #10b981;
+      --cat-security:   #ef4444;
     }
 
     html { scroll-behavior: smooth; }
@@ -196,7 +196,7 @@
     .hero p {
       font-size: 1.05rem;
       color: var(--text-dim);
-      max-width: 620px;
+      max-width: 680px;
       margin: 0 auto 32px;
       line-height: 1.7;
     }
@@ -242,7 +242,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 32px;
+      gap: 28px;
       padding: 24px 0;
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
@@ -250,25 +250,26 @@
     }
 
     .stat { text-align: center; }
-    .stat-value { font-size: 1.6rem; font-weight: 700; color: var(--text); line-height: 1; }
+    .stat-value { font-size: 1.5rem; font-weight: 700; color: var(--text); line-height: 1; }
     .stat-label { font-size: 0.75rem; color: var(--text-dim); margin-top: 2px; }
 
     /* ── Tab Switcher ─────────────────────────────────────── */
     .tab-nav {
       display: flex;
       justify-content: center;
-      gap: 12px;
+      gap: 10px;
       margin: 36px 0 16px;
+      flex-wrap: wrap;
     }
 
     .tab-btn {
-      padding: 10px 24px;
+      padding: 9px 20px;
       border-radius: 30px;
       border: 1px solid var(--border);
       background: var(--surface);
       color: var(--text-dim);
       font-family: 'Inter', sans-serif;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 600;
       cursor: pointer;
       display: inline-flex;
@@ -290,65 +291,71 @@
     }
 
     .tab-count {
-      padding: 2px 8px;
+      padding: 2px 7px;
       border-radius: 12px;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       background: var(--surface2);
       border: 1px solid var(--border);
       color: var(--accent-2);
       font-weight: 700;
     }
 
-    /* ── Filters ────────────────────────────────────────── */
+    /* ── Filters ─────────────────────────────────────────── */
     .filters {
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 16px 0 24px;
+      margin-bottom: 24px;
       flex-wrap: wrap;
     }
 
-    .filter-label { font-size: 0.8rem; color: var(--text-dim); margin-right: 4px; }
-
-    .filter-chip {
-      padding: 5px 14px;
-      border-radius: 20px;
-      border: 1px solid var(--border);
-      background: transparent;
+    .filter-label {
+      font-size: 0.78rem;
       color: var(--text-dim);
-      font-size: 0.8rem;
-      font-family: 'Inter', sans-serif;
-      cursor: pointer;
-      transition: all 0.18s;
-      display: flex;
-      align-items: center;
-      gap: 5px;
+      font-weight: 500;
+      margin-right: 4px;
     }
 
-    .filter-chip:hover { border-color: var(--border-h); color: var(--text); }
+    .filter-chip {
+      padding: 5px 12px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-dim);
+      font-size: 0.75rem;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.18s;
+    }
+
+    .filter-chip:hover {
+      border-color: var(--border-h);
+      color: var(--text);
+    }
 
     .filter-chip.active {
-      background: rgba(139,92,246,0.15);
+      background: var(--surface2);
       border-color: var(--accent);
-      color: var(--accent);
-      font-weight: 500;
+      color: var(--text);
+      font-weight: 600;
     }
 
     .filter-dot {
       width: 7px; height: 7px;
       border-radius: 50%;
-      flex-shrink: 0;
     }
 
-    /* ── Grid ───────────────────────────────────────────── */
+    /* ── Grid & Cards ─────────────────────────────────────── */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 16px;
-      padding-bottom: 80px;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 20px;
+      margin-bottom: 60px;
     }
 
-    /* ── Card ─────────────────────────────────────── */
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -356,43 +363,29 @@
       padding: 22px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
-      cursor: default;
+      gap: 14px;
+      transition: all 0.22s cubic-bezier(.34,1.56,.64,1);
       position: relative;
-      overflow: hidden;
-    }
-
-    .card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 0% 0%, rgba(139,92,246,0.05) 0%, transparent 60%);
-      opacity: 0;
-      transition: opacity 0.3s;
     }
 
     .card:hover {
       border-color: var(--border-h);
       transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.35);
     }
-
-    .card:hover::before { opacity: 1; }
 
     .card-header {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      gap: 10px;
+      gap: 12px;
     }
 
     .card-name {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.9rem;
+      font-size: 1.05rem;
       font-weight: 600;
       color: var(--text);
-      word-break: break-word;
+      font-family: 'JetBrains Mono', monospace;
     }
 
     .header-badges {
@@ -403,50 +396,44 @@
     }
 
     .cat-badge {
-      padding: 3px 9px;
-      border-radius: 12px;
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 600;
-      letter-spacing: 0.04em;
+      padding: 3px 8px;
+      border-radius: 6px;
       text-transform: uppercase;
-      flex-shrink: 0;
+      letter-spacing: 0.04em;
     }
 
     .runtime-badge {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
+      font-weight: 600;
       padding: 3px 8px;
-      border-radius: 12px;
+      border-radius: 6px;
       background: rgba(255,255,255,0.06);
       border: 1px solid var(--border);
       color: var(--text-dim);
       font-family: 'JetBrains Mono', monospace;
-      text-transform: lowercase;
     }
 
     .card-desc {
-      font-size: 0.83rem;
+      font-size: 0.86rem;
       color: var(--text-dim);
-      line-height: 1.6;
+      line-height: 1.55;
       flex: 1;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
     }
 
     .card-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 5px;
-      margin-top: -4px;
+      gap: 6px;
     }
 
     .tag-pill {
-      font-size: 0.68rem;
+      font-size: 0.7rem;
       padding: 2px 7px;
-      border-radius: 4px;
       background: var(--surface2);
       border: 1px solid var(--border);
+      border-radius: 4px;
       color: var(--text-dim);
       font-family: 'JetBrains Mono', monospace;
     }
@@ -612,34 +599,10 @@
       border-color: var(--border-h);
     }
 
-    .modal h2 {
-      font-size: 1.35rem;
-      margin-bottom: 8px;
-      color: var(--text);
-    }
-
-    .modal p {
-      font-size: 0.9rem;
-      color: var(--text-dim);
-      margin-bottom: 14px;
-      line-height: 1.6;
-    }
-
-    .modal-section {
-      margin-top: 18px;
-      border-top: 1px solid var(--border);
-      padding-top: 14px;
-    }
-
-    .modal-section h3 {
-      font-size: 0.95rem;
-      color: var(--accent-2);
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
+    .modal h2 { font-size: 1.35rem; margin-bottom: 8px; color: var(--text); }
+    .modal p { font-size: 0.9rem; color: var(--text-dim); margin-bottom: 14px; line-height: 1.6; }
+    .modal-section { margin-top: 18px; border-top: 1px solid var(--border); padding-top: 14px; }
+    .modal-section h3 { font-size: 0.95rem; color: var(--accent-2); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
     .modal pre {
       background: var(--surface2);
       border: 1px solid var(--border);
@@ -667,11 +630,10 @@
     }
     .modal-cta:hover { opacity: 0.9; text-decoration: none; }
 
-    /* ── Responsive ─────────────────────────────────────── */
     @media (max-width: 640px) {
       .hero { padding: 48px 0 32px; }
       .grid { grid-template-columns: 1fr; }
-      .stats { gap: 20px; }
+      .stats { gap: 16px; }
       .header-search { min-width: 0; width: 100%; max-width: none; }
     }
   </style>
@@ -684,15 +646,15 @@
     <div class="header-inner">
       <a href="https://github.com/carthworks/ai-agent-skills" class="logo">
         <div class="logo-icon">🧠</div>
-        <span class="logo-text">ai-agent-<span>skills</span></span>
+        <span class="logo-text">developer-<span>agent-stack</span></span>
       </a>
       <div class="header-search">
         <span class="search-icon">🔍</span>
-        <input id="search" type="search" placeholder="Search skills & MCPs…" autocomplete="off" />
+        <input id="search" type="search" placeholder="Search skills, MCPs, agents, rules, plugins…" autocomplete="off" />
       </div>
       <div class="header-actions">
         <button class="btn-ghost" onclick="openMcpModal()" title="How to Use MCP Servers & CLIs">
-          🔌 How to use MCP
+          🔌 MCP Guide
         </button>
         <a href="https://github.com/carthworks/ai-agent-skills" class="btn-ghost" target="_blank" rel="noopener">
           ⭐ Star on GitHub
@@ -708,9 +670,9 @@
 <!-- Hero -->
 <section class="hero">
   <div class="container">
-    <div class="hero-badge">✨ Open Source · Apache-2.0 · Free Forever</div>
+    <div class="hero-badge">✨ Open Source · Apache-2.0 · New Era Developer Stack</div>
     <h1>Supercharge Your AI<br>Coding Agent</h1>
-    <p>A curated marketplace of drop-in <code style="font-family:JetBrains Mono,monospace;color:var(--accent-2);font-size:0.95em">SKILL.md</code> workflows and <strong>Model Context Protocol (MCP)</strong> servers for AI coding agents.</p>
+    <p>A curated marketplace of drop-in <strong>Skills</strong>, <strong>MCP Servers</strong>, <strong>Specialist Subagents</strong>, <strong>Behavioral Rules</strong>, and composite <strong>Plugins</strong> for modern AI-native engineering.</p>
     <div class="hero-install">
       <code id="hero-cmd">bash -c "$(curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh)"</code>
       <button class="copy-btn" onclick="copyHero(this)" title="Copy install command">📋</button>
@@ -730,16 +692,16 @@
       <div class="stat-label">MCP Servers</div>
     </div>
     <div class="stat">
-      <div class="stat-value" id="stat-cats">6</div>
-      <div class="stat-label">Categories</div>
+      <div class="stat-value" id="stat-agents">3</div>
+      <div class="stat-label">Subagents</div>
     </div>
     <div class="stat">
-      <div class="stat-value">Free</div>
-      <div class="stat-label">Always</div>
+      <div class="stat-value" id="stat-rules">4</div>
+      <div class="stat-label">Rules</div>
     </div>
     <div class="stat">
-      <div class="stat-value">&lt;10s</div>
-      <div class="stat-label">To Install</div>
+      <div class="stat-value" id="stat-plugins">3</div>
+      <div class="stat-label">Plugins</div>
     </div>
   </div>
 </section>
@@ -751,7 +713,16 @@
       🧠 Skills <span class="tab-count" id="count-skills">10</span>
     </button>
     <button class="tab-btn" id="tab-mcps" onclick="switchTab('mcps')">
-      🔌 MCP Servers <span class="tab-count" id="count-mcps">12</span>
+      🔌 MCPs <span class="tab-count" id="count-mcps">12</span>
+    </button>
+    <button class="tab-btn" id="tab-agents" onclick="switchTab('agents')">
+      🤖 Subagents <span class="tab-count" id="count-agents">3</span>
+    </button>
+    <button class="tab-btn" id="tab-rules" onclick="switchTab('rules')">
+      📜 Rules <span class="tab-count" id="count-rules">4</span>
+    </button>
+    <button class="tab-btn" id="tab-plugins" onclick="switchTab('plugins')">
+      📦 Plugins <span class="tab-count" id="count-plugins">3</span>
     </button>
   </div>
 </div>
@@ -819,7 +790,7 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
 
     <div class="modal-section" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
       <span style="font-size:0.85rem; color:var(--text-dim);">Read full documentation and setup guide on GitHub:</span>
-      <a class="modal-cta" href="https://github.com/carthworks/ai-agent-skills#what-is-mcp--how-to-use-mcp-servers" target="_blank" rel="noopener">
+      <a class="modal-cta" href="https://github.com/carthworks/ai-agent-skills" target="_blank" rel="noopener">
         View Full Guide on GitHub ↗
       </a>
     </div>
@@ -832,11 +803,10 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
     <p>
       Built by <a href="https://github.com/carthworks" target="_blank">@carthworks</a> ·
       <a href="https://github.com/carthworks/ai-agent-skills" target="_blank">View on GitHub</a> ·
-      <a href="https://github.com/carthworks/ai-agent-skills#what-is-mcp--how-to-use-mcp-servers" target="_blank">How to Use MCP Servers & CLIs</a> ·
       <a href="https://github.com/carthworks/ai-agent-skills/blob/main/CONTRIBUTING.md" target="_blank">Contribute</a> ·
       Apache-2.0
     </p>
-    <p style="margin-top:6px;color:var(--text-mute)"><em>Let's build a safer, more inclusive web.</em></p>
+    <p style="margin-top:6px;color:var(--text-mute)"><em>Supercharging the next generation of software engineering.</em></p>
   </div>
 </footer>
 
@@ -845,467 +815,508 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
 <script>
   // ── Category colours ────────────────────────────────────
   const CAT_COLORS = {
-    web:        { bg: 'rgba(59,130,246,0.15)', text: '#60a5fa', border: 'rgba(59,130,246,0.3)' },
-    devops:     { bg: 'rgba(139,92,246,0.15)', text: '#a78bfa', border: 'rgba(139,92,246,0.3)' },
-    typescript: { bg: 'rgba(6,182,212,0.15)',  text: '#22d3ee', border: 'rgba(6,182,212,0.3)'  },
-    testing:    { bg: 'rgba(16,185,129,0.15)', text: '#34d399', border: 'rgba(16,185,129,0.3)' },
-    safety:     { bg: 'rgba(239,68,68,0.15)',  text: '#f87171', border: 'rgba(239,68,68,0.3)'  },
-    planning:   { bg: 'rgba(245,158,11,0.15)', text: '#fbbf24', border: 'rgba(245,158,11,0.3)' },
-    data:       { bg: 'rgba(6,182,212,0.15)',  text: '#22d3ee', border: 'rgba(6,182,212,0.3)'  },
-    api:        { bg: 'rgba(236,72,153,0.15)', text: '#f472b6', border: 'rgba(236,72,153,0.3)' },
-    browser:    { bg: 'rgba(59,130,246,0.15)', text: '#60a5fa', border: 'rgba(59,130,246,0.3)' },
-    quality:    { bg: 'rgba(16,185,129,0.15)', text: '#34d399', border: 'rgba(16,185,129,0.3)' },
-    general:    { bg: 'rgba(107,114,128,0.15)',text: '#9ca3af', border: 'rgba(107,114,128,0.3)' },
+    web:          { bg: 'rgba(59,130,246,0.15)', text: '#60a5fa', border: 'rgba(59,130,246,0.3)' },
+    devops:       { bg: 'rgba(139,92,246,0.15)', text: '#a78bfa', border: 'rgba(139,92,246,0.3)' },
+    typescript:   { bg: 'rgba(6,182,212,0.15)',  text: '#22d3ee', border: 'rgba(6,182,212,0.3)'  },
+    testing:      { bg: 'rgba(16,185,129,0.15)', text: '#34d399', border: 'rgba(16,185,129,0.3)' },
+    safety:       { bg: 'rgba(239,68,68,0.15)',  text: '#f87171', border: 'rgba(239,68,68,0.3)'  },
+    planning:     { bg: 'rgba(245,158,11,0.15)', text: '#fbbf24', border: 'rgba(245,158,11,0.3)' },
+    data:         { bg: 'rgba(6,182,212,0.15)',  text: '#22d3ee', border: 'rgba(6,182,212,0.3)'  },
+    api:          { bg: 'rgba(236,72,153,0.15)', text: '#f472b6', border: 'rgba(236,72,153,0.3)' },
+    browser:      { bg: 'rgba(59,130,246,0.15)', text: '#60a5fa', border: 'rgba(59,130,246,0.3)' },
+    quality:      { bg: 'rgba(16,185,129,0.15)', text: '#34d399', border: 'rgba(16,185,129,0.3)' },
+    security:     { bg: 'rgba(239,68,68,0.15)',  text: '#f87171', border: 'rgba(239,68,68,0.3)'  },
+    review:       { bg: 'rgba(139,92,246,0.15)', text: '#a78bfa', border: 'rgba(139,92,246,0.3)' },
+    architecture: { bg: 'rgba(245,158,11,0.15)', text: '#fbbf24', border: 'rgba(245,158,11,0.3)' },
+    efficiency:   { bg: 'rgba(6,182,212,0.15)',  text: '#22d3ee', border: 'rgba(6,182,212,0.3)'  },
+    launch:       { bg: 'rgba(59,130,246,0.15)', text: '#60a5fa', border: 'rgba(59,130,246,0.3)' },
+    fullstack:    { bg: 'rgba(139,92,246,0.15)', text: '#a78bfa', border: 'rgba(139,92,246,0.3)' },
+    general:      { bg: 'rgba(107,114,128,0.15)',text: '#9ca3af', border: 'rgba(107,114,128,0.3)' },
   };
 
   function catColor(cat) {
     return CAT_COLORS[cat] || CAT_COLORS.general;
   }
 
-  // ── Initial / Static Datasets ──────────────────────────────
   // __INITIAL_SKILLS_START__
   const INITIAL_SKILLS = [
-      {
-          "name": "code-review-checklist",
-          "description": "Provides a structured, thorough code review checklist covering correctness, security, performance, tests, and maintainability. Use this skill whenever asked to…",
-          "category": "devops",
-          "path": "skills/devops/code-review-checklist",
-          "license": "Apache-2.0",
-          "version": "v1",
-          "publisher": "carthworks",
-          "tags": []
-      },
-      {
-          "name": "dockerfile-best-practices",
-          "description": "Guides writing secure, efficient, production-grade Dockerfiles and docker-compose files. Use when creating or reviewing a Dockerfile, docker-compose.yml, or .d…",
-          "category": "devops",
-          "path": "skills/devops/dockerfile-best-practices",
-          "license": "Apache-2.0",
-          "version": "v1",
-          "publisher": "carthworks",
-          "tags": []
-      },
-      {
-          "name": "git-commit-quality",
-          "description": "Enforces high-quality git commit messages following Conventional Commits. Use this skill whenever the agent is about to run `git commit`, write a commit messag…",
-          "category": "devops",
-          "path": "skills/devops/git-commit-quality",
-          "license": "Apache-2.0",
-          "version": "v1",
-          "publisher": "carthworks",
-          "tags": []
-      },
-      {
-          "name": "env-secret-safety",
-          "description": "Prevents hardcoded secrets, API keys, passwords, and credentials in source code. Use this skill whenever the agent is writing code that connects to external se…",
-          "category": "safety",
-          "path": "skills/safety/env-secret-safety",
-          "license": "Apache-2.0",
-          "version": "v1",
-          "publisher": "carthworks",
-          "tags": []
-      },
-      {
-          "name": "test-coverage-guidance",
-          "description": "Guides what, when, and how to test code — choosing between unit, integration, and end-to-end tests. Use when writing tests, deciding test strategy, setting up …",
-          "category": "testing",
-          "path": "skills/testing/test-coverage-guidance",
-          "license": "Apache-2.0",
-          "version": "v1",
-          "publisher": "carthworks",
-          "tags": []
-      },
-      {
-          "name": "typescript-strict-mode",
-          "description": "Enforces TypeScript strict mode configuration and type-safe coding patterns. Use when setting up a TypeScript project, reviewing tsconfig.json, fixing type err…",
-          "category": "typescript",
-          "path": "skills/typescript/typescript-strict-mode",
-          "license": "Apache-2.0",
-          "version": "v1",
-          "publisher": "carthworks",
-          "tags": []
-      },
-      {
-          "name": "api-design-rest",
-          "description": "Guides designing clean, consistent, and developer-friendly REST APIs. Use when creating new API endpoints, reviewing API contracts, writing OpenAPI/Swagger spe…",
-          "category": "web",
-          "path": "skills/web/api-design-rest",
-          "license": "Apache-2.0",
-          "version": "v1",
-          "publisher": "carthworks",
-          "tags": []
-      },
-      {
-          "name": "nextjs-performance",
-          "description": "Optimises Next.js applications for Core Web Vitals, bundle size, and perceived performance. Use when building, auditing, or debugging a Next.js app's performan…",
-          "category": "web",
-          "path": "skills/web/nextjs-performance",
-          "license": "Apache-2.0",
-          "version": "v1",
-          "publisher": "carthworks",
-          "tags": []
-      },
-      {
-          "name": "production-web-app-launch",
-          "description": "Audit and fix production-readiness gaps in websites and web apps — accessibility, SEO, metadata, security, forms, errors, mobile, deployment config, and operat…",
-          "category": "web",
-          "path": "skills/web/production-web-app-launch",
-          "license": "Apache-2.0",
-          "version": "v1",
-          "publisher": "carthworks",
-          "tags": []
-      },
-      {
-          "name": "web-trust-and-compliance",
-          "description": "Audit web applications and websites for legal compliance, consumer trust, privacy policies, terms of service / terms & conditions, cancellation/refund policies, a…",
-          "category": "web",
-          "path": "skills/web/web-trust-and-compliance",
-          "license": "Apache-2.0",
-          "version": "v1",
-          "publisher": "carthworks",
-          "tags": [
-              "compliance",
-              "privacy",
-              "trust",
-              "legal",
-              "accessibility",
-              "web"
-          ]
-      }
+    {
+      "name": "code-review-checklist",
+      "description": "Provides a structured, thorough code review checklist covering correctness, security, performance, tests, and maintainability. Use this skill whenever asked to…",
+      "category": "devops",
+      "path": "skills/devops/code-review-checklist",
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": []
+    },
+    {
+      "name": "dockerfile-best-practices",
+      "description": "Guides writing secure, efficient, production-grade Dockerfiles and docker-compose files. Use when creating or reviewing a Dockerfile, docker-compose.yml, or .d…",
+      "category": "devops",
+      "path": "skills/devops/dockerfile-best-practices",
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": []
+    },
+    {
+      "name": "git-commit-quality",
+      "description": "Enforces high-quality git commit messages following Conventional Commits. Use this skill whenever the agent is about to run `git commit`, write a commit messag…",
+      "category": "devops",
+      "path": "skills/devops/git-commit-quality",
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": []
+    },
+    {
+      "name": "env-secret-safety",
+      "description": "Prevents hardcoded secrets, API keys, passwords, and credentials in source code. Use this skill whenever the agent is writing code that connects to external se…",
+      "category": "safety",
+      "path": "skills/safety/env-secret-safety",
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": []
+    },
+    {
+      "name": "test-coverage-guidance",
+      "description": "Guides what, when, and how to test code — choosing between unit, integration, and end-to-end tests. Use when writing tests, deciding test strategy, setting up …",
+      "category": "testing",
+      "path": "skills/testing/test-coverage-guidance",
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": []
+    },
+    {
+      "name": "typescript-strict-mode",
+      "description": "Enforces TypeScript strict mode configuration and type-safe coding patterns. Use when setting up a TypeScript project, reviewing tsconfig.json, fixing type err…",
+      "category": "typescript",
+      "path": "skills/typescript/typescript-strict-mode",
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": []
+    },
+    {
+      "name": "api-design-rest",
+      "description": "Guides designing clean, consistent, and developer-friendly REST APIs. Use when creating new API endpoints, reviewing API contracts, writing OpenAPI/Swagger spe…",
+      "category": "web",
+      "path": "skills/web/api-design-rest",
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": []
+    },
+    {
+      "name": "nextjs-performance",
+      "description": "Optimises Next.js applications for Core Web Vitals, bundle size, and perceived performance. Use when building, auditing, or debugging a Next.js app's performan…",
+      "category": "web",
+      "path": "skills/web/nextjs-performance",
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": []
+    },
+    {
+      "name": "production-web-app-launch",
+      "description": "Audit and fix production-readiness gaps in websites and web apps — accessibility, SEO, metadata, security, forms, errors, mobile, deployment config, and operat…",
+      "category": "web",
+      "path": "skills/web/production-web-app-launch",
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": []
+    },
+    {
+      "name": "web-trust-and-compliance",
+      "description": "Audit web applications and websites for legal compliance, consumer trust, privacy policies, terms of service / terms & conditions, cancellation/refund policies, a…",
+      "category": "web",
+      "path": "skills/web/web-trust-and-compliance",
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": [
+        "compliance",
+        "privacy",
+        "trust",
+        "legal",
+        "accessibility",
+        "web"
+      ]
+    }
   ];
   // __INITIAL_SKILLS_END__
 
   // __INITIAL_MCPS_START__
   const INITIAL_MCPS = [
-      {
-          "name": "fetch",
-          "description": "Fetch web content, test REST and GraphQL endpoints, download API schemas, and inspect remote HTTP headers directly inside AI coding workflows.",
-          "category": "api",
-          "path": "mcps/api/fetch",
-          "license": "MIT",
-          "command": "uvx",
-          "args": [
-              "mcp-server-fetch"
-          ],
-          "env": {},
-          "version": "v1",
-          "publisher": "carthworks",
-          "tags": [
-              "fetch",
-              "http",
-              "api",
-              "curl",
-              "rest"
-          ],
-          "runtime": "python",
-          "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/fetch"
-      },
-      {
-          "name": "stripe",
-          "description": "Inspect and manage Stripe resources in test mode: query payments, customers, subscriptions, products, prices, and verify webhook delivery events.",
-          "category": "api",
-          "path": "mcps/api/stripe",
-          "license": "MIT",
-          "command": "npx",
-          "args": [
-              "-y",
-              "@stripe/mcp"
-          ],
-          "env": {
-              "STRIPE_SECRET_KEY": "<your-stripe-test-key>"
-          },
-          "version": "v1",
-          "publisher": "carthworks",
-          "tags": [
-              "stripe",
-              "payments",
-              "billing",
-              "checkout",
-              "api"
-          ],
-          "runtime": "node",
-          "officialUrl": "https://github.com/stripe/agent-toolkit"
-      },
-      {
-          "name": "chrome-devtools",
-          "description": "Inspect live web pages with Chrome DevTools: query DOM elements, capture network traffic, evaluate JavaScript, take screenshots, and troubleshoot UI console er…",
-          "category": "browser",
-          "path": "mcps/browser/chrome-devtools",
-          "license": "Apache-2.0",
-          "command": "npx",
-          "args": [
-              "-y",
-              "chrome-devtools-mcp"
-          ],
-          "env": {},
-          "version": "v1",
-          "publisher": "carthworks",
-          "tags": [
-              "browser",
-              "chrome",
-              "devtools",
-              "qa",
-              "frontend"
-          ],
-          "runtime": "node",
-          "officialUrl": "https://github.com/carthworks/ai-agent-skills"
-      },
-      {
-          "name": "playwright",
-          "description": "Headless browser automation with Playwright: execute end-to-end clicks, form fills, multi-page user journeys, PDF generation, and automated cross-browser testi…",
-          "category": "browser",
-          "path": "mcps/browser/playwright",
-          "license": "MIT",
-          "command": "npx",
-          "args": [
-              "-y",
-              "@modelcontextprotocol/server-puppeteer"
-          ],
-          "env": {},
-          "version": "v1",
-          "publisher": "carthworks",
-          "tags": [
-              "playwright",
-              "puppeteer",
-              "e2e",
-              "testing",
-              "browser"
-          ],
-          "runtime": "node",
-          "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/puppeteer"
-      },
-      {
-          "name": "postgres",
-          "description": "Read-only and migration database inspection for PostgreSQL: query schemas, inspect tables, view foreign keys, and run analytical queries without schema halluci…",
-          "category": "data",
-          "path": "mcps/data/postgres",
-          "license": "MIT",
-          "command": "npx",
-          "args": [
-              "-y",
-              "@modelcontextprotocol/server-postgres",
-              "postgresql://user:password@localhost:5432/dbname"
-          ],
-          "env": {
-              "DATABASE_URL": "postgresql://user:password@localhost:5432/dbname"
-          },
-          "version": "v1",
-          "publisher": "carthworks",
-          "tags": [
-              "postgres",
-              "sql",
-              "database",
-              "data",
-              "schema"
-          ],
-          "runtime": "node",
-          "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/postgres"
-      },
-      {
-          "name": "redis",
-          "description": "Inspect and manage Redis instances: query keys, inspect TTLs, view data types (hashes, lists, sets, streams), debug caching layers, and monitor pub/sub message…",
-          "category": "data",
-          "path": "mcps/data/redis",
-          "license": "MIT",
-          "command": "npx",
-          "args": [
-              "-y",
-              "@modelcontextprotocol/server-redis",
-              "redis://localhost:6379"
-          ],
-          "env": {
-              "REDIS_URL": "redis://localhost:6379"
-          },
-          "version": "v1",
-          "publisher": "carthworks",
-          "tags": [
-              "redis",
-              "cache",
-              "kv",
-              "queues",
-              "data"
-          ],
-          "runtime": "node",
-          "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/redis"
-      },
-      {
-          "name": "supabase",
-          "description": "Manage Supabase projects: inspect PostgreSQL tables, query Auth users, review Storage buckets, inspect Edge Functions, and check database migrations.",
-          "category": "data",
-          "path": "mcps/data/supabase",
-          "license": "MIT",
-          "command": "npx",
-          "args": [
-              "-y",
-              "@supabase/mcp-server"
-          ],
-          "env": {
-              "SUPABASE_ACCESS_TOKEN": "<your-supabase-access-token>"
-          },
-          "version": "v1",
-          "publisher": "carthworks",
-          "tags": [
-              "supabase",
-              "postgres",
-              "auth",
-              "database",
-              "baas"
-          ],
-          "runtime": "node",
-          "officialUrl": "https://github.com/supabase-community/supabase-mcp"
-      },
-      {
-          "name": "cloudflare",
-          "description": "Manage Cloudflare resources: inspect DNS records, manage Worker scripts, query KV namespaces, D1 databases, and R2 object storage buckets.",
-          "category": "devops",
-          "path": "mcps/devops/cloudflare",
-          "license": "MIT",
-          "command": "npx",
-          "args": [
-              "-y",
-              "@cloudflare/mcp-server-cloudflare"
-          ],
-          "env": {
-              "CLOUDFLARE_API_TOKEN": "<your-cloudflare-api-token>",
-              "CLOUDFLARE_ACCOUNT_ID": "<your-cloudflare-account-id>"
-          },
-          "version": "v1",
-          "publisher": "carthworks",
-          "tags": [
-              "cloudflare",
-              "workers",
-              "dns",
-              "r2",
-              "devops"
-          ],
-          "runtime": "node",
-          "officialUrl": "https://github.com/cloudflare/mcp-server-cloudflare"
-      },
-      {
-          "name": "docker",
-          "description": "Inspect and manage Docker containers, images, volumes, and networks. Tail real-time container logs and troubleshoot docker-compose environments.",
-          "category": "devops",
-          "path": "mcps/devops/docker",
-          "license": "Apache-2.0",
-          "command": "npx",
-          "args": [
-              "-y",
-              "@modelcontextprotocol/server-docker"
-          ],
-          "env": {},
-          "version": "v1",
-          "publisher": "carthworks",
-          "tags": [
-              "docker",
-              "containers",
-              "devops",
-              "infra",
-              "compose"
-          ],
-          "runtime": "node",
-          "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/docker"
-      },
-      {
-          "name": "github",
-          "description": "Interact with GitHub repositories: search and read code, manage pull requests, create and update issues, inspect commits, and manage branches directly from the…",
-          "category": "planning",
-          "path": "mcps/planning/github",
-          "license": "MIT",
-          "command": "npx",
-          "args": [
-              "-y",
-              "@modelcontextprotocol/server-github"
-          ],
-          "env": {
-              "GITHUB_PERSONAL_ACCESS_TOKEN": "<your-github-token>"
-          },
-          "version": "v1",
-          "publisher": "carthworks",
-          "tags": [
-              "git",
-              "github",
-              "prs",
-              "issues",
-              "planning"
-          ],
-          "runtime": "node",
-          "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/github"
-      },
-      {
-          "name": "linear",
-          "description": "Query, create, and update Linear issues, search project roadmaps, track bug cycles, and manage team sprints directly inside development workflows.",
-          "category": "planning",
-          "path": "mcps/planning/linear",
-          "license": "MIT",
-          "command": "npx",
-          "args": [
-              "-y",
-              "linear-mcp-server"
-          ],
-          "env": {
-              "LINEAR_API_KEY": "<your-linear-api-key>"
-          },
-          "version": "v1",
-          "publisher": "carthworks",
-          "tags": [
-              "linear",
-              "issues",
-              "tickets",
-              "planning",
-              "pm"
-          ],
-          "runtime": "node",
-          "officialUrl": "https://github.com/jerhadf/linear-mcp-server"
-      },
-      {
-          "name": "sentry",
-          "description": "Retrieve and inspect real-time application crash reports, error stack traces, breadcrumbs, and issue telemetry directly from Sentry projects.",
-          "category": "quality",
-          "path": "mcps/quality/sentry",
-          "license": "MIT",
-          "command": "uvx",
-          "args": [
-              "mcp-server-sentry",
-              "--auth-token",
-              "<your-sentry-auth-token>"
-          ],
-          "env": {
-              "SENTRY_AUTH_TOKEN": "<your-sentry-auth-token>"
-          },
-          "version": "v1",
-          "publisher": "carthworks",
-          "tags": [
-              "sentry",
-              "monitoring",
-              "errors",
-              "debug",
-              "quality"
-          ],
-          "runtime": "python",
-          "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/sentry"
-      }
+    {
+      "name": "fetch",
+      "description": "Fetch web content, test REST and GraphQL endpoints, download API schemas, and inspect remote HTTP headers directly inside AI coding workflows.",
+      "category": "api",
+      "path": "mcps/api/fetch",
+      "license": "MIT",
+      "command": "uvx",
+      "args": ["mcp-server-fetch"],
+      "env": {},
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": ["fetch", "http", "api", "curl", "rest"],
+      "runtime": "python",
+      "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/fetch"
+    },
+    {
+      "name": "stripe",
+      "description": "Inspect and manage Stripe resources in test mode: query payments, customers, subscriptions, products, prices, and verify webhook delivery events.",
+      "category": "api",
+      "path": "mcps/api/stripe",
+      "license": "MIT",
+      "command": "npx",
+      "args": ["-y", "@stripe/mcp"],
+      "env": { "STRIPE_SECRET_KEY": "<your-stripe-test-key>" },
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": ["stripe", "payments", "billing", "checkout", "api"],
+      "runtime": "node",
+      "officialUrl": "https://github.com/stripe/agent-toolkit"
+    },
+    {
+      "name": "chrome-devtools",
+      "description": "Inspect live web pages with Chrome DevTools: query DOM elements, capture network traffic, evaluate JavaScript, take screenshots, and troubleshoot UI console errors.",
+      "category": "browser",
+      "path": "mcps/browser/chrome-devtools",
+      "license": "Apache-2.0",
+      "command": "npx",
+      "args": ["-y", "chrome-devtools-mcp"],
+      "env": {},
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": ["browser", "chrome", "devtools", "qa", "frontend"],
+      "runtime": "node",
+      "officialUrl": "https://github.com/carthworks/ai-agent-skills"
+    },
+    {
+      "name": "playwright",
+      "description": "Headless browser automation with Playwright: execute end-to-end clicks, form fills, multi-page user journeys, PDF generation, and automated cross-browser testing.",
+      "category": "browser",
+      "path": "mcps/browser/playwright",
+      "license": "MIT",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-puppeteer"],
+      "env": {},
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": ["playwright", "puppeteer", "e2e", "testing", "browser"],
+      "runtime": "node",
+      "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/puppeteer"
+    },
+    {
+      "name": "postgres",
+      "description": "Read-only and migration database inspection for PostgreSQL: query schemas, inspect tables, view foreign keys, and run analytical queries without schema hallucinations.",
+      "category": "data",
+      "path": "mcps/data/postgres",
+      "license": "MIT",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres", "postgresql://user:password@localhost:5432/dbname"],
+      "env": { "DATABASE_URL": "postgresql://user:password@localhost:5432/dbname" },
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": ["postgres", "sql", "database", "data", "schema"],
+      "runtime": "node",
+      "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/postgres"
+    },
+    {
+      "name": "redis",
+      "description": "Inspect and manage Redis instances: query keys, inspect TTLs, view data types (hashes, lists, sets, streams), debug caching layers, and monitor pub/sub messages.",
+      "category": "data",
+      "path": "mcps/data/redis",
+      "license": "MIT",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-redis", "redis://localhost:6379"],
+      "env": { "REDIS_URL": "redis://localhost:6379" },
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": ["redis", "cache", "kv", "queues", "data"],
+      "runtime": "node",
+      "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/redis"
+    },
+    {
+      "name": "supabase",
+      "description": "Manage and inspect Supabase projects: query Postgres tables, inspect auth users, browse Storage buckets, invoke Edge Functions, and view project logs.",
+      "category": "data",
+      "path": "mcps/data/supabase",
+      "license": "MIT",
+      "command": "npx",
+      "args": ["-y", "@supabase/mcp-server"],
+      "env": { "SUPABASE_ACCESS_TOKEN": "<your-access-token>", "SUPABASE_PROJECT_ID": "<your-project-ref>" },
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": ["supabase", "postgres", "auth", "storage", "database"],
+      "runtime": "node",
+      "officialUrl": "https://github.com/supabase-community/mcp-server-supabase"
+    },
+    {
+      "name": "cloudflare",
+      "description": "Manage Cloudflare resources: query DNS records, inspect Worker deployments, manage KV namespaces, view D1 SQL databases, and inspect R2 storage bucket objects.",
+      "category": "devops",
+      "path": "mcps/devops/cloudflare",
+      "license": "MIT",
+      "command": "npx",
+      "args": ["-y", "@cloudflare/mcp-server-cloudflare"],
+      "env": { "CLOUDFLARE_API_TOKEN": "<your-cloudflare-api-token>", "CLOUDFLARE_ACCOUNT_ID": "<your-cloudflare-account-id>" },
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": ["cloudflare", "dns", "workers", "kv", "d1", "r2", "edge"],
+      "runtime": "node",
+      "officialUrl": "https://github.com/cloudflare/mcp-server-cloudflare"
+    },
+    {
+      "name": "docker",
+      "description": "Inspect and manage Docker containers, images, volumes, and networks: list running containers, tail live logs, and restart crashed services during development.",
+      "category": "devops",
+      "path": "mcps/devops/docker",
+      "license": "MIT",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-docker"],
+      "env": {},
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": ["docker", "containers", "devops", "compose", "infra"],
+      "runtime": "node",
+      "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/docker"
+    },
+    {
+      "name": "github",
+      "description": "Interact with GitHub repositories: search code, inspect issues, read and create pull requests, review diffs, manage branches, and view commit logs.",
+      "category": "planning",
+      "path": "mcps/planning/github",
+      "license": "MIT",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": { "GITHUB_PERSONAL_ACCESS_TOKEN": "<your-github-pat>" },
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": ["github", "git", "pr", "issues", "repo", "planning"],
+      "runtime": "node",
+      "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/github"
+    },
+    {
+      "name": "linear",
+      "description": "Query, create, and update Linear project issues, tasks, and roadmaps: sync agent work with sprints, assign tickets, and update issue states automatically.",
+      "category": "planning",
+      "path": "mcps/planning/linear",
+      "license": "MIT",
+      "command": "npx",
+      "args": ["-y", "linear-mcp-server"],
+      "env": { "LINEAR_API_KEY": "<your-linear-api-key>" },
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": ["linear", "issues", "tickets", "planning", "pm"],
+      "runtime": "node",
+      "officialUrl": "https://github.com/jerhadf/linear-mcp-server"
+    },
+    {
+      "name": "sentry",
+      "description": "Retrieve and inspect real-time application crash reports, error stack traces, breadcrumbs, and issue telemetry directly from Sentry projects.",
+      "category": "quality",
+      "path": "mcps/quality/sentry",
+      "license": "MIT",
+      "command": "uvx",
+      "args": ["mcp-server-sentry", "--auth-token", "<your-sentry-auth-token>"],
+      "env": { "SENTRY_AUTH_TOKEN": "<your-sentry-auth-token>" },
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": ["sentry", "monitoring", "errors", "debug", "quality"],
+      "runtime": "python",
+      "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/sentry"
+    }
   ];
   // __INITIAL_MCPS_END__
 
+  // __INITIAL_AGENTS_START__
+  const INITIAL_AGENTS = [
+    {
+      "name": "code-reviewer",
+      "role": "Principal Code Reviewer & Architecture Guardian",
+      "description": "Rigorous pull request reviewer subagent enforcing correctness, strict typing, error handling, performance regressions, and architectural boundaries.",
+      "category": "review",
+      "path": "agents/code-reviewer",
+      "model": "high-reasoning",
+      "toolsAllowed": ["view_file", "grep_search", "list_dir"],
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": ["review", "pr", "quality", "clean-code", "refactoring"]
+    },
+    {
+      "name": "qa-engineer",
+      "role": "Staff QA & Test Automation Specialist",
+      "description": "Autonomous Quality Assurance subagent specializing in test pyramid design, edge-case generation, synthetic regression testing, and E2E test suites.",
+      "category": "quality",
+      "path": "agents/qa-engineer",
+      "model": "high-reasoning",
+      "toolsAllowed": ["view_file", "grep_search", "list_dir", "run_command"],
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": ["qa", "testing", "vitest", "playwright", "e2e"]
+    },
+    {
+      "name": "security-auditor",
+      "role": "Senior Security & Vulnerability Auditor",
+      "description": "Specialized subagent for scanning codebases for vulnerabilities, hardcoded secrets, injection flaws, OWASP Top 10 risks, and unsafe dependency patterns.",
+      "category": "security",
+      "path": "agents/security-auditor",
+      "model": "high-reasoning",
+      "toolsAllowed": ["view_file", "grep_search", "list_dir", "run_command"],
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": ["security", "audit", "owasp", "cve", "secrets"]
+    }
+  ];
+  // __INITIAL_AGENTS_END__
+
+  // __INITIAL_RULES_START__
+  const INITIAL_RULES = [
+    {
+      "name": "clean-architecture-boundaries",
+      "description": "Architectural separation of concerns separating UI presentation, domain business logic, and infrastructure/data access layers.",
+      "category": "architecture",
+      "path": "rules/clean-architecture-boundaries.md",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": ["architecture", "clean-code", "boundaries", "domain-driven"]
+    },
+    {
+      "name": "token-efficiency",
+      "description": "Universal rules for minimizing token consumption, enforcing surgical diffs, avoiding redundant reads, and streamlining agent responses.",
+      "category": "efficiency",
+      "path": "rules/token-efficiency.md",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": ["tokens", "efficiency", "performance", "agent-behavior"]
+    },
+    {
+      "name": "typescript-strict-guardrails",
+      "description": "Strict TypeScript rules prohibiting any, enforcing discriminated unions, runtime schema validation (Zod), and exhaustive type guards.",
+      "category": "quality",
+      "path": "rules/typescript-strict-guardrails.md",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": ["typescript", "types", "strict", "quality"]
+    },
+    {
+      "name": "security-and-secret-hygiene",
+      "description": "Strict security rules prohibiting hardcoded credentials, enforcing environment variable validation, and preventing sensitive data leaks.",
+      "category": "security",
+      "path": "rules/security-and-secret-hygiene.md",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": ["security", "secrets", "env", "safety"]
+    }
+  ];
+  // __INITIAL_RULES_END__
+
+  // __INITIAL_PLUGINS_START__
+  const INITIAL_PLUGINS = [
+    {
+      "name": "production-launch-pack",
+      "description": "Essential pre-launch bundle covering production readiness audits, trust & compliance checks, edge deployment tools, and browser QA inspectors.",
+      "category": "launch",
+      "path": "plugins/production-launch-pack",
+      "components": {
+        "skills": ["skills/web/production-web-app-launch", "skills/web/web-trust-and-compliance", "skills/web/nextjs-performance"],
+        "mcps": ["mcps/devops/cloudflare", "mcps/browser/chrome-devtools"],
+        "agents": ["agents/qa-engineer"],
+        "rules": ["rules/token-efficiency.md"]
+      },
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": ["launch", "production", "performance", "deployment", "readiness"]
+    },
+    {
+      "name": "fullstack-quality-pack",
+      "description": "Comprehensive engineering quality stack with strict TypeScript rules, testing pyramid guidance, PR review checklist, and code reviewer subagent.",
+      "category": "quality",
+      "path": "plugins/fullstack-quality-pack",
+      "components": {
+        "skills": ["skills/typescript/typescript-strict-mode", "skills/testing/test-coverage-guidance", "skills/devops/code-review-checklist"],
+        "mcps": ["mcps/quality/sentry"],
+        "agents": ["agents/code-reviewer"],
+        "rules": ["rules/typescript-strict-guardrails.md", "rules/clean-architecture-boundaries.md"]
+      },
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": ["quality", "typescript", "testing", "code-review", "architecture"]
+    },
+    {
+      "name": "web-security-pack",
+      "description": "Complete security bundle combining trust & compliance audits, secret safety enforcement, automated vulnerability scanning subagent, and secret hygiene rules.",
+      "category": "security",
+      "path": "plugins/web-security-pack",
+      "components": {
+        "skills": ["skills/web/web-trust-and-compliance", "skills/safety/env-secret-safety"],
+        "mcps": ["mcps/quality/sentry"],
+        "agents": ["agents/security-auditor"],
+        "rules": ["rules/security-and-secret-hygiene.md"]
+      },
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": ["security", "compliance", "privacy", "secrets", "audit"]
+    }
+  ];
+  // __INITIAL_PLUGINS_END__
+
   // ── State ────────────────────────────────────────────────
-  let currentTab   = 'skills'; // 'skills' | 'mcps'
+  let currentTab   = 'skills'; // 'skills' | 'mcps' | 'agents' | 'rules' | 'plugins'
   let allSkills    = [...INITIAL_SKILLS];
   let allMcps      = [...INITIAL_MCPS];
+  let allAgents    = [...INITIAL_AGENTS];
+  let allRules     = [...INITIAL_RULES];
+  let allPlugins   = [...INITIAL_PLUGINS];
   let activeFilter = 'all';
   let searchQuery  = '';
+
+  function getCurrentList() {
+    switch (currentTab) {
+      case 'skills':  return allSkills;
+      case 'mcps':    return allMcps;
+      case 'agents':  return allAgents;
+      case 'rules':   return allRules;
+      case 'plugins': return allPlugins;
+      default:        return allSkills;
+    }
+  }
 
   // ── Tab Switcher ─────────────────────────────────────────
   function switchTab(tab) {
     currentTab = tab;
     activeFilter = 'all';
-    document.getElementById('tab-skills').classList.toggle('active', tab === 'skills');
-    document.getElementById('tab-mcps').classList.toggle('active', tab === 'mcps');
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    const activeBtn = document.getElementById('tab-' + tab);
+    if (activeBtn) activeBtn.classList.add('active');
+
+    const mcpBanner = document.getElementById('mcp-banner');
+    if (mcpBanner) mcpBanner.style.display = (tab === 'mcps') ? 'block' : 'none';
+
     const heroCmd = document.getElementById('hero-cmd');
     if (heroCmd) {
       if (tab === 'skills') {
         heroCmd.textContent = 'bash -c "$(curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh)"';
-      } else {
+      } else if (tab === 'mcps') {
         heroCmd.textContent = 'npx -y @modelcontextprotocol/server-github';
+      } else if (tab === 'agents') {
+        heroCmd.textContent = 'cp -r agents/security-auditor .agents/agents/';
+      } else if (tab === 'rules') {
+        heroCmd.textContent = 'cp rules/token-efficiency.md .agents/rules/';
+      } else if (tab === 'plugins') {
+        heroCmd.textContent = 'cp -r plugins/web-security-pack .agents/plugins/';
       }
     }
     buildFilters();
@@ -1319,29 +1330,44 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
     updateStats();
 
     try {
-      const [resSkills, resMcps] = await Promise.all([
+      const [resSkills, resMcps, resAgents, resRules, resPlugins] = await Promise.all([
         fetch('skills.json').catch(() => null),
-        fetch('mcps.json').catch(() => null)
+        fetch('mcps.json').catch(() => null),
+        fetch('agents.json').catch(() => null),
+        fetch('rules.json').catch(() => null),
+        fetch('plugins.json').catch(() => null)
       ]);
       if (resSkills && resSkills.ok) {
-        const sData = await resSkills.json();
-        if (sData.skills) allSkills = sData.skills;
+        const d = await resSkills.json();
+        if (d.skills) allSkills = d.skills;
       }
       if (resMcps && resMcps.ok) {
-        const mData = await resMcps.json();
-        if (mData.mcps) allMcps = mData.mcps;
+        const d = await resMcps.json();
+        if (d.mcps) allMcps = d.mcps;
+      }
+      if (resAgents && resAgents.ok) {
+        const d = await resAgents.json();
+        if (d.agents) allAgents = d.agents;
+      }
+      if (resRules && resRules.ok) {
+        const d = await resRules.json();
+        if (d.rules) allRules = d.rules;
+      }
+      if (resPlugins && resPlugins.ok) {
+        const d = await resPlugins.json();
+        if (d.plugins) allPlugins = d.plugins;
       }
       buildFilters();
       render();
       updateStats();
     } catch {
-      // Offline / standalone mode: initialized from embedded arrays
+      // Standalone mode: initialized from embedded arrays
     }
   }
 
   // ── Filters ──────────────────────────────────────────────
   function buildFilters() {
-    const list = (currentTab === 'skills') ? allSkills : allMcps;
+    const list = getCurrentList();
     const cats = [...new Set(list.map(s => s.category))].sort();
     const container = document.getElementById('filters');
     container.innerHTML = `<span class="filter-label">Filter:</span><button class="filter-chip ${activeFilter === 'all' ? 'active' : ''}" data-cat="all" onclick="setFilter('all', this)">All</button>`;
@@ -1373,15 +1399,16 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
   // ── Render ───────────────────────────────────────────────
   function render() {
     const q = searchQuery;
-    const items = (currentTab === 'skills') ? allSkills : allMcps;
+    const items = getCurrentList();
     const filtered = items.filter(s => {
       if (activeFilter !== 'all' && s.category !== activeFilter) return false;
       if (q) {
         const matchesName = (s.name || '').toLowerCase().includes(q);
         const matchesDesc = (s.description || '').toLowerCase().includes(q);
         const matchesCat  = (s.category || '').toLowerCase().includes(q);
+        const matchesRole = (s.role || '').toLowerCase().includes(q);
         const matchesTags = s.tags && s.tags.some(t => t.toLowerCase().includes(q));
-        if (!matchesName && !matchesDesc && !matchesCat && !matchesTags) return false;
+        if (!matchesName && !matchesDesc && !matchesCat && !matchesRole && !matchesTags) return false;
       }
       return true;
     });
@@ -1392,7 +1419,7 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
       grid.innerHTML = `
         <div class="empty">
           <div class="empty-icon">🔍</div>
-          <h3>No ${currentTab === 'skills' ? 'skills' : 'MCP servers'} found</h3>
+          <h3>No items found in ${currentTab}</h3>
           <p>Try a different search term or filter category.</p>
         </div>`;
       return;
@@ -1400,8 +1427,14 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
 
     if (currentTab === 'skills') {
       grid.innerHTML = filtered.map(skill => skillCardHTML(skill)).join('');
-    } else {
+    } else if (currentTab === 'mcps') {
       grid.innerHTML = filtered.map(mcp => mcpCardHTML(mcp)).join('');
+    } else if (currentTab === 'agents') {
+      grid.innerHTML = filtered.map(agent => agentCardHTML(agent)).join('');
+    } else if (currentTab === 'rules') {
+      grid.innerHTML = filtered.map(rule => ruleCardHTML(rule)).join('');
+    } else if (currentTab === 'plugins') {
+      grid.innerHTML = filtered.map(plugin => pluginCardHTML(plugin)).join('');
     }
   }
 
@@ -1481,14 +1514,117 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
       </div>`;
   }
 
+  function agentCardHTML(agent) {
+    const c = catColor(agent.category);
+    const installCmd = `cp -r ${agent.path} .agents/agents/`;
+    const ghUrl = `https://github.com/carthworks/ai-agent-skills/tree/main/${agent.path}`;
+    const id = `agent-${agent.name}`;
+    const tagsHTML = (agent.tags && agent.tags.length > 0)
+      ? `<div class="card-tags">${agent.tags.map(t => `<span class="tag-pill">#${escHtml(t)}</span>`).join('')}</div>`
+      : '';
+    return `
+      <div class="card">
+        <div class="card-header">
+          <span class="card-name">${escHtml(agent.name)}</span>
+          <div class="header-badges">
+            <span class="runtime-badge">🤖 ${escHtml(agent.model || 'subagent')}</span>
+            <span class="cat-badge" style="background:${c.bg};color:${c.text};border:1px solid ${c.border}">${escHtml(agent.category)}</span>
+          </div>
+        </div>
+        <p style="font-size:0.8rem; font-weight:600; color:var(--accent); margin-top:-6px;">${escHtml(agent.role)}</p>
+        <p class="card-desc">${escHtml(agent.description)}</p>
+        ${tagsHTML}
+        <div class="card-footer">
+          <span class="install-snippet" title="${escAttr(installCmd)}">${escHtml(installCmd)}</span>
+          <button class="card-copy" id="cp-${id}" onclick="copyInstall('${escAttr(installCmd)}','${id}')" title="Copy install command">📋</button>
+        </div>
+        <div class="card-meta">
+          <span>v${escHtml(agent.version)}</span>
+          <span>·</span>
+          <span>${escHtml(agent.license)}</span>
+          <span>·</span>
+          <a href="${escAttr(ghUrl)}" target="_blank" rel="noopener">View Agent ↗</a>
+        </div>
+      </div>`;
+  }
+
+  function ruleCardHTML(rule) {
+    const c = catColor(rule.category);
+    const installCmd = `cp ${rule.path} .agents/rules/`;
+    const ghUrl = `https://github.com/carthworks/ai-agent-skills/blob/main/${rule.path}`;
+    const id = `rule-${rule.name}`;
+    const tagsHTML = (rule.tags && rule.tags.length > 0)
+      ? `<div class="card-tags">${rule.tags.map(t => `<span class="tag-pill">#${escHtml(t)}</span>`).join('')}</div>`
+      : '';
+    return `
+      <div class="card">
+        <div class="card-header">
+          <span class="card-name">${escHtml(rule.name)}</span>
+          <div class="header-badges">
+            <span class="cat-badge" style="background:${c.bg};color:${c.text};border:1px solid ${c.border}">${escHtml(rule.category)}</span>
+          </div>
+        </div>
+        <p class="card-desc">${escHtml(rule.description)}</p>
+        ${tagsHTML}
+        <div class="card-footer">
+          <span class="install-snippet" title="${escAttr(installCmd)}">${escHtml(installCmd)}</span>
+          <button class="card-copy" id="cp-${id}" onclick="copyInstall('${escAttr(installCmd)}','${id}')" title="Copy install command">📋</button>
+        </div>
+        <div class="card-meta">
+          <span>v${escHtml(rule.version)}</span>
+          <span>·</span>
+          <a href="${escAttr(ghUrl)}" target="_blank" rel="noopener">View Rule Preset ↗</a>
+        </div>
+      </div>`;
+  }
+
+  function pluginCardHTML(plugin) {
+    const c = catColor(plugin.category);
+    const installCmd = `cp -r ${plugin.path} .agents/plugins/`;
+    const ghUrl = `https://github.com/carthworks/ai-agent-skills/tree/main/${plugin.path}`;
+    const id = `plugin-${plugin.name}`;
+    const tagsHTML = (plugin.tags && plugin.tags.length > 0)
+      ? `<div class="card-tags">${plugin.tags.map(t => `<span class="tag-pill">#${escHtml(t)}</span>`).join('')}</div>`
+      : '';
+    const componentCount = (plugin.components?.skills?.length || 0) + (plugin.components?.mcps?.length || 0) + (plugin.components?.agents?.length || 0) + (plugin.components?.rules?.length || 0);
+    return `
+      <div class="card">
+        <div class="card-header">
+          <span class="card-name">${escHtml(plugin.name)}</span>
+          <div class="header-badges">
+            <span class="runtime-badge">📦 ${componentCount} items</span>
+            <span class="cat-badge" style="background:${c.bg};color:${c.text};border:1px solid ${c.border}">${escHtml(plugin.category)}</span>
+          </div>
+        </div>
+        <p class="card-desc">${escHtml(plugin.description)}</p>
+        ${tagsHTML}
+        <div class="card-footer">
+          <span class="install-snippet" title="${escAttr(installCmd)}">${escHtml(installCmd)}</span>
+          <button class="card-copy" id="cp-${id}" onclick="copyInstall('${escAttr(installCmd)}','${id}')" title="Copy install command">📋</button>
+        </div>
+        <div class="card-meta">
+          <span>v${escHtml(plugin.version)}</span>
+          <span>·</span>
+          <span>${escHtml(plugin.license)}</span>
+          <span>·</span>
+          <a href="${escAttr(ghUrl)}" target="_blank" rel="noopener">View Bundle ↗</a>
+        </div>
+      </div>`;
+  }
+
   // ── Stats ────────────────────────────────────────────────
   function updateStats() {
     document.getElementById('stat-skills').textContent = allSkills.length;
     document.getElementById('stat-mcps').textContent = allMcps.length;
+    document.getElementById('stat-agents').textContent = allAgents.length;
+    document.getElementById('stat-rules').textContent = allRules.length;
+    document.getElementById('stat-plugins').textContent = allPlugins.length;
+
     document.getElementById('count-skills').textContent = allSkills.length;
     document.getElementById('count-mcps').textContent = allMcps.length;
-    const cats = new Set([...allSkills.map(s => s.category), ...allMcps.map(m => m.category)]);
-    document.getElementById('stat-cats').textContent = cats.size;
+    document.getElementById('count-agents').textContent = allAgents.length;
+    document.getElementById('count-rules').textContent = allRules.length;
+    document.getElementById('count-plugins').textContent = allPlugins.length;
   }
 
   // ── Copy helpers ─────────────────────────────────────────

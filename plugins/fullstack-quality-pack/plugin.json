@@ -1,0 +1,28 @@
+{
+  "name": "fullstack-quality-pack",
+  "category": "quality",
+  "description": "Comprehensive engineering quality stack with strict TypeScript rules, testing pyramid guidance, PR review checklist, code reviewer subagent, and clean architecture boundaries.",
+  "license": "Apache-2.0",
+  "components": {
+    "skills": [
+      "skills/typescript/typescript-strict-mode",
+      "skills/testing/test-coverage-guidance",
+      "skills/devops/code-review-checklist"
+    ],
+    "mcps": [
+      "mcps/quality/sentry"
+    ],
+    "agents": [
+      "agents/code-reviewer"
+    ],
+    "rules": [
+      "rules/typescript-strict-guardrails.md",
+      "rules/clean-architecture-boundaries.md"
+    ]
+  },
+  "metadata": {
+    "version": "v1",
+    "publisher": "carthworks",
+    "tags": ["quality", "typescript", "testing", "code-review", "architecture"]
+  }
+}

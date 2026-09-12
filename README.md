@@ -1,94 +1,40 @@
-# ai-agent-skills
+# ai-agent-skills (Developer Agent Stack)
 
-> A curated collection of **SKILL.md** workflows and **Model Context Protocol (MCP)** server configurations for [Antigravity IDE](https://antigravity.dev), Claude Desktop, Cursor, and modern AI coding agents.
-> Drop skills into your workspace to teach your agent specialised workflows, and plug in MCP servers to give your agent live runtime superpowers (databases, browser inspection, APIs, cloud deployments).
+> A curated collection of **Skills**, **Model Context Protocol (MCP)** servers, **Specialist Subagents**, **Behavioral Rules**, and **Composite Plugins** for [Antigravity IDE](https://antigravity.dev), Claude Desktop, Cursor, and modern AI coding agents.
+> Drop skills into your workspace to teach your agent specialised workflows, plug in MCP servers for live runtime execution, assign subagents to domain tasks, and enforce strict behavioral guardrails.
 
 ![Skills](https://img.shields.io/badge/skills-10-blueviolet?style=flat-square)
 ![MCPs](https://img.shields.io/badge/MCPs-12-blue?style=flat-square)
+![Subagents](https://img.shields.io/badge/subagents-3-purple?style=flat-square)
+![Rules](https://img.shields.io/badge/rules-4-teal?style=flat-square)
+![Plugins](https://img.shields.io/badge/plugins-3-orange?style=flat-square)
 ![License](https://img.shields.io/badge/license-Apache--2.0-green?style=flat-square)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)
-![CI](https://github.com/carthworks/ai-agent-skills/actions/workflows/validate.yml/badge.svg)
 [![Marketplace](https://img.shields.io/badge/marketplace-live-blueviolet?style=flat-square)](https://carthworks.github.io/ai-agent-skills/)
 
 ![ai-agent-skills banner](ai-skil-set.png)
 
 ---
 
-## 🧠 What is a skill?
+## 🏛️ The 5 Pillars of the New Era Developer Stack
 
-A **skill** is a markdown file (`SKILL.md`) that teaches your AI agent a specialised workflow and reasoning checklist.
-When you drop a skill into `.agents/skills/<skill-name>/`, the agent automatically discovers and applies it
-at the right moment — no manual prompting required.
-
-Skills can also include `references/` subdirectories with supporting cheat-sheets and reference documents
-that the agent reads on demand.
-
----
-
-## 🔌 What is MCP & How to use MCP Servers?
-
-The **Model Context Protocol (MCP)** is an open standard that connects AI coding agents directly to live external tools, databases, APIs, browser sessions, and container runtimes.
-
-While **Skills** teach the agent *how* to reason and *what* to check, **MCP Servers** give the agent the *tools* to execute actions in real time:
-
-| Superpower | What the Agent Can Do |
-|---|---|
-| **Live Database Access** | Inspect schemas, foreign keys, run queries with `postgres` or `supabase` without hallucinating column names. |
-| **Interactive Browser QA** | Open headless pages, inspect live DOM, capture console errors with `chrome-devtools` or `playwright`. |
-| **API & Webhook Testing** | Test endpoints, inspect headers, and query third-party APIs with `fetch` or `stripe`. |
-| **Release & Project Ops** | Create PRs, inspect commits, and manage sprints with `github`, `linear`, `docker`, and `sentry`. |
-
----
-
-### How to Configure MCP Servers in Your Agent
-
-Every MCP definition in this repository includes a standard command and configuration block. Copy and paste the JSON configuration into your agent's config file:
-
-#### 1. In Antigravity IDE
-Add the server definition to your workspace `.agents/mcp_config.json` or global `~/.gemini/config/mcp_config.json`:
-
-```json
-{
-  "mcpServers": {
-    "chrome-devtools": {
-      "command": "npx",
-      "args": ["-y", "chrome-devtools-mcp"]
-    },
-    "postgres": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-postgres", "postgresql://user:password@localhost:5432/mydb"]
-    },
-    "fetch": {
-      "command": "uvx",
-      "args": ["mcp-server-fetch"]
-    }
-  }
-}
 ```
-
-#### 2. In Claude Desktop
-Open Settings → Developer → Edit Config (`claude_desktop_config.json`) and paste the `mcpServers` block.
-
-#### 3. In Cursor
-Open **Settings → Features → MCP**, click **Add New MCP Server**, enter the name, command (`npx`/`uvx`), and arguments.
-
-#### 4. Running directly via CLI (Testing & Debugging)
-You can test any MCP server directly from your terminal:
-
-```bash
-# Node.js MCP server (no install needed)
-npx -y @modelcontextprotocol/server-github
-
-# Python MCP server via uvx (fast, isolated)
-uvx mcp-server-fetch
-
-# Chrome DevTools debugging server
-npx -y chrome-devtools-mcp
+┌───────────────────────────────────────────────────────────────────────────────────┐
+│                           DEVELOPER AGENT STACK                                   │
+├─────────────────────────┬─────────────────────────┬───────────────────────────────┤
+│ 1. 🧠 Skills            │ 2. 🔌 MCP Servers       │ 3. 🤖 Specialist Subagents    │
+│ Step-by-step reasoning  │ Live runtime tools &    │ Role-based autonomous agents  │
+│ playbooks & checklists  │ database/browser APIs   │ with scoped permissions       │
+├─────────────────────────┴─────────────────────────┴───────────────────────────────┤
+│ 4. 📜 Behavioral Rules & Guardrails    5. 📦 Composite Plugins & Stacks           │
+│ Strict constraints, token efficiency   Pre-bundled fullstack suites combining     │
+│ and clean architecture boundaries      Skills + MCPs + Subagents + Rules          │
+└───────────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## Skills Catalogue
+## 🧠 Skills Catalogue
 
 | Skill | Category | Description |
 |-------|----------|-------------|
@@ -107,8 +53,6 @@ npx -y chrome-devtools-mcp
 
 ## 🔌 Model Context Protocol (MCP) Catalogue
 
-Curated Model Context Protocol servers for product development:
-
 | Server | Category | Command / Runtime | Description |
 |---|---|---|---|
 | [github](mcps/planning/github/mcp.json) | `planning` | `npx @modelcontextprotocol/server-github` | Search code, manage pull requests, create/update issues and inspect commits. |
@@ -124,136 +68,90 @@ Curated Model Context Protocol servers for product development:
 | [cloudflare](mcps/devops/cloudflare/mcp.json) | `devops` | `npx @cloudflare/mcp-server-cloudflare` | Inspect DNS records, Workers, KV namespaces, D1 databases, and R2 storage buckets. |
 | [sentry](mcps/quality/sentry/mcp.json) | `quality` | `uvx mcp-server-sentry` | Retrieve live stack traces, crash reports, error breadcrumbs, and issue telemetry. |
 
-> Want to add your own? See [CONTRIBUTING.md](CONTRIBUTING.md).
+---
+
+## 🤖 Specialist Subagents Catalogue
+
+Specialist agent personas configured with domain-specific reasoning and tool permissions:
+
+| Subagent | Category | Role | Description |
+|---|---|---|---|
+| [security-auditor](agents/security-auditor/) | `security` | Senior Security & Vulnerability Auditor | Scans for OWASP Top 10 vulnerabilities, hardcoded secrets, injection flaws, and unsafe dependencies. |
+| [code-reviewer](agents/code-reviewer/) | `review` | Principal Code Reviewer & Architecture Guardian | Enforces correctness, strict typing, error handling, performance regressions, and architectural boundaries. |
+| [qa-engineer](agents/qa-engineer/) | `quality` | Staff QA & Test Automation Specialist | Designs test pyramid plans, edge-case generation, synthetic regression testing, and E2E test suites. |
 
 ---
 
-## Install a skill
+## 📜 Behavioral Rules & Guardrails Catalogue
 
-Pick whichever method suits your workflow.
+Universal rule presets ready to drop into `.instructions`, `AGENTS.md`, or `.cursorrules`:
 
-### Option A — Manual copy (no tooling needed)
+| Rule Preset | Category | Description |
+|---|---|---|
+| [token-efficiency](rules/token-efficiency.md) | `efficiency` | Minimizes token consumption, enforces surgical diffs, avoids redundant reads, and streamlines responses. |
+| [typescript-strict-guardrails](rules/typescript-strict-guardrails.md) | `quality` | Enforces zero `any` policy, discriminated unions, runtime Zod boundary validation, and exhaustive typing. |
+| [clean-architecture-boundaries](rules/clean-architecture-boundaries.md) | `architecture` | Enforces strict separation of UI presentation, domain business logic, and infrastructure/data access layers. |
+| [security-and-secret-hygiene](rules/security-and-secret-hygiene.md) | `security` | Prohibits hardcoded credentials, enforces `.env` validation, and prevents client-side secret exposure. |
 
+---
+
+## 📦 Composite Plugins & Bundles Catalogue
+
+Pre-configured fullstack bundles combining Skills, MCPs, Subagents, and Rules:
+
+| Plugin Bundle | Category | Key Components | Description |
+|---|---|---|---|
+| [web-security-pack](plugins/web-security-pack/) | `security` | Skills: `web-trust-and-compliance`, `env-secret-safety`<br>MCP: `sentry`<br>Agent: `security-auditor`<br>Rule: `security-and-secret-hygiene.md` | Defense-in-depth web application security suite. |
+| [production-launch-pack](plugins/production-launch-pack/) | `launch` | Skills: `production-web-app-launch`, `web-trust-and-compliance`, `nextjs-performance`<br>MCPs: `cloudflare`, `chrome-devtools`<br>Agent: `qa-engineer`<br>Rule: `token-efficiency.md` | Comprehensive pre-launch and edge deployment verification stack. |
+| [fullstack-quality-pack](plugins/fullstack-quality-pack/) | `quality` | Skills: `typescript-strict-mode`, `test-coverage-guidance`, `code-review-checklist`<br>MCP: `sentry`<br>Agent: `code-reviewer`<br>Rules: `typescript-strict-guardrails.md`, `clean-architecture-boundaries.md` | Fullstack code quality, testing pyramid, and PR review bundle. |
+
+---
+
+## 🚀 Quick Install & Project Layout
+
+### Installation Options
+
+#### Option A — Direct Copy
 ```bash
-# macOS / Linux
+# Skills
 cp -r skills/web/production-web-app-launch .agents/skills/
 
-# Windows (PowerShell)
-Copy-Item -Recurse skills\web\production-web-app-launch .agents\skills\
+# Subagents
+cp -r agents/security-auditor .agents/agents/
+
+# Rules
+cp rules/token-efficiency.md .agents/rules/
+
+# Plugins
+cp -r plugins/web-security-pack .agents/plugins/
 ```
 
-That's it. Commit the folder and every developer on your team gets the skill.
+#### Option B — One-liner Install Script
+- **macOS / Linux**: `bash -c "$(curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh)"`
+- **Windows (PowerShell)**: `irm https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.ps1 | iex`
 
----
-
-### Option B — One-liner install script
-
-**macOS / Linux (bash):**
-
-```bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh)"
-```
-
-**Windows (PowerShell):**
-
-```powershell
-irm https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.ps1 | iex
-```
-
-Both scripts present an interactive menu — pick skills by number, they land in `.agents/skills/` automatically.
-
----
-
-### Option C — Sparse git checkout (no full clone)
-
-Download only the skill folder(s) you want without cloning the whole repo:
-
-```bash
-git clone --filter=blob:none --sparse https://github.com/carthworks/ai-agent-skills.git
-cd ai-agent-skills
-git sparse-checkout set skills/web/production-web-app-launch
-# then copy to your project:
-cp -r skills/web/production-web-app-launch ../.agents/skills/
-```
-
----
-
-## Project layout
-
-```
-skills/
-├── web/
-│   ├── production-web-app-launch/
-│   ├── web-trust-and-compliance/
-│   ├── nextjs-performance/
-│   └── api-design-rest/
-├── typescript/
-│   └── typescript-strict-mode/
-├── testing/
-│   └── test-coverage-guidance/
-├── devops/
-│   ├── git-commit-quality/
-│   ├── code-review-checklist/
-│   └── dockerfile-best-practices/
-└── safety/
-    └── env-secret-safety/
-
-scripts/
-├── install.sh    ← Bash interactive installer
-└── install.ps1   ← PowerShell interactive installer
-```
-
----
-
-## Where skills go in your project
-
-Skills are loaded from the `.agents/skills/` directory at your project root.
-This is automatically discovered by Antigravity IDE and compatible agents.
-
+### Workspace Layout (`.agents/`)
 ```
 your-project/
 └── .agents/
-    └── skills/
-        └── production-web-app-launch/   ← drop skill folders here
-            ├── SKILL.md
-            └── references/
+    ├── skills/       ← Drop SKILL.md folders here
+    ├── agents/       ← Drop specialist subagent folders here
+    ├── rules/        ← Drop behavioral rule presets here
+    ├── plugins/      ← Drop composite plugin bundles here
+    └── mcp_config.json ← Configure MCP servers here
 ```
 
 ---
 
-## Contributing
+## Contributing & Validation
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) — the short version:
+Run local validation across the entire stack:
+```bash
+npm test          # Runs all validation test suites
+npm run generate  # Re-generates catalogue JSON files & synchronizes docs/index.html
+```
 
-1. Fork → add your skill folder under `skills/<category>/<skill-name>/`
-2. Make sure `SKILL.md` has valid YAML frontmatter (name, description, license, metadata)
-3. Add a row to the table above
-4. Open a PR
-
----
-
-## 📖 Blog & Articles
-
-Read about how skills work and why they matter:
-
-- **[I Built a Collection of AI Agent Skills — Here's How They Work](blog/devto-post.md)**
-  _A deep dive into the skill format, real examples, and why teams should commit `.agents/skills/` to their repos._
-
----
-
-## 🗺️ Coming Soon
-
-Skills currently in development:
-
-| Skill | Category | Status |
-|-------|----------|--------|
-| `react-component-patterns` | `web` | 🔨 In progress |
-| `accessibility-audit` | `web` | 📋 Planned |
-| `ci-github-actions` | `devops` | 📋 Planned |
-| `database-migration-safety` | `safety` | 📋 Planned |
-| `openapi-spec-design` | `web` | 📋 Planned |
-
-> Have a skill idea? [Open an issue](https://github.com/carthworks/ai-agent-skills/issues) or submit a PR!
+See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 ---
 
@@ -266,9 +164,8 @@ Apache-2.0 — see [LICENSE](LICENSE).
 ## Author
 
 **Karthikeyan T** · [@carthworks](https://github.com/carthworks)
-
 - ✉️ [tkarthikeyan@gmail.com](mailto:tkarthikeyan@gmail.com)
 - 💼 [Connect on LinkedIn](https://www.linkedin.com/in/carthworks)
 - 🐙 [github.com/carthworks](https://github.com/carthworks)
 
-> *Let's build a safer, more inclusive web.*
+> *Supercharging the next generation of software engineering.*

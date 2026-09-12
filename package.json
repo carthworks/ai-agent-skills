@@ -6,7 +6,9 @@
   "scripts": {
     "validate:skills": "node tests/validate-skills.js",
     "validate:mcps": "node tests/validate-mcps.js",
-    "validate": "node tests/validate-skills.js && node tests/validate-mcps.js",
+    "validate:agents": "node tests/validate-agents.js",
+    "validate:plugins": "node tests/validate-plugins.js",
+    "validate": "node tests/validate-all.js",
     "generate": "node scripts/generate-catalogue.js",
     "build": "npm run validate && npm run generate",
     "test": "npm run validate"

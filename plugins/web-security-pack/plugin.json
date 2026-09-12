@@ -1,0 +1,26 @@
+{
+  "name": "web-security-pack",
+  "category": "security",
+  "description": "Complete security bundle combining trust & compliance audits, secret safety enforcement, automated vulnerability scanning subagent, and secret hygiene rules.",
+  "license": "Apache-2.0",
+  "components": {
+    "skills": [
+      "skills/web/web-trust-and-compliance",
+      "skills/safety/env-secret-safety"
+    ],
+    "mcps": [
+      "mcps/quality/sentry"
+    ],
+    "agents": [
+      "agents/security-auditor"
+    ],
+    "rules": [
+      "rules/security-and-secret-hygiene.md"
+    ]
+  },
+  "metadata": {
+    "version": "v1",
+    "publisher": "carthworks",
+    "tags": ["security", "compliance", "privacy", "secrets", "audit"]
+  }
+}

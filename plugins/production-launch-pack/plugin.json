@@ -1,0 +1,28 @@
+{
+  "name": "production-launch-pack",
+  "category": "launch",
+  "description": "Essential pre-launch bundle covering production readiness audits, trust & compliance checks, edge deployment tools, and browser QA inspectors.",
+  "license": "Apache-2.0",
+  "components": {
+    "skills": [
+      "skills/web/production-web-app-launch",
+      "skills/web/web-trust-and-compliance",
+      "skills/web/nextjs-performance"
+    ],
+    "mcps": [
+      "mcps/devops/cloudflare",
+      "mcps/browser/chrome-devtools"
+    ],
+    "agents": [
+      "agents/qa-engineer"
+    ],
+    "rules": [
+      "rules/token-efficiency.md"
+    ]
+  },
+  "metadata": {
+    "version": "v1",
+    "publisher": "carthworks",
+    "tags": ["launch", "production", "performance", "deployment", "readiness"]
+  }
+}

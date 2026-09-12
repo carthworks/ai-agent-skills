@@ -1,0 +1,102 @@
+{
+  "generated": "2026-09-12T09:13:30.000Z",
+  "plugins": [
+    {
+      "name": "production-launch-pack",
+      "description": "Essential pre-launch bundle covering production readiness audits, trust & compliance checks, edge deployment tools, and browser QA inspectors.",
+      "category": "launch",
+      "path": "plugins/production-launch-pack",
+      "components": {
+        "skills": [
+          "skills/web/production-web-app-launch",
+          "skills/web/web-trust-and-compliance",
+          "skills/web/nextjs-performance"
+        ],
+        "mcps": [
+          "mcps/devops/cloudflare",
+          "mcps/browser/chrome-devtools"
+        ],
+        "agents": [
+          "agents/qa-engineer"
+        ],
+        "rules": [
+          "rules/token-efficiency.md"
+        ]
+      },
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": [
+        "launch",
+        "production",
+        "performance",
+        "deployment",
+        "readiness"
+      ]
+    },
+    {
+      "name": "fullstack-quality-pack",
+      "description": "Comprehensive engineering quality stack with strict TypeScript rules, testing pyramid guidance, PR review checklist, code reviewer subagent, and clean arch…",
+      "category": "quality",
+      "path": "plugins/fullstack-quality-pack",
+      "components": {
+        "skills": [
+          "skills/typescript/typescript-strict-mode",
+          "skills/testing/test-coverage-guidance",
+          "skills/devops/code-review-checklist"
+        ],
+        "mcps": [
+          "mcps/quality/sentry"
+        ],
+        "agents": [
+          "agents/code-reviewer"
+        ],
+        "rules": [
+          "rules/typescript-strict-guardrails.md",
+          "rules/clean-architecture-boundaries.md"
+        ]
+      },
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": [
+        "quality",
+        "typescript",
+        "testing",
+        "code-review",
+        "architecture"
+      ]
+    },
+    {
+      "name": "web-security-pack",
+      "description": "Complete security bundle combining trust & compliance audits, secret safety enforcement, automated vulnerability scanning subagent, and secret hygiene rules.",
+      "category": "security",
+      "path": "plugins/web-security-pack",
+      "components": {
+        "skills": [
+          "skills/web/web-trust-and-compliance",
+          "skills/safety/env-secret-safety"
+        ],
+        "mcps": [
+          "mcps/quality/sentry"
+        ],
+        "agents": [
+          "agents/security-auditor"
+        ],
+        "rules": [
+          "rules/security-and-secret-hygiene.md"
+        ]
+      },
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": [
+        "security",
+        "compliance",
+        "privacy",
+        "secrets",
+        "audit"
+      ]
+    }
+  ]
+}

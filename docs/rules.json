@@ -1,0 +1,61 @@
+{
+  "generated": "2026-09-12T09:13:30.000Z",
+  "rules": [
+    {
+      "name": "clean-architecture-boundaries",
+      "description": "Architectural separation of concerns separating UI presentation, domain business logic, and infrastructure/data access layers.",
+      "category": "architecture",
+      "path": "rules/clean-architecture-boundaries.md",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": [
+        "architecture",
+        "clean-code",
+        "boundaries",
+        "domain-driven"
+      ]
+    },
+    {
+      "name": "token-efficiency",
+      "description": "Universal rules for minimizing token consumption, enforcing surgical diffs, avoiding redundant reads, and streamlining agent responses.",
+      "category": "efficiency",
+      "path": "rules/token-efficiency.md",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": [
+        "tokens",
+        "efficiency",
+        "performance",
+        "agent-behavior"
+      ]
+    },
+    {
+      "name": "typescript-strict-guardrails",
+      "description": "Strict TypeScript rules prohibiting any, enforcing discriminated unions, runtime schema validation (Zod), and exhaustive type guards.",
+      "category": "quality",
+      "path": "rules/typescript-strict-guardrails.md",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": [
+        "typescript",
+        "types",
+        "strict",
+        "quality"
+      ]
+    },
+    {
+      "name": "security-and-secret-hygiene",
+      "description": "Strict security rules prohibiting hardcoded credentials, enforcing environment variable validation, and preventing sensitive data leaks.",
+      "category": "security",
+      "path": "rules/security-and-secret-hygiene.md",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": [
+        "security",
+        "secrets",
+        "env",
+        "safety"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/carthworks/ai-agent-skills/blob/main/agent.schema.json",
+  "title": "Subagent Definition Schema",
+  "description": "Validates agent.json and AGENT.md frontmatter for specialist subagents in the ai-agent-skills repository.",
+  "type": "object",
+  "required": ["name", "category", "description", "role", "systemPrompt", "metadata"],
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$",
+      "minLength": 3,
+      "maxLength": 64,
+      "description": "Unique agent identifier in kebab-case."
+    },
+    "category": {
+      "type": "string",
+      "enum": ["security", "quality", "review", "architecture", "devops", "general"],
+      "description": "Functional domain of the specialist subagent."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 1000,
+      "description": "Clear explanation of what the subagent specializes in."
+    },
+    "role": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 200,
+      "description": "Concise persona role statement (e.g. 'Senior Security & Vulnerability Auditor')."
+    },
+    "model": {
+      "type": "string",
+      "description": "Recommended model profile or reasoning temperament."
+    },
+    "toolsAllowed": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "List of permissible tool categories or specific tools."
+    },
+    "systemPrompt": {
+      "type": "string",
+      "minLength": 50,
+      "description": "Specialized prompt instructions defining the agent's persona, constraints, and workflow."
+    },
+    "license": {
+      "type": "string",
+      "enum": [
+        "Apache-2.0",
+        "MIT",
+        "BSD-2-Clause",
+        "BSD-3-Clause",
+        "ISC",
+        "GPL-3.0",
+        "MPL-2.0",
+        "CC-BY-4.0",
+        "CC0-1.0"
+      ]
+    },
+    "metadata": {
+      "type": "object",
+      "required": ["version", "publisher"],
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "type": "string",
+          "pattern": "^v?[0-9]+(\\.[0-9]+)*(\\.[0-9]+)?$"
+        },
+        "publisher": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9-]{0,37}[a-zA-Z0-9])?$"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "maxItems": 10,
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}
