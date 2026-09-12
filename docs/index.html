@@ -282,7 +282,69 @@
       padding: 18px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+    }
+
+    .hero-canvas-wrap {
+      width: 100%;
+      height: 195px;
+      border-radius: 10px;
+      position: relative;
+      overflow: hidden;
+      background: radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.88) 0%, rgba(8, 10, 15, 0.98) 100%);
+      border: 1px solid var(--border);
+      cursor: grab;
+      touch-action: none;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 0 28px rgba(0, 0, 0, 0.55);
+      transition: border-color 0.3s ease;
+    }
+
+    .hero-canvas-wrap:active {
+      cursor: grabbing;
+    }
+
+    .hero-canvas-wrap canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .hero-canvas-hud {
+      position: absolute;
+      bottom: 8px;
+      left: 10px;
+      right: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      font-size: 0.68rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .hud-tag {
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 2px 7px;
+      border-radius: 10px;
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      transition: color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .hud-hint {
+      color: var(--text-dim);
+      opacity: 0.8;
+      font-size: 0.64rem;
     }
 
     .hero-badge {
@@ -918,7 +980,14 @@
   <aside class="sidebar-panel">
     
     <!-- Hero & Install Box -->
-    <div class="sidebar-card">
+    <div class="sidebar-card" id="hero-sidebar-card">
+      <div class="hero-canvas-wrap" id="hero-canvas-wrap" title="Drag to rotate 3D Cyber Globe">
+        <canvas id="hero-globe-canvas"></canvas>
+        <div class="hero-canvas-hud">
+          <span class="hud-tag" id="hud-color-name">✦ Electric Indigo</span>
+          <span class="hud-hint">👆 Drag to spin 3D</span>
+        </div>
+      </div>
       <div class="hero-badge">✨ New Era Developer Stack</div>
       <h1>Supercharge Your AI Agent</h1>
       <p>Modular reasoning skills, live MCP tools, specialist subagents, and guardrails for modern AI engineering.</p>
@@ -2085,10 +2154,557 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
     };
   }
 
+  // ── 3D Interactive Cyber Globe & Galaxy Engine ────────────
+  function initHeroGlobeGalaxy() {
+    const canvas = document.getElementById('hero-globe-canvas');
+    const wrap = document.getElementById('hero-canvas-wrap');
+    const hudColor = document.getElementById('hud-color-name');
+    const heroCard = document.getElementById('hero-sidebar-card');
+    if (!canvas || !wrap) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let width = 0;
+    let height = 0;
+    let dpr = window.devicePixelRatio || 1;
+
+    function resize() {
+      const rect = wrap.getBoundingClientRect();
+      width = rect.width;
+      height = rect.height;
+      dpr = window.devicePixelRatio || 1;
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+    if (window.ResizeObserver) {
+      new ResizeObserver(resize).observe(wrap);
+    }
+
+    // Neon Cyber Palette
+    const CYBER_PALETTE = [
+      { name: 'Electric Indigo', rgb: [99, 102, 241], secRgb: [139, 92, 246] },
+      { name: 'Cyan', rgb: [6, 182, 212], secRgb: [56, 189, 248] },
+      { name: 'Royal Violet', rgb: [139, 92, 246], secRgb: [217, 70, 239] },
+      { name: 'Cyber Emerald', rgb: [16, 185, 129], secRgb: [52, 211, 153] },
+      { name: 'Amber Gold', rgb: [245, 158, 11], secRgb: [251, 191, 36] },
+      { name: 'Rose Pink', rgb: [236, 72, 153], secRgb: [244, 114, 182] }
+    ];
+
+    let colorFrom = 0;
+    let colorTo = 1;
+    let colorProgress = 0;
+    let lastColorChange = performance.now();
+    const TRANSITION_DURATION = 1800;
+    const HOLD_DURATION = 2600;
+
+    // Rotation & Physics State
+    let rotX = 0.25;
+    let rotY = 0.0;
+    let rotZ = 0.12;
+    let velX = 0.0025;
+    let velY = 0.007;
+    let isDragging = false;
+    let lastPointerX = 0;
+    let lastPointerY = 0;
+    let hoverTiltX = 0;
+    let hoverTiltY = 0;
+
+    // Golden Spiral Fibonacci Nodes for Spherical Mesh
+    const NODE_COUNT = 56;
+    const globeNodes = [];
+    const phi = Math.PI * (3 - Math.sqrt(5));
+    for (let i = 0; i < NODE_COUNT; i++) {
+      const y = 1 - (i / (NODE_COUNT - 1)) * 2;
+      const radiusAtY = Math.sqrt(Math.max(0, 1 - y * y));
+      const theta = phi * i;
+      const x = Math.cos(theta) * radiusAtY;
+      const z = Math.sin(theta) * radiusAtY;
+      globeNodes.push({ x, y, z, phase: Math.random() * Math.PI * 2 });
+    }
+
+    // Cyber Great-Circle Arcs & Pulses
+    const cyberArcs = [];
+    for (let i = 0; i < globeNodes.length; i += 3) {
+      const target = (i + 5 + Math.floor(Math.random() * 7)) % globeNodes.length;
+      cyberArcs.push({
+        from: i,
+        to: target,
+        pulsePos: Math.random(),
+        speed: 0.007 + Math.random() * 0.011
+      });
+    }
+
+    // Galaxy Spiral Particles & Twinkling Stars
+    const GALAXY_COUNT = 135;
+    const galaxyParticles = [];
+    for (let i = 0; i < GALAXY_COUNT; i++) {
+      const arm = i % 3;
+      const armOffset = (arm * 2 * Math.PI) / 3;
+      const distNorm = Math.pow(Math.random(), 0.65);
+      const r = 0.45 + distNorm * 0.95;
+      const theta = armOffset + r * 2.6 + (Math.random() - 0.5) * 0.4;
+      const x = Math.cos(theta) * r;
+      const z = Math.sin(theta) * r;
+      const y = (Math.random() - 0.5) * 0.2 * (1.2 - distNorm);
+      galaxyParticles.push({
+        x, y, z,
+        r, theta,
+        size: 0.75 + Math.random() * 1.5,
+        twinkleSpeed: 2.2 + Math.random() * 4.5,
+        twinklePhase: Math.random() * Math.PI * 2,
+        baseAlpha: 0.35 + Math.random() * 0.55
+      });
+    }
+
+    // Multi-Layered 3D Orbital Rings & Orbiting Satellites
+    const orbitalRings = [
+      {
+        radiusMult: 1.34,
+        tiltX: 0.48,
+        tiltY: 0.18,
+        tiltZ: 0.52,
+        speed: 0.016,
+        angle: 0.2,
+        satelliteSize: 3.2,
+        trail: []
+      },
+      {
+        radiusMult: 1.62,
+        tiltX: -0.58,
+        tiltY: 0.62,
+        tiltZ: -0.28,
+        speed: -0.013,
+        angle: Math.PI * 0.75,
+        satelliteSize: 2.7,
+        trail: []
+      },
+      {
+        radiusMult: 1.88,
+        tiltX: 0.82,
+        tiltY: -0.38,
+        tiltZ: 0.22,
+        speed: 0.009,
+        angle: Math.PI * 1.45,
+        satelliteSize: 2.3,
+        trail: []
+      }
+    ];
+
+    // Click Sparks Burst
+    const sparkBursts = [];
+    function addSparks(cx, cy, rgb) {
+      for (let i = 0; i < 24; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 1.0 + Math.random() * 3.8;
+        sparkBursts.push({
+          x: cx,
+          y: cy,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          alpha: 1.0,
+          decay: 0.02 + Math.random() * 0.03,
+          size: 1.2 + Math.random() * 2.2,
+          rgb
+        });
+      }
+    }
+
+    // Pointer Interaction Handlers
+    wrap.addEventListener('pointerdown', (e) => {
+      isDragging = true;
+      lastPointerX = e.clientX;
+      lastPointerY = e.clientY;
+      wrap.setPointerCapture(e.pointerId);
+    });
+
+    wrap.addEventListener('pointermove', (e) => {
+      const rect = wrap.getBoundingClientRect();
+      const nx = (e.clientX - rect.left) / rect.width - 0.5;
+      const ny = (e.clientY - rect.top) / rect.height - 0.5;
+      hoverTiltX = ny * 0.2;
+      hoverTiltY = nx * 0.3;
+
+      if (isDragging) {
+        const dx = e.clientX - lastPointerX;
+        const dy = e.clientY - lastPointerY;
+        velY = dx * 0.008;
+        velX = dy * 0.008;
+        rotY += velY;
+        rotX += velX;
+        lastPointerX = e.clientX;
+        lastPointerY = e.clientY;
+      }
+    });
+
+    function endDrag() {
+      isDragging = false;
+    }
+    wrap.addEventListener('pointerup', endDrag);
+    wrap.addEventListener('pointercancel', endDrag);
+
+    wrap.addEventListener('click', (e) => {
+      const rect = wrap.getBoundingClientRect();
+      const cx = e.clientX - rect.left;
+      const cy = e.clientY - rect.top;
+      const c = CYBER_PALETTE[colorTo].rgb;
+      addSparks(cx, cy, c);
+    });
+
+    // 3D Math Helper
+    function rotate3D(p, rx, ry, rz) {
+      const cosY = Math.cos(ry), sinY = Math.sin(ry);
+      const x1 = p.x * cosY + p.z * sinY;
+      const z1 = -p.x * sinY + p.z * cosY;
+      const y1 = p.y;
+
+      const cosX = Math.cos(rx), sinX = Math.sin(rx);
+      const y2 = y1 * cosX - z1 * sinX;
+      const z2 = y1 * sinX + z1 * cosX;
+      const x2 = x1;
+
+      const cosZ = Math.cos(rz), sinZ = Math.sin(rz);
+      const x3 = x2 * cosZ - y2 * sinZ;
+      const y3 = x2 * sinZ + y2 * cosZ;
+      const z3 = z2;
+
+      return { x: x3, y: y3, z: z3 };
+    }
+
+    function project(p, cx, cy, R) {
+      const fov = 380;
+      const zWorld = p.z * R;
+      const scale = fov / (fov + zWorld + 100);
+      return {
+        x2d: cx + p.x * R * scale,
+        y2d: cy + p.y * R * scale,
+        scale: scale,
+        depth: p.z
+      };
+    }
+
+    // Animation Loop
+    let lastTime = performance.now();
+
+    function render(now) {
+      requestAnimationFrame(render);
+      const dt = Math.min((now - lastTime) / 1000, 0.1);
+      lastTime = now;
+
+      if (!width || !height) return;
+      ctx.clearRect(0, 0, width, height);
+
+      // Color Engine Update
+      const elapsedColor = now - lastColorChange;
+      if (elapsedColor > HOLD_DURATION + TRANSITION_DURATION) {
+        colorFrom = colorTo;
+        let next = Math.floor(Math.random() * CYBER_PALETTE.length);
+        while (next === colorFrom && CYBER_PALETTE.length > 1) {
+          next = Math.floor(Math.random() * CYBER_PALETTE.length);
+        }
+        colorTo = next;
+        lastColorChange = now;
+        colorProgress = 0;
+      } else if (elapsedColor > HOLD_DURATION) {
+        const t = (elapsedColor - HOLD_DURATION) / TRANSITION_DURATION;
+        colorProgress = 0.5 - 0.5 * Math.cos(t * Math.PI);
+      } else {
+        colorProgress = 0;
+      }
+
+      const c1 = CYBER_PALETTE[colorFrom];
+      const c2 = CYBER_PALETTE[colorTo];
+      const p = colorProgress;
+
+      const r = Math.round(c1.rgb[0] + (c2.rgb[0] - c1.rgb[0]) * p);
+      const g = Math.round(c1.rgb[1] + (c2.rgb[1] - c1.rgb[1]) * p);
+      const b = Math.round(c1.rgb[2] + (c2.rgb[2] - c1.rgb[2]) * p);
+
+      const sr = Math.round(c1.secRgb[0] + (c2.secRgb[0] - c1.secRgb[0]) * p);
+      const sg = Math.round(c1.secRgb[1] + (c2.secRgb[1] - c1.secRgb[1]) * p);
+      const sb = Math.round(c1.secRgb[2] + (c2.secRgb[2] - c1.secRgb[2]) * p);
+
+      const activeName = p > 0.5 ? c2.name : c1.name;
+      if (hudColor && hudColor.textContent !== `✦ ${activeName}`) {
+        hudColor.textContent = `✦ ${activeName}`;
+        hudColor.style.color = `rgb(${r},${g},${b})`;
+        hudColor.style.borderColor = `rgba(${r},${g},${b},0.35)`;
+      }
+
+      // Container illumination
+      if (heroCard) {
+        heroCard.style.background = `radial-gradient(circle at 50% 28%, rgba(${r},${g},${b},0.13) 0%, rgba(${r},${g},${b},0.025) 60%, var(--surface) 100%)`;
+        heroCard.style.borderColor = `rgba(${r},${g},${b},0.28)`;
+        heroCard.style.boxShadow = `0 8px 32px rgba(${r},${g},${b},0.09)`;
+      }
+
+      // Physics & Rotation
+      if (!isDragging) {
+        velX += (0.0022 - velX) * 0.05;
+        velY += (0.0065 - velY) * 0.05;
+        rotX += velX;
+        rotY += velY;
+      }
+      const curRotX = rotX + hoverTiltX;
+      const curRotY = rotY + hoverTiltY;
+      const curRotZ = rotZ;
+
+      const cx = width * 0.5;
+      const cy = height * 0.5;
+      const R = Math.min(width, height) * 0.28;
+      const timeSec = now * 0.001;
+      const pulse = 1 + 0.16 * Math.sin(timeSec * 2.4);
+
+      // ── 1. Dynamic Radial Ambient Nebula / Core Glow ───────────
+      const bgGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 2.2);
+      bgGlow.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${0.22 * pulse})`);
+      bgGlow.addColorStop(0.35, `rgba(${sr}, ${sg}, ${sb}, ${0.1 * pulse})`);
+      bgGlow.addColorStop(0.7, `rgba(${r}, ${g}, ${b}, 0.03)`);
+      bgGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      ctx.fillStyle = bgGlow;
+      ctx.fillRect(0, 0, width, height);
+
+      // ── 2. Rotating Galaxy & Nebula Particle Field ────────────
+      for (let i = 0; i < galaxyParticles.length; i++) {
+        const gp = galaxyParticles[i];
+        gp.theta += 0.004;
+        gp.x = Math.cos(gp.theta) * gp.r;
+        gp.z = Math.sin(gp.theta) * gp.r;
+
+        const rotated = rotate3D(gp, curRotX * 0.6, curRotY * 0.8 + 0.5, curRotZ);
+        const proj = project(rotated, cx, cy, R * 1.35);
+
+        const twinkle = 0.4 + 0.6 * Math.sin(timeSec * gp.twinkleSpeed + gp.twinklePhase);
+        const depthAlpha = Math.max(0.1, (proj.depth + 1.2) / 2.2);
+        const finalAlpha = gp.baseAlpha * twinkle * depthAlpha;
+
+        ctx.fillStyle = i % 2 === 0
+          ? `rgba(${r}, ${g}, ${b}, ${finalAlpha})`
+          : `rgba(${sr}, ${sg}, ${sb}, ${finalAlpha})`;
+        ctx.beginPath();
+        ctx.arc(proj.x2d, proj.y2d, gp.size * proj.scale, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // ── 3. Multi-Layered 3D Orbital Rings & Satellites ────────
+      orbitalRings.forEach((ring, ringIdx) => {
+        ring.angle += ring.speed;
+        const ringRad = R * ring.radiusMult;
+
+        // Draw 3D Ring Ellipse Path
+        ctx.beginPath();
+        const RING_PTS = 40;
+        for (let j = 0; j <= RING_PTS; j++) {
+          const theta = (j / RING_PTS) * Math.PI * 2;
+          const px = Math.cos(theta);
+          const pz = Math.sin(theta);
+          const py = 0;
+          const pt3D = rotate3D({ x: px, y: py, z: pz }, ring.tiltX + curRotX * 0.3, ring.tiltY + curRotY * 0.4, ring.tiltZ);
+          const proj = project(pt3D, cx, cy, ringRad);
+          if (j === 0) ctx.moveTo(proj.x2d, proj.y2d);
+          else ctx.lineTo(proj.x2d, proj.y2d);
+        }
+        ctx.strokeStyle = ringIdx === 0
+          ? `rgba(${r}, ${g}, ${b}, 0.28)`
+          : ringIdx === 1
+          ? `rgba(${sr}, ${sg}, ${sb}, 0.24)`
+          : `rgba(${r}, ${g}, ${b}, 0.18)`;
+        ctx.lineWidth = 1;
+        ctx.setLineDash([4, 4]);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Satellite on Ring
+        const satX = Math.cos(ring.angle);
+        const satZ = Math.sin(ring.angle);
+        const sat3D = rotate3D({ x: satX, y: 0, z: satZ }, ring.tiltX + curRotX * 0.3, ring.tiltY + curRotY * 0.4, ring.tiltZ);
+        const satProj = project(sat3D, cx, cy, ringRad);
+
+        // Update trail
+        ring.trail.push({ x: satProj.x2d, y: satProj.y2d, alpha: 1.0 });
+        if (ring.trail.length > 10) ring.trail.shift();
+
+        // Draw trail
+        for (let k = 0; k < ring.trail.length; k++) {
+          const t = ring.trail[k];
+          const trailAlpha = (k / ring.trail.length) * 0.45;
+          ctx.fillStyle = `rgba(${sr}, ${sg}, ${sb}, ${trailAlpha})`;
+          ctx.beginPath();
+          ctx.arc(t.x, t.y, 1.2, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        // Draw Satellite Node & Glow
+        const satAlpha = Math.max(0.2, (satProj.depth + 1.2) / 2.2);
+        const satGrad = ctx.createRadialGradient(satProj.x2d, satProj.y2d, 0, satProj.x2d, satProj.y2d, ring.satelliteSize * 3);
+        satGrad.addColorStop(0, `rgba(255, 255, 255, ${0.9 * satAlpha})`);
+        satGrad.addColorStop(0.4, `rgba(${r}, ${g}, ${b}, ${0.8 * satAlpha})`);
+        satGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = satGrad;
+        ctx.beginPath();
+        ctx.arc(satProj.x2d, satProj.y2d, ring.satelliteSize * 3, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Satellite Radar Wave Pulse
+        const pingRadius = ((timeSec * 35 + ringIdx * 20) % 30) * satProj.scale;
+        const pingAlpha = Math.max(0, (1 - pingRadius / 30) * 0.4 * satAlpha);
+        ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${pingAlpha})`;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(satProj.x2d, satProj.y2d, pingRadius, 0, Math.PI * 2);
+        ctx.stroke();
+      });
+
+      // ── 4. Central Core Glowing Nebula ─────────────────────────
+      const coreGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 0.65 * pulse);
+      coreGrad.addColorStop(0, `rgba(255, 255, 255, ${0.85 * pulse})`);
+      coreGrad.addColorStop(0.25, `rgba(${sr}, ${sg}, ${sb}, ${0.55 * pulse})`);
+      coreGrad.addColorStop(0.6, `rgba(${r}, ${g}, ${b}, ${0.2 * pulse})`);
+      coreGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      ctx.fillStyle = coreGrad;
+      ctx.beginPath();
+      ctx.arc(cx, cy, R * 0.65 * pulse, 0, Math.PI * 2);
+      ctx.fill();
+
+      // ── 5. 3D Wireframe Globe Mesh (Latitudes & Longitudes) ────
+      const LAT_RINGS = [-0.65, -0.35, 0, 0.35, 0.65];
+      LAT_RINGS.forEach(latY => {
+        const ringRad = Math.sqrt(Math.max(0, 1 - latY * latY));
+        ctx.beginPath();
+        const SEGS = 32;
+        for (let j = 0; j <= SEGS; j++) {
+          const theta = (j / SEGS) * Math.PI * 2;
+          const p = {
+            x: Math.cos(theta) * ringRad,
+            y: latY,
+            z: Math.sin(theta) * ringRad
+          };
+          const pRot = rotate3D(p, curRotX, curRotY, curRotZ);
+          const proj = project(pRot, cx, cy, R);
+          if (j === 0) ctx.moveTo(proj.x2d, proj.y2d);
+          else ctx.lineTo(proj.x2d, proj.y2d);
+        }
+        ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.22)`;
+        ctx.lineWidth = 0.9;
+        ctx.stroke();
+      });
+
+      const LON_LINES = 8;
+      for (let m = 0; m < LON_LINES; m++) {
+        const lonAngle = (m / LON_LINES) * Math.PI;
+        ctx.beginPath();
+        const SEGS = 32;
+        for (let j = 0; j <= SEGS; j++) {
+          const theta = (j / SEGS) * Math.PI * 2;
+          const p = {
+            x: Math.sin(theta) * Math.cos(lonAngle),
+            y: Math.cos(theta),
+            z: Math.sin(theta) * Math.sin(lonAngle)
+          };
+          const pRot = rotate3D(p, curRotX, curRotY, curRotZ);
+          const proj = project(pRot, cx, cy, R);
+          if (j === 0) ctx.moveTo(proj.x2d, proj.y2d);
+          else ctx.lineTo(proj.x2d, proj.y2d);
+        }
+        ctx.strokeStyle = `rgba(${sr}, ${sg}, ${sb}, 0.18)`;
+        ctx.lineWidth = 0.8;
+        ctx.stroke();
+      }
+
+      // ── 6. Great-Circle Cyber Arcs & Data Packets ──────────────
+      cyberArcs.forEach(arc => {
+        const nodeA = globeNodes[arc.from];
+        const nodeB = globeNodes[arc.to];
+        const rotA = rotate3D(nodeA, curRotX, curRotY, curRotZ);
+        const rotB = rotate3D(nodeB, curRotX, curRotY, curRotZ);
+        const projA = project(rotA, cx, cy, R);
+        const projB = project(rotB, cx, cy, R);
+
+        const mid = {
+          x: (rotA.x + rotB.x) * 0.65,
+          y: (rotA.y + rotB.y) * 0.65,
+          z: (rotA.z + rotB.z) * 0.65
+        };
+        const projMid = project(mid, cx, cy, R * 1.25);
+
+        // Arc line
+        const depthAlpha = Math.max(0.08, (rotA.z + rotB.z + 2) / 4);
+        ctx.beginPath();
+        ctx.moveTo(projA.x2d, projA.y2d);
+        ctx.quadraticCurveTo(projMid.x2d, projMid.y2d, projB.x2d, projB.y2d);
+        ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${0.28 * depthAlpha})`;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        // Traveling pulse packet
+        arc.pulsePos = (arc.pulsePos + arc.speed) % 1;
+        const t = arc.pulsePos;
+        const invT = 1 - t;
+        const px = invT * invT * projA.x2d + 2 * invT * t * projMid.x2d + t * t * projB.x2d;
+        const py = invT * invT * projA.y2d + 2 * invT * t * projMid.y2d + t * t * projB.y2d;
+
+        ctx.fillStyle = `rgba(255, 255, 255, ${0.9 * depthAlpha})`;
+        ctx.beginPath();
+        ctx.arc(px, py, 1.8, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // ── 7. Globe Cyber Nodes ──────────────────────────────────
+      globeNodes.forEach((node, idx) => {
+        const pRot = rotate3D(node, curRotX, curRotY, curRotZ);
+        const proj = project(pRot, cx, cy, R);
+
+        const isFront = proj.depth > -0.15;
+        const nodePulse = 1 + 0.3 * Math.sin(timeSec * 3 + node.phase);
+        const alpha = isFront ? Math.min(1.0, 0.4 + proj.depth * 0.7) : 0.15;
+        const nodeRadius = (isFront ? 2.2 : 1.4) * proj.scale * nodePulse;
+
+        // Outer glow on front nodes
+        if (isFront && idx % 2 === 0) {
+          ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${0.35 * alpha})`;
+          ctx.beginPath();
+          ctx.arc(proj.x2d, proj.y2d, nodeRadius * 2.4, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        ctx.fillStyle = isFront
+          ? `rgba(255, 255, 255, ${alpha})`
+          : `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        ctx.beginPath();
+        ctx.arc(proj.x2d, proj.y2d, nodeRadius, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // ── 8. Interactive Energy Spark Bursts ─────────────────────
+      for (let s = sparkBursts.length - 1; s >= 0; s--) {
+        const sp = sparkBursts[s];
+        sp.x += sp.vx;
+        sp.y += sp.vy;
+        sp.alpha -= sp.decay;
+
+        if (sp.alpha <= 0) {
+          sparkBursts.splice(s, 1);
+          continue;
+        }
+
+        ctx.fillStyle = `rgba(${sp.rgb[0]}, ${sp.rgb[1]}, ${sp.rgb[2]}, ${sp.alpha})`;
+        ctx.beginPath();
+        ctx.arc(sp.x, sp.y, sp.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    requestAnimationFrame(render);
+  }
+
   // ── Boot ─────────────────────────────────────────────────
   initTheme();
   loadData();
   logDeveloperDetails();
+  initHeroGlobeGalaxy();
 </script>
 </body>
 </html>
