@@ -35,6 +35,8 @@
 ---
 
 ## 🧠 Skills Catalogue
+> **What it is**: Modular markdown playbooks (`SKILL.md`) that teach your AI agent domain-specific reasoning, standards, and checklists.  
+> **How to use**: Drop into `.agents/skills/<name>/` in your project — your agent automatically discovers and applies them on relevant tasks.
 
 | Skill | Category | Description |
 |-------|----------|-------------|
@@ -52,6 +54,8 @@
 ---
 
 ## 🔌 Model Context Protocol (MCP) Catalogue
+> **What it is**: Open-standard protocol servers giving your AI agent live runtime access to databases, web browsers, terminal commands, and APIs.  
+> **How to use**: Add the JSON configuration to your agent's `mcp_config.json` or run on-demand via `npx` / `uvx` with zero setup.
 
 | Server | Category | Command / Runtime | Description |
 |---|---|---|---|
@@ -71,8 +75,8 @@
 ---
 
 ## 🤖 Specialist Subagents Catalogue
-
-Specialist agent personas configured with domain-specific reasoning and tool permissions:
+> **What it is**: Autonomous, role-based subagent personas configured with tailored system prompts, restricted toolsets, and scoped objectives.  
+> **How to use**: Place in `.agents/agents/<name>/` and delegate complex tasks to specialist subagents (e.g. SecurityAuditor, CodeReviewer).
 
 | Subagent | Category | Role | Description |
 |---|---|---|---|
@@ -83,8 +87,8 @@ Specialist agent personas configured with domain-specific reasoning and tool per
 ---
 
 ## 📜 Behavioral Rules & Guardrails Catalogue
-
-Universal rule presets ready to drop into `.instructions`, `AGENTS.md`, or `.cursorrules`:
+> **What it is**: High-leverage behavioral constraints and style contracts enforcing token efficiency, strict typing, security hygiene, and clean architecture.  
+> **How to use**: Place in `.agents/rules/` or reference inside your `.instructions`, `AGENTS.md`, or `.cursorrules` to guide every agent response.
 
 | Rule Preset | Category | Description |
 |---|---|---|
@@ -96,8 +100,8 @@ Universal rule presets ready to drop into `.instructions`, `AGENTS.md`, or `.cur
 ---
 
 ## 📦 Composite Plugins & Bundles Catalogue
-
-Pre-configured fullstack bundles combining Skills, MCPs, Subagents, and Rules:
+> **What it is**: Curated multi-component packages bundling complementary Skills, MCPs, Subagents, and Rules into unified vertical domain packs.  
+> **How to use**: Copy the bundle into `.agents/plugins/<name>/` to equip your AI agent with an entire development toolkit in a single step.
 
 | Plugin Bundle | Category | Key Components | Description |
 |---|---|---|---|

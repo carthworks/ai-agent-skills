@@ -14,19 +14,22 @@
     /* ── Reset & tokens ─────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
+    :root, [data-theme="dark"] {
       --bg:        #08090e;
       --surface:   #0f1117;
       --surface2:  #161921;
       --border:    rgba(255,255,255,0.07);
       --border-h:  rgba(139,92,246,0.5);
       --text:      #e2e8f0;
-      --text-dim:  #6b7280;
-      --text-mute: #374151;
+      --text-dim:  #94a3b8;
+      --text-mute: #475569;
       --accent:    #8b5cf6;
       --accent-2:  #06b6d4;
       --green:     #10b981;
       --yellow:    #f59e0b;
+      --header-bg: rgba(8,9,14,0.92);
+      --tab-active-text: #ffffff;
+      --shadow:    0 8px 24px rgba(0,0,0,0.4);
 
       --cat-web:        #3b82f6;
       --cat-devops:     #8b5cf6;
@@ -42,6 +45,68 @@
       --cat-security:   #ef4444;
     }
 
+    [data-theme="middle"] {
+      --bg:        #151821;
+      --surface:   #1d212c;
+      --surface2:  #262b3a;
+      --border:    rgba(255,255,255,0.12);
+      --border-h:  rgba(167,139,250,0.6);
+      --text:      #f1f5f9;
+      --text-dim:  #cbd5e1;
+      --text-mute: #788296;
+      --accent:    #9d72f9;
+      --accent-2:  #22d3ee;
+      --green:     #34d399;
+      --yellow:    #fbbf24;
+      --header-bg: rgba(21,24,33,0.92);
+      --tab-active-text: #ffffff;
+      --shadow:    0 8px 24px rgba(0,0,0,0.3);
+
+      --cat-web:        #60a5fa;
+      --cat-devops:     #a78bfa;
+      --cat-typescript: #22d3ee;
+      --cat-testing:    #34d399;
+      --cat-safety:     #f87171;
+      --cat-general:    #94a3b8;
+      --cat-planning:   #fbbf24;
+      --cat-data:       #22d3ee;
+      --cat-api:        #f472b6;
+      --cat-browser:    #60a5fa;
+      --cat-quality:    #34d399;
+      --cat-security:   #f87171;
+    }
+
+    [data-theme="light"] {
+      --bg:        #f4f6f9;
+      --surface:   #ffffff;
+      --surface2:  #edf2f7;
+      --border:    rgba(15,23,42,0.1);
+      --border-h:  rgba(124,58,237,0.5);
+      --text:      #0f172a;
+      --text-dim:  #475569;
+      --text-mute: #94a3b8;
+      --accent:    #7c3aed;
+      --accent-2:  #0284c7;
+      --green:     #059669;
+      --yellow:    #d97706;
+      --header-bg: rgba(244,246,249,0.94);
+      --tab-active-text: #5b21b6;
+      --shadow:    0 6px 20px rgba(15,23,42,0.08);
+
+      --cat-web:        #2563eb;
+      --cat-devops:     #7c3aed;
+      --cat-typescript: #0891b2;
+      --cat-testing:    #059669;
+      --cat-safety:     #dc2626;
+      --cat-general:    #475569;
+      --cat-planning:   #d97706;
+      --cat-data:       #0891b2;
+      --cat-api:        #db2777;
+      --cat-browser:    #2563eb;
+      --cat-quality:    #059669;
+      --cat-security:   #dc2626;
+    }
+
     html { scroll-behavior: smooth; }
 
     body {
@@ -49,26 +114,29 @@
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
-      line-height: 1.6;
+      line-height: 1.5;
+      transition: background-color 0.2s ease, color 0.2s ease;
     }
-
-    /* ── Layout ─────────────────────────────────────────── */
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
     /* ── Header ─────────────────────────────────────────── */
     header {
       border-bottom: 1px solid var(--border);
-      padding: 20px 0;
+      padding: 10px 0;
       position: sticky;
       top: 0;
-      background: rgba(8,9,14,0.92);
+      background: var(--header-bg);
       backdrop-filter: blur(16px);
       z-index: 100;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
     }
 
-    .header-inner {
+    .header-container {
+      max-width: 1560px;
+      margin: 0 auto;
+      padding: 0 24px;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 16px;
       flex-wrap: wrap;
     }
@@ -82,75 +150,102 @@
     }
 
     .logo-icon {
-      width: 36px; height: 36px;
+      width: 32px; height: 32px;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
       border-radius: 8px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 18px;
+      font-size: 16px;
     }
 
     .logo-text {
       font-weight: 700;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       color: var(--text);
       letter-spacing: -0.02em;
     }
 
     .logo-text span { color: var(--accent); }
 
-    .header-search {
-      flex: 1;
-      min-width: 200px;
-      max-width: 420px;
-      position: relative;
+    .header-stats-strip {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.78rem;
+      color: var(--text-dim);
     }
 
-    .header-search input {
-      width: 100%;
-      padding: 9px 16px 9px 40px;
+    .stat-pill {
       background: var(--surface2);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--text);
-      font-family: 'Inter', sans-serif;
-      font-size: 0.875rem;
-      outline: none;
-      transition: border-color 0.2s;
+      padding: 3px 9px;
+      border-radius: 16px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
     }
 
-    .header-search input:focus { border-color: var(--accent); }
-    .header-search input::placeholder { color: var(--text-dim); }
-
-    .search-icon {
-      position: absolute;
-      left: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--text-dim);
-      font-size: 0.9rem;
-      pointer-events: none;
-    }
+    .stat-pill strong { color: var(--accent-2); font-family: 'JetBrains Mono', monospace; }
 
     .header-actions {
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-left: auto;
+    }
+
+    /* ── Theme Switcher ─────────────────────────────────── */
+    .theme-switch-group {
+      display: inline-flex;
+      align-items: center;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2px;
+      gap: 2px;
+    }
+
+    .theme-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-dim);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.74rem;
+      font-weight: 500;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.16s ease;
+      line-height: 1;
+    }
+
+    .theme-btn:hover {
+      color: var(--text);
+    }
+
+    .theme-btn.active {
+      background: var(--surface);
+      color: var(--accent);
+      border-color: var(--border-h);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+      font-weight: 600;
     }
 
     .btn-ghost {
-      padding: 8px 14px;
+      padding: 6px 12px;
       border-radius: 7px;
       border: 1px solid var(--border);
       background: transparent;
       color: var(--text-dim);
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-family: 'Inter', sans-serif;
       cursor: pointer;
       text-decoration: none;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       transition: all 0.18s;
     }
 
@@ -160,76 +255,96 @@
       background: rgba(139,92,246,0.06);
     }
 
-    /* ── Hero ───────────────────────────────────────────── */
-    .hero {
-      padding: 72px 0 40px;
-      text-align: center;
+    /* ── App Layout (2 Columns: 1/3 Sidebar + 2/3 Main) ─── */
+    .app-layout {
+      max-width: 1560px;
+      margin: 18px auto 40px;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    /* ── Sidebar (1/3 Width) ────────────────────────────── */
+    .sidebar-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: sticky;
+      top: 68px;
+    }
+
+    .sidebar-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
     .hero-badge {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 5px 12px;
-      border-radius: 20px;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 14px;
       border: 1px solid rgba(139,92,246,0.3);
       background: rgba(139,92,246,0.08);
       color: var(--accent);
-      font-size: 0.78rem;
-      font-weight: 500;
-      margin-bottom: 24px;
-      letter-spacing: 0.02em;
+      font-size: 0.72rem;
+      font-weight: 600;
+      width: fit-content;
     }
 
-    .hero h1 {
-      font-size: clamp(2rem, 5vw, 3.2rem);
+    .sidebar-card h1 {
+      font-size: 1.35rem;
       font-weight: 700;
-      letter-spacing: -0.03em;
-      line-height: 1.15;
-      margin-bottom: 16px;
-      background: linear-gradient(135deg, #fff 40%, var(--accent) 100%);
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      background: linear-gradient(135deg, var(--text) 40%, var(--accent) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
-    .hero p {
-      font-size: 1.05rem;
+    .sidebar-card p {
+      font-size: 0.82rem;
       color: var(--text-dim);
-      max-width: 680px;
-      margin: 0 auto 32px;
-      line-height: 1.7;
+      line-height: 1.5;
     }
 
     .hero-install {
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      gap: 0;
       background: var(--surface2);
       border: 1px solid var(--border);
-      border-radius: 10px;
+      border-radius: 8px;
       overflow: hidden;
-      max-width: 100%;
+      width: 100%;
     }
 
     .hero-install code {
-      padding: 11px 18px;
+      padding: 9px 12px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.82rem;
+      font-size: 0.75rem;
       color: var(--accent-2);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      flex: 1;
     }
 
     .copy-btn {
-      padding: 11px 14px;
+      padding: 9px 12px;
       background: var(--surface);
       border: none;
       border-left: 1px solid var(--border);
       color: var(--text-dim);
       cursor: pointer;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       transition: all 0.18s;
       flex-shrink: 0;
     }
@@ -237,97 +352,192 @@
     .copy-btn:hover { background: rgba(139,92,246,0.12); color: var(--accent); }
     .copy-btn.copied { color: var(--green); }
 
-    /* ── Stats bar ──────────────────────────────────────── */
-    .stats {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 28px;
-      padding: 24px 0;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      flex-wrap: wrap;
-    }
-
-    .stat { text-align: center; }
-    .stat-value { font-size: 1.5rem; font-weight: 700; color: var(--text); line-height: 1; }
-    .stat-label { font-size: 0.75rem; color: var(--text-dim); margin-top: 2px; }
-
-    /* ── Tab Switcher ─────────────────────────────────────── */
+    /* ── Tab Switcher (Vertical Navigation) ──────────────── */
     .tab-nav {
       display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin: 36px 0 16px;
-      flex-wrap: wrap;
+      flex-direction: column;
+      gap: 6px;
+      width: 100%;
     }
 
     .tab-btn {
-      padding: 9px 20px;
-      border-radius: 30px;
+      padding: 9px 14px;
+      border-radius: 8px;
       border: 1px solid var(--border);
       background: var(--surface);
       color: var(--text-dim);
       font-family: 'Inter', sans-serif;
-      font-size: 0.9rem;
+      font-size: 0.86rem;
       font-weight: 600;
       cursor: pointer;
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      gap: 8px;
-      transition: all 0.2s;
+      justify-content: space-between;
+      transition: all 0.18s;
+      width: 100%;
     }
 
     .tab-btn:hover {
       border-color: var(--border-h);
       color: var(--text);
+      background: rgba(139,92,246,0.06);
     }
 
     .tab-btn.active {
       background: linear-gradient(135deg, rgba(139,92,246,0.22), rgba(6,182,212,0.22));
       border-color: var(--accent);
-      color: #fff;
-      box-shadow: 0 0 24px rgba(139,92,246,0.25);
+      color: var(--tab-active-text);
+      box-shadow: 0 0 16px rgba(139,92,246,0.2);
+    }
+
+    [data-theme="light"] .tab-btn.active {
+      background: #ede9fe;
+      color: #5b21b6;
+      border-color: var(--accent);
+      box-shadow: 0 2px 8px rgba(124,58,237,0.12);
     }
 
     .tab-count {
-      padding: 2px 7px;
-      border-radius: 12px;
-      font-size: 0.72rem;
+      padding: 1px 7px;
+      border-radius: 10px;
+      font-size: 0.7rem;
       background: var(--surface2);
       border: 1px solid var(--border);
       color: var(--accent-2);
       font-weight: 700;
     }
 
+    /* ── Menu Explainer Banner (2-Line Info) ─────────────── */
+    .menu-explainer-banner {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 10px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      transition: all 0.22s ease;
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+
+    .explainer-title {
+      font-weight: 600;
+      color: var(--accent-2);
+      font-size: 0.82rem;
+      margin-bottom: 2px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .explainer-line {
+      display: flex;
+      align-items: baseline;
+      gap: 5px;
+      color: var(--text-dim);
+      font-size: 0.77rem;
+    }
+
+    .explainer-label {
+      font-weight: 600;
+      color: var(--text);
+      font-size: 0.71rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      flex-shrink: 0;
+    }
+
+    .explainer-code {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent-2);
+      font-size: 0.73rem;
+      background: rgba(255,255,255,0.05);
+      padding: 1px 4px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+
+    /* ── Content Panel (2/3 Width) ───────────────────────── */
+    .content-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .content-toolbar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .content-search {
+      flex: 1;
+      min-width: 220px;
+      position: relative;
+    }
+
+    .content-search input {
+      width: 100%;
+      padding: 8px 12px 8px 34px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .content-search input:focus { border-color: var(--accent); }
+    .content-search input::placeholder { color: var(--text-dim); }
+
+    .content-search .search-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+      font-size: 0.82rem;
+      pointer-events: none;
+    }
+
     /* ── Filters ─────────────────────────────────────────── */
     .filters {
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 24px;
+      gap: 6px;
       flex-wrap: wrap;
     }
 
     .filter-label {
-      font-size: 0.78rem;
+      font-size: 0.74rem;
       color: var(--text-dim);
       font-weight: 500;
-      margin-right: 4px;
+      margin-right: 2px;
     }
 
     .filter-chip {
-      padding: 5px 12px;
-      border-radius: 20px;
+      padding: 4px 10px;
+      border-radius: 16px;
       border: 1px solid var(--border);
-      background: var(--surface);
+      background: var(--surface2);
       color: var(--text-dim);
-      font-size: 0.75rem;
+      font-size: 0.73rem;
       font-family: 'Inter', sans-serif;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       transition: all 0.18s;
     }
 
@@ -337,52 +547,65 @@
     }
 
     .filter-chip.active {
-      background: var(--surface2);
+      background: rgba(139,92,246,0.15);
       border-color: var(--accent);
       color: var(--text);
       font-weight: 600;
     }
 
     .filter-dot {
-      width: 7px; height: 7px;
+      width: 6px; height: 6px;
       border-radius: 50%;
     }
 
-    /* ── Grid & Cards ─────────────────────────────────────── */
+    /* ── MCP Help Strip ──────────────────────────────────── */
+    #mcp-banner {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    /* ── Cards Grid ───────────────────────────────────────── */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-      gap: 20px;
-      margin-bottom: 60px;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 14px;
     }
 
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 22px;
+      border-radius: 10px;
+      padding: 16px;
       display: flex;
       flex-direction: column;
-      gap: 14px;
-      transition: all 0.22s cubic-bezier(.34,1.56,.64,1);
+      gap: 10px;
+      transition: all 0.2s cubic-bezier(.34,1.56,.64,1);
       position: relative;
     }
 
     .card:hover {
       border-color: var(--border-h);
       transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.35);
     }
 
     .card-header {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      gap: 12px;
+      gap: 8px;
     }
 
     .card-name {
-      font-size: 1.05rem;
+      font-size: 0.96rem;
       font-weight: 600;
       color: var(--text);
       font-family: 'JetBrains Mono', monospace;
@@ -391,24 +614,24 @@
     .header-badges {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       flex-shrink: 0;
     }
 
     .cat-badge {
-      font-size: 0.68rem;
+      font-size: 0.65rem;
       font-weight: 600;
-      padding: 3px 8px;
-      border-radius: 6px;
+      padding: 2px 7px;
+      border-radius: 5px;
       text-transform: uppercase;
       letter-spacing: 0.04em;
     }
 
     .runtime-badge {
-      font-size: 0.68rem;
+      font-size: 0.65rem;
       font-weight: 600;
-      padding: 3px 8px;
-      border-radius: 6px;
+      padding: 2px 7px;
+      border-radius: 5px;
       background: rgba(255,255,255,0.06);
       border: 1px solid var(--border);
       color: var(--text-dim);
@@ -416,21 +639,21 @@
     }
 
     .card-desc {
-      font-size: 0.86rem;
+      font-size: 0.82rem;
       color: var(--text-dim);
-      line-height: 1.55;
+      line-height: 1.5;
       flex: 1;
     }
 
     .card-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
+      gap: 5px;
     }
 
     .tag-pill {
-      font-size: 0.7rem;
-      padding: 2px 7px;
+      font-size: 0.68rem;
+      padding: 1px 6px;
       background: var(--surface2);
       border: 1px solid var(--border);
       border-radius: 4px;
@@ -441,8 +664,8 @@
     .card-footer {
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-top: 4px;
+      gap: 6px;
+      margin-top: 2px;
     }
 
     .install-snippet {
@@ -450,9 +673,9 @@
       background: var(--surface2);
       border: 1px solid var(--border);
       border-radius: 6px;
-      padding: 7px 10px;
+      padding: 6px 9px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       color: var(--accent-2);
       white-space: nowrap;
       overflow: hidden;
@@ -460,20 +683,20 @@
     }
 
     .card-copy {
-      padding: 7px 10px;
+      padding: 6px 9px;
       background: var(--surface2);
       border: 1px solid var(--border);
       border-radius: 6px;
       color: var(--text-dim);
       cursor: pointer;
-      font-size: 0.78rem;
+      font-size: 0.74rem;
       font-family: 'Inter', sans-serif;
       font-weight: 500;
       transition: all 0.18s;
       flex-shrink: 0;
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 4px;
     }
 
     .card-copy:hover { border-color: var(--border-h); color: var(--accent); }
@@ -482,8 +705,8 @@
     .card-meta {
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-size: 0.72rem;
+      gap: 8px;
+      font-size: 0.7rem;
       color: var(--text-mute);
     }
 
@@ -499,19 +722,19 @@
     .empty {
       grid-column: 1 / -1;
       text-align: center;
-      padding: 80px 0;
+      padding: 60px 0;
     }
 
-    .empty-icon { font-size: 3rem; margin-bottom: 16px; }
-    .empty h3 { font-size: 1.1rem; color: var(--text); margin-bottom: 8px; }
-    .empty p  { font-size: 0.875rem; color: var(--text-dim); }
+    .empty-icon { font-size: 2.5rem; margin-bottom: 12px; }
+    .empty h3 { font-size: 1rem; color: var(--text); margin-bottom: 6px; }
+    .empty p  { font-size: 0.82rem; color: var(--text-dim); }
 
     /* ── Footer ─────────────────────────────────────────── */
     footer {
       border-top: 1px solid var(--border);
-      padding: 32px 0;
+      padding: 24px 0;
       text-align: center;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-dim);
     }
 
@@ -527,9 +750,9 @@
       background: var(--surface2);
       border: 1px solid var(--green);
       color: var(--green);
-      padding: 10px 20px;
+      padding: 9px 18px;
       border-radius: 8px;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 500;
       opacity: 0;
       transition: all 0.3s cubic-bezier(.34,1.56,.64,1);
@@ -567,30 +790,30 @@
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 14px;
-      max-width: 680px;
+      max-width: 640px;
       width: 100%;
       max-height: 85vh;
       overflow-y: auto;
-      padding: 28px;
+      padding: 24px;
       box-shadow: 0 20px 50px rgba(0,0,0,0.6);
       position: relative;
     }
 
     .modal-close {
       position: absolute;
-      top: 18px;
-      right: 18px;
+      top: 16px;
+      right: 16px;
       background: var(--surface2);
       border: 1px solid var(--border);
       color: var(--text-dim);
-      width: 32px;
-      height: 32px;
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       transition: all 0.18s;
     }
 
@@ -599,42 +822,55 @@
       border-color: var(--border-h);
     }
 
-    .modal h2 { font-size: 1.35rem; margin-bottom: 8px; color: var(--text); }
-    .modal p { font-size: 0.9rem; color: var(--text-dim); margin-bottom: 14px; line-height: 1.6; }
-    .modal-section { margin-top: 18px; border-top: 1px solid var(--border); padding-top: 14px; }
-    .modal-section h3 { font-size: 0.95rem; color: var(--accent-2); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+    .modal h2 { font-size: 1.25rem; margin-bottom: 8px; color: var(--text); }
+    .modal p { font-size: 0.86rem; color: var(--text-dim); margin-bottom: 12px; line-height: 1.55; }
+    .modal-section { margin-top: 16px; border-top: 1px solid var(--border); padding-top: 12px; }
+    .modal-section h3 { font-size: 0.9rem; color: var(--accent-2); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
     .modal pre {
       background: var(--surface2);
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 12px 14px;
+      padding: 10px 12px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       color: var(--accent-2);
       overflow-x: auto;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .modal-cta {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 8px 16px;
-      border-radius: 8px;
+      padding: 7px 14px;
+      border-radius: 7px;
       background: var(--accent);
       color: #fff;
       font-weight: 500;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       text-decoration: none;
       transition: opacity 0.2s;
     }
     .modal-cta:hover { opacity: 0.9; text-decoration: none; }
 
-    @media (max-width: 640px) {
-      .hero { padding: 48px 0 32px; }
-      .grid { grid-template-columns: 1fr; }
-      .stats { gap: 16px; }
-      .header-search { min-width: 0; width: 100%; max-width: none; }
+    /* ── Responsive ─────────────────────────────────────── */
+    @media (max-width: 980px) {
+      .app-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar-panel {
+        position: static;
+      }
+      .tab-nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      .tab-btn {
+        width: auto;
+      }
+      .header-stats-strip {
+        display: none;
+      }
     }
   </style>
 </head>
@@ -642,111 +878,122 @@
 
 <!-- Header -->
 <header>
-  <div class="container">
-    <div class="header-inner">
-      <a href="https://github.com/carthworks/ai-agent-skills" class="logo">
-        <div class="logo-icon">🧠</div>
-        <span class="logo-text">developer-<span>agent-stack</span></span>
+  <div class="header-container">
+    <a href="https://github.com/carthworks/ai-agent-skills" class="logo">
+      <div class="logo-icon">🧠</div>
+      <span class="logo-text">developer-<span>agent-stack</span></span>
+    </a>
+    
+    <div class="header-stats-strip">
+      <span class="stat-pill">🧠 Skills: <strong id="stat-skills">10</strong></span>
+      <span class="stat-pill">🔌 MCPs: <strong id="stat-mcps">12</strong></span>
+      <span class="stat-pill">🤖 Agents: <strong id="stat-agents">3</strong></span>
+      <span class="stat-pill">📜 Rules: <strong id="stat-rules">4</strong></span>
+      <span class="stat-pill">📦 Plugins: <strong id="stat-plugins">3</strong></span>
+    </div>
+
+    <div class="header-actions">
+      <div class="theme-switch-group" role="group" aria-label="Theme selector">
+        <button class="theme-btn active" id="theme-btn-dark" onclick="setTheme('dark')" title="Dark Theme">🌙 Dark</button>
+        <button class="theme-btn" id="theme-btn-middle" onclick="setTheme('middle')" title="Middle / Twilight Theme">🌓 Middle</button>
+        <button class="theme-btn" id="theme-btn-light" onclick="setTheme('light')" title="Light Theme">☀️ Light</button>
+      </div>
+      <button class="btn-ghost" onclick="openMcpModal()" title="How to Use MCP Servers & CLIs">
+        🔌 MCP Guide
+      </button>
+      <a href="https://github.com/carthworks/ai-agent-skills" class="btn-ghost" target="_blank" rel="noopener">
+        ⭐ Star
       </a>
-      <div class="header-search">
-        <span class="search-icon">🔍</span>
-        <input id="search" type="search" placeholder="Search skills, MCPs, agents, rules, plugins…" autocomplete="off" />
-      </div>
-      <div class="header-actions">
-        <button class="btn-ghost" onclick="openMcpModal()" title="How to Use MCP Servers & CLIs">
-          🔌 MCP Guide
-        </button>
-        <a href="https://github.com/carthworks/ai-agent-skills" class="btn-ghost" target="_blank" rel="noopener">
-          ⭐ Star on GitHub
-        </a>
-        <a href="https://github.com/carthworks/ai-agent-skills/blob/main/CONTRIBUTING.md" class="btn-ghost" target="_blank" rel="noopener">
-          + Contribute
-        </a>
-      </div>
+      <a href="https://github.com/carthworks/ai-agent-skills/blob/main/CONTRIBUTING.md" class="btn-ghost" target="_blank" rel="noopener">
+        + Contribute
+      </a>
     </div>
   </div>
 </header>
 
-<!-- Hero -->
-<section class="hero">
-  <div class="container">
-    <div class="hero-badge">✨ Open Source · Apache-2.0 · New Era Developer Stack</div>
-    <h1>Supercharge Your AI<br>Coding Agent</h1>
-    <p>A curated marketplace of drop-in <strong>Skills</strong>, <strong>MCP Servers</strong>, <strong>Specialist Subagents</strong>, <strong>Behavioral Rules</strong>, and composite <strong>Plugins</strong> for modern AI-native engineering.</p>
-    <div class="hero-install">
-      <code id="hero-cmd">bash -c "$(curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh)"</code>
-      <button class="copy-btn" onclick="copyHero(this)" title="Copy install command">📋</button>
+<!-- Main App Layout (2-Column Single Fold) -->
+<div class="app-layout">
+  
+  <!-- LEFT COLUMN (1/3 Width) -->
+  <aside class="sidebar-panel">
+    
+    <!-- Hero & Install Box -->
+    <div class="sidebar-card">
+      <div class="hero-badge">✨ New Era Developer Stack</div>
+      <h1>Supercharge Your AI Agent</h1>
+      <p>Modular reasoning skills, live MCP tools, specialist subagents, and guardrails for modern AI engineering.</p>
+      
+      <div class="hero-install">
+        <code id="hero-cmd">bash -c "$(curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh)"</code>
+        <button class="copy-btn" onclick="copyHero(this)" title="Copy install command">📋</button>
+      </div>
     </div>
-  </div>
-</section>
 
-<!-- Stats -->
-<section class="stats">
-  <div class="container" style="display:contents">
-    <div class="stat">
-      <div class="stat-value" id="stat-skills">10</div>
-      <div class="stat-label">Skills</div>
-    </div>
-    <div class="stat">
-      <div class="stat-value" id="stat-mcps">12</div>
-      <div class="stat-label">MCP Servers</div>
-    </div>
-    <div class="stat">
-      <div class="stat-value" id="stat-agents">3</div>
-      <div class="stat-label">Subagents</div>
-    </div>
-    <div class="stat">
-      <div class="stat-value" id="stat-rules">4</div>
-      <div class="stat-label">Rules</div>
-    </div>
-    <div class="stat">
-      <div class="stat-value" id="stat-plugins">3</div>
-      <div class="stat-label">Plugins</div>
-    </div>
-  </div>
-</section>
+    <!-- Tab Navigation (Vertical Menu) -->
+    <nav class="tab-nav">
+      <button class="tab-btn active" id="tab-skills" onclick="switchTab('skills')">
+        <span>🧠 Skills</span> <span class="tab-count" id="count-skills">10</span>
+      </button>
+      <button class="tab-btn" id="tab-mcps" onclick="switchTab('mcps')">
+        <span>🔌 MCP Servers</span> <span class="tab-count" id="count-mcps">12</span>
+      </button>
+      <button class="tab-btn" id="tab-agents" onclick="switchTab('agents')">
+        <span>🤖 Specialist Subagents</span> <span class="tab-count" id="count-agents">3</span>
+      </button>
+      <button class="tab-btn" id="tab-rules" onclick="switchTab('rules')">
+        <span>📜 Behavioral Rules</span> <span class="tab-count" id="count-rules">4</span>
+      </button>
+      <button class="tab-btn" id="tab-plugins" onclick="switchTab('plugins')">
+        <span>📦 Composite Plugins</span> <span class="tab-count" id="count-plugins">3</span>
+      </button>
+    </nav>
 
-<!-- Tab Switcher -->
-<div class="container">
-  <div class="tab-nav">
-    <button class="tab-btn active" id="tab-skills" onclick="switchTab('skills')">
-      🧠 Skills <span class="tab-count" id="count-skills">10</span>
-    </button>
-    <button class="tab-btn" id="tab-mcps" onclick="switchTab('mcps')">
-      🔌 MCPs <span class="tab-count" id="count-mcps">12</span>
-    </button>
-    <button class="tab-btn" id="tab-agents" onclick="switchTab('agents')">
-      🤖 Subagents <span class="tab-count" id="count-agents">3</span>
-    </button>
-    <button class="tab-btn" id="tab-rules" onclick="switchTab('rules')">
-      📜 Rules <span class="tab-count" id="count-rules">4</span>
-    </button>
-    <button class="tab-btn" id="tab-plugins" onclick="switchTab('plugins')">
-      📦 Plugins <span class="tab-count" id="count-plugins">3</span>
-    </button>
-  </div>
-</div>
-
-<!-- MCP Quick Help Banner -->
-<div class="container" id="mcp-banner" style="display:none; text-align:center; margin-bottom:12px;">
-  <span style="font-size:0.83rem; color:var(--text-dim); background:var(--surface); border:1px solid var(--border); padding:6px 16px; border-radius:20px; display:inline-flex; align-items:center; gap:8px;">
-    💡 Need help connecting MCP servers to your agent? <a href="javascript:void(0)" onclick="openMcpModal()" style="color:var(--accent-2); font-weight:600; text-decoration:underline;">How to Use MCP Servers & CLIs ↗</a>
-  </span>
-</div>
-
-<!-- Filters + Grid -->
-<div class="container">
-  <div class="filters" id="filters">
-    <span class="filter-label">Filter:</span>
-    <button class="filter-chip active" data-cat="all" onclick="setFilter('all', this)">All</button>
-  </div>
-
-  <div class="grid" id="grid">
-    <div class="empty">
-      <div class="empty-icon">⏳</div>
-      <h3>Loading catalogue…</h3>
+    <!-- 2-Line Menu Explainer -->
+    <div class="menu-explainer-banner" id="menu-explainer">
+      <div class="explainer-title" id="explainer-title">🧠 Skills (Workflow Playbooks & Reasoning Checklists)</div>
+      <div class="explainer-line">
+        <span class="explainer-label">What it is:</span>
+        <span id="explainer-what">Modular markdown playbooks (<code class="explainer-code">SKILL.md</code>) that teach your AI agent domain-specific reasoning, standards, and checklists.</span>
+      </div>
+      <div class="explainer-line">
+        <span class="explainer-label">How to use:</span>
+        <span id="explainer-how">Drop into <code class="explainer-code">.agents/skills/&lt;name&gt;/</code> in your project — your agent automatically discovers and applies them on relevant tasks.</span>
+      </div>
     </div>
-  </div>
+
+  </aside>
+
+  <!-- RIGHT COLUMN (2/3 Width - Body Content & Grid) -->
+  <main class="content-panel">
+    
+    <!-- Content Toolbar: Search & Filter Chips -->
+    <div class="content-toolbar">
+      <div class="content-search">
+        <span class="search-icon">🔍</span>
+        <input id="search" type="search" placeholder="Search skills, MCPs, agents, rules, plugins…" autocomplete="off" />
+      </div>
+
+      <div class="filters" id="filters">
+        <span class="filter-label">Category:</span>
+        <button class="filter-chip active" data-cat="all" onclick="setFilter('all', this)">All</button>
+      </div>
+    </div>
+
+    <!-- MCP Quick Help Banner (Shown in MCP tab) -->
+    <div id="mcp-banner" style="display:none;">
+      <span>💡 Need help connecting MCP servers to your agent?</span>
+      <a href="javascript:void(0)" onclick="openMcpModal()" style="color:var(--accent-2); font-weight:600; text-decoration:underline;">How to Use MCP Servers & CLIs ↗</a>
+    </div>
+
+    <!-- Cards Grid -->
+    <div class="grid" id="grid">
+      <div class="empty">
+        <div class="empty-icon">⏳</div>
+        <h3>Loading catalogue…</h3>
+      </div>
+    </div>
+
+  </main>
 </div>
 
 <!-- MCP Guide Modal -->
@@ -789,7 +1036,7 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
     </div>
 
     <div class="modal-section" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-      <span style="font-size:0.85rem; color:var(--text-dim);">Read full documentation and setup guide on GitHub:</span>
+      <span style="font-size:0.82rem; color:var(--text-dim);">Read full documentation and setup guide on GitHub:</span>
       <a class="modal-cta" href="https://github.com/carthworks/ai-agent-skills" target="_blank" rel="noopener">
         View Full Guide on GitHub ↗
       </a>
@@ -799,14 +1046,14 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
 
 <!-- Footer -->
 <footer>
-  <div class="container">
+  <div class="header-container" style="justify-content:center; flex-direction:column; gap:4px;">
     <p>
       Built by <a href="https://github.com/carthworks" target="_blank">@carthworks</a> ·
-      <a href="https://github.com/carthworks/ai-agent-skills" target="_blank">View on GitHub</a> ·
+      <a href="https://github.com/carthworks/ai-agent-skills" target="_blank">GitHub</a> ·
       <a href="https://github.com/carthworks/ai-agent-skills/blob/main/CONTRIBUTING.md" target="_blank">Contribute</a> ·
       Apache-2.0
     </p>
-    <p style="margin-top:6px;color:var(--text-mute)"><em>Supercharging the next generation of software engineering.</em></p>
+    <p style="color:var(--text-mute)"><em>Supercharging the next generation of software engineering.</em></p>
   </div>
 </footer>
 
@@ -1294,6 +1541,35 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
     }
   }
 
+  // ── Menu Explanations (What it is & How to use) ───────────
+  const MENU_EXPLANATIONS = {
+    skills: {
+      title: "🧠 Skills (Workflow Playbooks & Reasoning Checklists)",
+      what: "Modular markdown playbooks (<code class=\"explainer-code\">SKILL.md</code>) that teach your AI agent domain-specific reasoning, standards, and checklists.",
+      how: "Drop into <code class=\"explainer-code\">.agents/skills/&lt;name&gt;/</code> in your project — your agent automatically discovers and applies them on relevant tasks."
+    },
+    mcps: {
+      title: "🔌 MCP Servers (Model Context Protocol Live Tools)",
+      what: "Open-standard protocol servers giving your AI agent live runtime access to databases, web browsers, terminal commands, and APIs.",
+      how: "Add the JSON configuration to your agent's <code class=\"explainer-code\">mcp_config.json</code> or run on-demand via <code class=\"explainer-code\">npx</code> / <code class=\"explainer-code\">uvx</code> with zero setup."
+    },
+    agents: {
+      title: "🤖 Specialist Subagents (Targeted Roles & Personas)",
+      what: "Autonomous, role-based subagent personas configured with tailored system prompts, restricted toolsets, and scoped objectives.",
+      how: "Place in <code class=\"explainer-code\">.agents/agents/&lt;name&gt;/</code> and delegate complex tasks to specialist subagents (e.g. SecurityAuditor, CodeReviewer)."
+    },
+    rules: {
+      title: "📜 Behavioral Rules & Guardrails (Execution Contracts)",
+      what: "High-leverage behavioral constraints and style contracts enforcing token efficiency, strict typing, security hygiene, and clean architecture.",
+      how: "Place in <code class=\"explainer-code\">.agents/rules/</code> or reference inside your <code class=\"explainer-code\">.instructions</code>, <code class=\"explainer-code\">AGENTS.md</code>, or <code class=\"explainer-code\">.cursorrules</code>."
+    },
+    plugins: {
+      title: "📦 Composite Plugins (Fullstack Bundles & Stacks)",
+      what: "Curated multi-component packages bundling complementary Skills, MCPs, Subagents, and Rules into unified vertical domain packs.",
+      how: "Copy the bundle into <code class=\"explainer-code\">.agents/plugins/&lt;name&gt;/</code> to equip your AI agent with an entire development toolkit in a single step."
+    }
+  };
+
   // ── Tab Switcher ─────────────────────────────────────────
   function switchTab(tab) {
     currentTab = tab;
@@ -1302,8 +1578,17 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
     const activeBtn = document.getElementById('tab-' + tab);
     if (activeBtn) activeBtn.classList.add('active');
 
+    // Update Explainer Banner
+    const info = MENU_EXPLANATIONS[tab] || MENU_EXPLANATIONS.skills;
+    const expTitle = document.getElementById('explainer-title');
+    const expWhat  = document.getElementById('explainer-what');
+    const expHow   = document.getElementById('explainer-how');
+    if (expTitle) expTitle.innerHTML = info.title;
+    if (expWhat)  expWhat.innerHTML  = info.what;
+    if (expHow)   expHow.innerHTML   = info.how;
+
     const mcpBanner = document.getElementById('mcp-banner');
-    if (mcpBanner) mcpBanner.style.display = (tab === 'mcps') ? 'block' : 'none';
+    if (mcpBanner) mcpBanner.style.display = (tab === 'mcps') ? 'flex' : 'none';
 
     const heroCmd = document.getElementById('hero-cmd');
     if (heroCmd) {
@@ -1370,7 +1655,7 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
     const list = getCurrentList();
     const cats = [...new Set(list.map(s => s.category))].sort();
     const container = document.getElementById('filters');
-    container.innerHTML = `<span class="filter-label">Filter:</span><button class="filter-chip ${activeFilter === 'all' ? 'active' : ''}" data-cat="all" onclick="setFilter('all', this)">All</button>`;
+    container.innerHTML = `<span class="filter-label">Category:</span><button class="filter-chip ${activeFilter === 'all' ? 'active' : ''}" data-cat="all" onclick="setFilter('all', this)">All</button>`;
     
     for (const cat of cats) {
       const c = catColor(cat);
@@ -1420,7 +1705,7 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
         <div class="empty">
           <div class="empty-icon">🔍</div>
           <h3>No items found in ${currentTab}</h3>
-          <p>Try a different search term or filter category.</p>
+          <p>Try a different search term or category filter.</p>
         </div>`;
       return;
     }
@@ -1465,7 +1750,7 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
           <span>·</span>
           <span>${escHtml(skill.license)}</span>
           <span>·</span>
-          <a href="${escAttr(ghUrl)}" target="_blank" rel="noopener">View on GitHub ↗</a>
+          <a href="${escAttr(ghUrl)}" target="_blank" rel="noopener">View Skill ↗</a>
         </div>
       </div>`;
   }
@@ -1509,7 +1794,7 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
           <span>·</span>
           <span>${escHtml(mcp.license)}</span>
           <span>·</span>
-          <a href="${escAttr(ghUrl)}" target="_blank" rel="noopener">Documentation ↗</a>
+          <a href="${escAttr(ghUrl)}" target="_blank" rel="noopener">Docs ↗</a>
         </div>
       </div>`;
   }
@@ -1531,7 +1816,7 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
             <span class="cat-badge" style="background:${c.bg};color:${c.text};border:1px solid ${c.border}">${escHtml(agent.category)}</span>
           </div>
         </div>
-        <p style="font-size:0.8rem; font-weight:600; color:var(--accent); margin-top:-6px;">${escHtml(agent.role)}</p>
+        <p style="font-size:0.78rem; font-weight:600; color:var(--accent); margin-top:-4px;">${escHtml(agent.role)}</p>
         <p class="card-desc">${escHtml(agent.description)}</p>
         ${tagsHTML}
         <div class="card-footer">
@@ -1684,7 +1969,41 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
   }
   function escAttr(s) { return escHtml(s); }
 
+  // ── Theme Management ─────────────────────────────────────
+  function setTheme(theme) {
+    if (!['dark', 'middle', 'light'].includes(theme)) theme = 'dark';
+    document.documentElement.setAttribute('data-theme', theme);
+    try {
+      localStorage.setItem('theme_preference', theme);
+    } catch(e) {}
+
+    ['dark', 'middle', 'light'].forEach(t => {
+      const btn = document.getElementById('theme-btn-' + t);
+      if (btn) {
+        if (t === theme) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      }
+    });
+  }
+
+  function initTheme() {
+    let saved = null;
+    try {
+      saved = localStorage.getItem('theme_preference');
+    } catch(e) {}
+
+    if (saved && ['dark', 'middle', 'light'].includes(saved)) {
+      setTheme(saved);
+    } else {
+      setTheme('dark');
+    }
+  }
+
   // ── Boot ─────────────────────────────────────────────────
+  initTheme();
   loadData();
 </script>
 </body>
