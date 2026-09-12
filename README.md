@@ -3,7 +3,7 @@
 > A curated collection of **Skills**, **Model Context Protocol (MCP)** servers, **Specialist Subagents**, **Behavioral Rules**, and **Composite Plugins** for [Antigravity IDE](https://antigravity.dev), Claude Desktop, Cursor, and modern AI coding agents.
 > Drop skills into your workspace to teach your agent specialised workflows, plug in MCP servers for live runtime execution, assign subagents to domain tasks, and enforce strict behavioral guardrails.
 
-![Skills](https://img.shields.io/badge/skills-10-blueviolet?style=flat-square)
+![Skills](https://img.shields.io/badge/skills-11-blueviolet?style=flat-square)
 ![MCPs](https://img.shields.io/badge/MCPs-12-blue?style=flat-square)
 ![Subagents](https://img.shields.io/badge/subagents-3-purple?style=flat-square)
 ![Rules](https://img.shields.io/badge/rules-4-teal?style=flat-square)
@@ -42,6 +42,7 @@
 |-------|----------|-------------|
 | [production-web-app-launch](skills/web/production-web-app-launch/) | `web` | Audit and fix production-readiness gaps — accessibility, SEO, security, forms, mobile, deployment config. Activates on "is this ready to ship", "pre-launch check". |
 | [web-trust-and-compliance](skills/web/web-trust-and-compliance/) | `web` | Audit legal compliance, privacy policies, terms & conditions, cancellation/refund policies, about & contact pages, pricing & support info, consent, and anti-dark-patterns. |
+| [developer-console-signature](skills/web/developer-console-signature/) | `web` | Inject styled developer signatures, author branding, project metadata, ASCII art, easter eggs, security contact info, and interactive DevTools inspection helpers (`window.<App>`). |
 | [nextjs-performance](skills/web/nextjs-performance/) | `web` | Optimise Next.js for Core Web Vitals, bundle size, and perceived speed. Covers rendering strategy, `next/image`, fonts, code splitting, and App Router caching. |
 | [api-design-rest](skills/web/api-design-rest/) | `web` | Design clean, consistent REST APIs — URL naming, HTTP methods, status codes, error shapes, versioning, pagination, and auth patterns. |
 | [typescript-strict-mode](skills/typescript/typescript-strict-mode/) | `typescript` | Enforce TypeScript strict mode, eliminate `any`, use `unknown` + narrowing, discriminated unions, and utility types correctly. |

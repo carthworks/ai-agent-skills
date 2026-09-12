@@ -27,21 +27,22 @@ $Catalogue = @{
     3  = @{ Path = "plugins/fullstack-quality-pack";          Label = "📦 [Plugin]  fullstack-quality-pack    — TypeScript strict, coverage & PR reviewer" }
     4  = @{ Path = "skills/web/production-web-app-launch";    Label = "🧠 [Skill]   production-web-app-launch — Production readiness audit" }
     5  = @{ Path = "skills/web/web-trust-and-compliance";      Label = "🧠 [Skill]   web-trust-and-compliance  — Legal, privacy, consent & trust audit" }
-    6  = @{ Path = "skills/web/nextjs-performance";            Label = "🧠 [Skill]   nextjs-performance        — Core Web Vitals & bundle optimisation" }
-    7  = @{ Path = "skills/web/api-design-rest";               Label = "🧠 [Skill]   api-design-rest           — REST API standards & pagination" }
-    8  = @{ Path = "skills/typescript/typescript-strict-mode"; Label = "🧠 [Skill]   typescript-strict-mode    — Type safety & strict mode enforcement" }
-    9  = @{ Path = "skills/testing/test-coverage-guidance";    Label = "🧠 [Skill]   test-coverage-guidance    — Unit, integration & E2E strategies" }
-    10 = @{ Path = "skills/safety/env-secret-safety";          Label = "🧠 [Skill]   env-secret-safety         — Zero hardcoded secrets & .env hygiene" }
-    11 = @{ Path = "skills/devops/git-commit-quality";         Label = "🧠 [Skill]   git-commit-quality        — Conventional Commits enforcement" }
-    12 = @{ Path = "skills/devops/code-review-checklist";      Label = "🧠 [Skill]   code-review-checklist     — BLOCKER/MAJOR/MINOR PR review" }
-    13 = @{ Path = "skills/devops/dockerfile-best-practices";  Label = "🧠 [Skill]   dockerfile-best-practices — Secure, minimal container images" }
-    14 = @{ Path = "agents/security-auditor.agent.json";       Label = "🤖 [Agent]   security-auditor          — AppSec & vulnerability scanner" }
-    15 = @{ Path = "agents/code-reviewer.agent.json";          Label = "🤖 [Agent]   code-reviewer             — Principal PR code reviewer" }
-    16 = @{ Path = "agents/qa-engineer.agent.json";            Label = "🤖 [Agent]   qa-engineer               — Test plan & regression generator" }
-    17 = @{ Path = "rules/token-efficiency.md";                Label = "📜 [Rule]    token-efficiency          — Minimal diffs & token optimization" }
-    18 = @{ Path = "rules/typescript-strict-guardrails.md";    Label = "📜 [Rule]    typescript-strict         — Zero 'any', runtime Zod validation" }
-    19 = @{ Path = "rules/clean-architecture-boundaries.md";   Label = "📜 [Rule]    clean-architecture        — Layered architecture & separation" }
-    20 = @{ Path = "rules/security-and-secret-hygiene.md";     Label = "📜 [Rule]    secret-hygiene            — Mandatory .env checks & no secrets" }
+    6  = @{ Path = "skills/web/developer-console-signature";  Label = "🧠 [Skill]   developer-console-signature — Styled author branding & DevTools helpers" }
+    7  = @{ Path = "skills/web/nextjs-performance";            Label = "🧠 [Skill]   nextjs-performance        — Core Web Vitals & bundle optimisation" }
+    8  = @{ Path = "skills/web/api-design-rest";               Label = "🧠 [Skill]   api-design-rest           — REST API standards & pagination" }
+    9  = @{ Path = "skills/typescript/typescript-strict-mode"; Label = "🧠 [Skill]   typescript-strict-mode    — Type safety & strict mode enforcement" }
+    10 = @{ Path = "skills/testing/test-coverage-guidance";    Label = "🧠 [Skill]   test-coverage-guidance    — Unit, integration & E2E strategies" }
+    11 = @{ Path = "skills/safety/env-secret-safety";          Label = "🧠 [Skill]   env-secret-safety         — Zero hardcoded secrets & .env hygiene" }
+    12 = @{ Path = "skills/devops/git-commit-quality";         Label = "🧠 [Skill]   git-commit-quality        — Conventional Commits enforcement" }
+    13 = @{ Path = "skills/devops/code-review-checklist";      Label = "🧠 [Skill]   code-review-checklist     — BLOCKER/MAJOR/MINOR PR review" }
+    14 = @{ Path = "skills/devops/dockerfile-best-practices";  Label = "🧠 [Skill]   dockerfile-best-practices — Secure, minimal container images" }
+    15 = @{ Path = "agents/security-auditor.agent.json";       Label = "🤖 [Agent]   security-auditor          — AppSec & vulnerability scanner" }
+    16 = @{ Path = "agents/code-reviewer.agent.json";          Label = "🤖 [Agent]   code-reviewer             — Principal PR code reviewer" }
+    17 = @{ Path = "agents/qa-engineer.agent.json";            Label = "🤖 [Agent]   qa-engineer               — Test plan & regression generator" }
+    18 = @{ Path = "rules/token-efficiency.md";                Label = "📜 [Rule]    token-efficiency          — Minimal diffs & token optimization" }
+    19 = @{ Path = "rules/typescript-strict-guardrails.md";    Label = "📜 [Rule]    typescript-strict         — Zero 'any', runtime Zod validation" }
+    20 = @{ Path = "rules/clean-architecture-boundaries.md";   Label = "📜 [Rule]    clean-architecture        — Layered architecture & separation" }
+    21 = @{ Path = "rules/security-and-secret-hygiene.md";     Label = "📜 [Rule]    secret-hygiene            — Mandatory .env checks & no secrets" }
 }
 
 function Write-Header { Write-Host "`n$args" -ForegroundColor Cyan }

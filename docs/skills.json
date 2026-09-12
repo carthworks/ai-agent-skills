@@ -107,6 +107,22 @@
         "accessibility",
         "web"
       ]
+    },
+    {
+      "name": "developer-console-signature",
+      "description": "Inject styled developer signatures, author branding, project metadata, ASCII art, easter eggs, security contact info, and interactive DevTools inspection helpers (window.<App>) into the browser console.",
+      "category": "web",
+      "path": "skills/web/developer-console-signature",
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": [
+        "console",
+        "branding",
+        "developer-signature",
+        "devtools",
+        "web"
+      ]
     }
   ]
 }
