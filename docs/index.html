@@ -1741,7 +1741,7 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
 
   function skillCardHTML(skill) {
     const c = catColor(skill.category);
-    const installCmd = `cp -r ${skill.path} .agents/skills/`;
+    const installCmd = `curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh | bash -s -- ${skill.path}`;
     const ghUrl = `https://github.com/carthworks/ai-agent-skills/tree/main/${skill.path}`;
     const id = skill.name;
     const tagsHTML = (skill.tags && skill.tags.length > 0)
@@ -1759,7 +1759,7 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
         ${tagsHTML}
         <div class="card-footer">
           <span class="install-snippet" title="${escAttr(installCmd)}">${escHtml(installCmd)}</span>
-          <button class="card-copy" id="cp-${id}" onclick="copyInstall('${escAttr(installCmd)}','${id}')" title="Copy install command">📋</button>
+          <button class="card-copy" id="cp-${id}" onclick="copyInstall('${escAttr(installCmd)}','${id}')" title="Copy one-line install command">📋</button>
         </div>
         <div class="card-meta">
           <span>v${escHtml(skill.version)}</span>
@@ -1817,7 +1817,7 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
 
   function agentCardHTML(agent) {
     const c = catColor(agent.category);
-    const installCmd = `cp -r ${agent.path} .agents/agents/`;
+    const installCmd = `curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh | bash -s -- ${agent.path}`;
     const ghUrl = `https://github.com/carthworks/ai-agent-skills/tree/main/${agent.path}`;
     const id = `agent-${agent.name}`;
     const tagsHTML = (agent.tags && agent.tags.length > 0)
@@ -1837,7 +1837,7 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
         ${tagsHTML}
         <div class="card-footer">
           <span class="install-snippet" title="${escAttr(installCmd)}">${escHtml(installCmd)}</span>
-          <button class="card-copy" id="cp-${id}" onclick="copyInstall('${escAttr(installCmd)}','${id}')" title="Copy install command">📋</button>
+          <button class="card-copy" id="cp-${id}" onclick="copyInstall('${escAttr(installCmd)}','${id}')" title="Copy one-line install command">📋</button>
         </div>
         <div class="card-meta">
           <span>v${escHtml(agent.version)}</span>
@@ -1851,7 +1851,7 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
 
   function ruleCardHTML(rule) {
     const c = catColor(rule.category);
-    const installCmd = `cp ${rule.path} .agents/rules/`;
+    const installCmd = `curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh | bash -s -- ${rule.path}`;
     const ghUrl = `https://github.com/carthworks/ai-agent-skills/blob/main/${rule.path}`;
     const id = `rule-${rule.name}`;
     const tagsHTML = (rule.tags && rule.tags.length > 0)
@@ -1869,7 +1869,7 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
         ${tagsHTML}
         <div class="card-footer">
           <span class="install-snippet" title="${escAttr(installCmd)}">${escHtml(installCmd)}</span>
-          <button class="card-copy" id="cp-${id}" onclick="copyInstall('${escAttr(installCmd)}','${id}')" title="Copy install command">📋</button>
+          <button class="card-copy" id="cp-${id}" onclick="copyInstall('${escAttr(installCmd)}','${id}')" title="Copy one-line install command">📋</button>
         </div>
         <div class="card-meta">
           <span>v${escHtml(rule.version)}</span>
@@ -1881,7 +1881,7 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
 
   function pluginCardHTML(plugin) {
     const c = catColor(plugin.category);
-    const installCmd = `cp -r ${plugin.path} .agents/plugins/`;
+    const installCmd = `curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh | bash -s -- ${plugin.path}`;
     const ghUrl = `https://github.com/carthworks/ai-agent-skills/tree/main/${plugin.path}`;
     const id = `plugin-${plugin.name}`;
     const tagsHTML = (plugin.tags && plugin.tags.length > 0)
@@ -1901,7 +1901,7 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
         ${tagsHTML}
         <div class="card-footer">
           <span class="install-snippet" title="${escAttr(installCmd)}">${escHtml(installCmd)}</span>
-          <button class="card-copy" id="cp-${id}" onclick="copyInstall('${escAttr(installCmd)}','${id}')" title="Copy install command">📋</button>
+          <button class="card-copy" id="cp-${id}" onclick="copyInstall('${escAttr(installCmd)}','${id}')" title="Copy one-line install command">📋</button>
         </div>
         <div class="card-meta">
           <span>v${escHtml(plugin.version)}</span>

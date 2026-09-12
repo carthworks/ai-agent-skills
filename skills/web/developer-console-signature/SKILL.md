@@ -16,6 +16,11 @@ metadata:
 
 # Developer Console Signature & DevTools Branding
 
+> **Quick Install into any project:**
+> ```bash
+> curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh | bash -s -- skills/web/developer-console-signature
+> ```
+
 ## Mission
 
 Inject professional, styled developer signatures, author branding, project metadata, security disclosures, and interactive DevTools helpers into the browser console log (`console.log`) across modern web applications (Next.js, React, Vite, Vue, Vanilla HTML/JS).
