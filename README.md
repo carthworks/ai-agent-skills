@@ -130,9 +130,29 @@ cp rules/token-efficiency.md .agents/rules/
 cp -r plugins/web-security-pack .agents/plugins/
 ```
 
-#### Option B — One-liner Install Script
+#### Option B — One-liner Remote Installers (Auto-creates `.agents/` hierarchy)
+
+**Interactive Menu (Pick & Choose):**
 - **macOS / Linux**: `bash -c "$(curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh)"`
 - **Windows (PowerShell)**: `irm https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.ps1 | iex`
+
+**Direct Single-Item Installs (Runs anywhere, creates `.agents/*` if missing):**
+```bash
+# Install a Plugin bundle directly into .agents/plugins/
+curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh | bash -s -- plugins/web-security-pack
+
+# Install a Skill directly into .agents/skills/
+curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh | bash -s -- skills/web/web-trust-and-compliance
+
+# Install a Subagent directly into .agents/agents/
+curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh | bash -s -- agents/security-auditor.agent.json
+
+# Install a Rule preset directly into .agents/rules/
+curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh | bash -s -- rules/security-and-secret-hygiene.md
+
+# Install everything (Full 5-Pillar Developer Stack)
+curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh | bash -s -- all
+```
 
 ### Workspace Layout (`.agents/`)
 ```

@@ -1614,6 +1614,12 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
     render();
     updateStats();
 
+    // If opened directly via file:// protocol, browser CORS blocks fetch() on origin 'null'
+    // We seamlessly use the complete embedded catalogue data with zero console errors.
+    if (window.location.protocol === 'file:' || window.location.origin === 'null') {
+      return;
+    }
+
     try {
       const [resSkills, resMcps, resAgents, resRules, resPlugins] = await Promise.all([
         fetch('skills.json').catch(() => null),
@@ -1646,7 +1652,7 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
       render();
       updateStats();
     } catch {
-      // Standalone mode: initialized from embedded arrays
+      // Standalone fallback: already initialized from embedded arrays
     }
   }
 
@@ -2002,9 +2008,77 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
     }
   }
 
+  // ── Developer & Project Console Info ──────────────────────
+  function logDeveloperDetails() {
+    const titleStyle = 'font-size: 16px; font-weight: 700; color: #8b5cf6; background: #0f1117; padding: 6px 12px; border-radius: 6px; border: 1px solid rgba(139,92,246,0.4);';
+    const labelStyle = 'font-weight: 600; color: #06b6d4;';
+    const textStyle = 'color: #94a3b8;';
+    const linkStyle = 'color: #8b5cf6; font-weight: 500; text-decoration: underline;';
+    const quoteStyle = 'font-style: italic; color: #10b981;';
+
+    console.log('%c🧠 Developer Agent Stack — ai-agent-skills', titleStyle);
+    console.log(
+      '%c👨‍💻 Developer:%c Karthikeyan T (@carthworks)\n' +
+      '%c✉️  Email:     %ctkarthikeyan@gmail.com\n' +
+      '%c💼 LinkedIn:  %chttps://www.linkedin.com/in/carthworks\n' +
+      '%c🐙 GitHub:    %chttps://github.com/carthworks\n' +
+      '%c📦 Project:   %chttps://github.com/carthworks/ai-agent-skills\n' +
+      '%c📜 License:   %cApache-2.0\n' +
+      '%c✨ Mission:   %c"Supercharging the next generation of software engineering with drop-in AI agent capabilities."',
+      labelStyle, textStyle,
+      labelStyle, textStyle,
+      labelStyle, linkStyle,
+      labelStyle, linkStyle,
+      labelStyle, linkStyle,
+      labelStyle, textStyle,
+      labelStyle, quoteStyle
+    );
+    console.log(
+      '%c💡 Quick Tip:%c Run %cAgentStack.help()%c in this console to interactively explore skills, MCPs, subagents, and plugins!',
+      'font-weight:bold; color:#f59e0b;',
+      'color:#94a3b8;',
+      'font-family:monospace; color:#06b6d4; background:rgba(6,182,212,0.1); padding:1px 4px; border-radius:3px;',
+      'color:#94a3b8;'
+    );
+
+    // Global developer helper in DevTools
+    window.AgentStack = {
+      developer: {
+        name: 'Karthikeyan T',
+        handle: '@carthworks',
+        email: 'tkarthikeyan@gmail.com',
+        linkedIn: 'https://www.linkedin.com/in/carthworks',
+        github: 'https://github.com/carthworks'
+      },
+      project: {
+        name: 'Developer Agent Stack',
+        repo: 'https://github.com/carthworks/ai-agent-skills',
+        docs: 'https://carthworks.github.io/ai-agent-skills/',
+        license: 'Apache-2.0'
+      },
+      skills: () => allSkills,
+      mcps: () => allMcps,
+      agents: () => allAgents,
+      rules: () => allRules,
+      plugins: () => allPlugins,
+      help: () => {
+        console.table({
+          'AgentStack.developer': 'Author and contact details',
+          'AgentStack.skills()': 'List all 10 domain skills',
+          'AgentStack.mcps()': 'List all 12 MCP server configs',
+          'AgentStack.agents()': 'List all 3 autonomous subagents',
+          'AgentStack.rules()': 'List all 4 behavioral guardrails',
+          'AgentStack.plugins()': 'List all 3 composite plugin stacks'
+        });
+        return '🚀 Ready to inspect!';
+      }
+    };
+  }
+
   // ── Boot ─────────────────────────────────────────────────
   initTheme();
   loadData();
+  logDeveloperDetails();
 </script>
 </body>
 </html>

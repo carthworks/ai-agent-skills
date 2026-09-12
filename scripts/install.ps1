@@ -1,9 +1,16 @@
-# install.ps1 — Interactive skill installer for ai-agent-skills
-# Usage: irm https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.ps1 | iex
-#        or run directly: .\scripts\install.ps1 [-Skill "skills/web/production-web-app-launch"]
+# install.ps1 — Universal installer for ai-agent-skills (Skills, Plugins, Agents, Rules)
+# Usage:
+#   Interactive:
+#     irm https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.ps1 | iex
+#   Direct Single Item (checks and creates .agents/* automatically):
+#     .\scripts\install.ps1 -Target "plugins/fullstack-launch"
+#     .\scripts\install.ps1 -Target "skills/web/web-trust-and-compliance"
+#     .\scripts\install.ps1 -Target "agents/pr-reviewer.agent.json"
+#     .\scripts\install.ps1 -Target "rules/git-safety.md"
+#     .\scripts\install.ps1 -Target "all"
 
 param(
-    [string]$Skill = ""
+    [string]$Target = ""
 )
 
 $ErrorActionPreference = "Stop"
@@ -12,20 +19,29 @@ $Repo   = "carthworks/ai-agent-skills"
 $Branch = "main"
 $ArchiveUrl = "https://github.com/$Repo/archive/refs/heads/$Branch.zip"
 $TmpDir = Join-Path $env:TEMP "ai-agent-skills-$(Get-Random)"
-$Dest   = ".agents\skills"
 
-# --- skill catalogue ---
-$Skills = @{
-    1 = @{ Path = "skills/web/production-web-app-launch";          Label = "[web]        production-web-app-launch   — Production readiness audit" }
-    2 = @{ Path = "skills/web/nextjs-performance";                  Label = "[web]        nextjs-performance          — Core Web Vitals & bundle optimisation" }
-    3 = @{ Path = "skills/web/api-design-rest";                     Label = "[web]        api-design-rest             — REST API naming, status codes, pagination" }
-    4 = @{ Path = "skills/typescript/typescript-strict-mode";       Label = "[typescript] typescript-strict-mode      — Strict types, no any, discriminated unions" }
-    5 = @{ Path = "skills/testing/test-coverage-guidance";          Label = "[testing]    test-coverage-guidance      — Unit/integration/E2E strategy & patterns" }
-    6 = @{ Path = "skills/devops/git-commit-quality";               Label = "[devops]     git-commit-quality          — Conventional Commits enforcement" }
-    7 = @{ Path = "skills/devops/code-review-checklist";            Label = "[devops]     code-review-checklist       — BLOCKER/MAJOR/MINOR PR review" }
-    8 = @{ Path = "skills/devops/dockerfile-best-practices";        Label = "[devops]     dockerfile-best-practices   — Multi-stage, non-root, minimal images" }
-    9 = @{ Path = "skills/safety/env-secret-safety";                Label = "[safety]     env-secret-safety           — No hardcoded secrets, .env hygiene" }
-    10 = @{ Path = "skills/web/web-trust-and-compliance";          Label = "[web]        web-trust-and-compliance    — Legal, privacy, consent & anti-dark-pattern audit" }
+# --- catalogue ---
+$Catalogue = @{
+    1  = @{ Path = "plugins/web-security-pack";                Label = "📦 [Plugin]  web-security-pack         — Web trust, secret hygiene, auditor & rules" }
+    2  = @{ Path = "plugins/production-launch-pack";          Label = "📦 [Plugin]  production-launch-pack    — Launch audit, Next.js perf & QA tester" }
+    3  = @{ Path = "plugins/fullstack-quality-pack";          Label = "📦 [Plugin]  fullstack-quality-pack    — TypeScript strict, coverage & PR reviewer" }
+    4  = @{ Path = "skills/web/production-web-app-launch";    Label = "🧠 [Skill]   production-web-app-launch — Production readiness audit" }
+    5  = @{ Path = "skills/web/web-trust-and-compliance";      Label = "🧠 [Skill]   web-trust-and-compliance  — Legal, privacy, consent & trust audit" }
+    6  = @{ Path = "skills/web/nextjs-performance";            Label = "🧠 [Skill]   nextjs-performance        — Core Web Vitals & bundle optimisation" }
+    7  = @{ Path = "skills/web/api-design-rest";               Label = "🧠 [Skill]   api-design-rest           — REST API standards & pagination" }
+    8  = @{ Path = "skills/typescript/typescript-strict-mode"; Label = "🧠 [Skill]   typescript-strict-mode    — Type safety & strict mode enforcement" }
+    9  = @{ Path = "skills/testing/test-coverage-guidance";    Label = "🧠 [Skill]   test-coverage-guidance    — Unit, integration & E2E strategies" }
+    10 = @{ Path = "skills/safety/env-secret-safety";          Label = "🧠 [Skill]   env-secret-safety         — Zero hardcoded secrets & .env hygiene" }
+    11 = @{ Path = "skills/devops/git-commit-quality";         Label = "🧠 [Skill]   git-commit-quality        — Conventional Commits enforcement" }
+    12 = @{ Path = "skills/devops/code-review-checklist";      Label = "🧠 [Skill]   code-review-checklist     — BLOCKER/MAJOR/MINOR PR review" }
+    13 = @{ Path = "skills/devops/dockerfile-best-practices";  Label = "🧠 [Skill]   dockerfile-best-practices — Secure, minimal container images" }
+    14 = @{ Path = "agents/security-auditor.agent.json";       Label = "🤖 [Agent]   security-auditor          — AppSec & vulnerability scanner" }
+    15 = @{ Path = "agents/code-reviewer.agent.json";          Label = "🤖 [Agent]   code-reviewer             — Principal PR code reviewer" }
+    16 = @{ Path = "agents/qa-engineer.agent.json";            Label = "🤖 [Agent]   qa-engineer               — Test plan & regression generator" }
+    17 = @{ Path = "rules/token-efficiency.md";                Label = "📜 [Rule]    token-efficiency          — Minimal diffs & token optimization" }
+    18 = @{ Path = "rules/typescript-strict-guardrails.md";    Label = "📜 [Rule]    typescript-strict         — Zero 'any', runtime Zod validation" }
+    19 = @{ Path = "rules/clean-architecture-boundaries.md";   Label = "📜 [Rule]    clean-architecture        — Layered architecture & separation" }
+    20 = @{ Path = "rules/security-and-secret-hygiene.md";     Label = "📜 [Rule]    secret-hygiene            — Mandatory .env checks & no secrets" }
 }
 
 function Write-Header { Write-Host "`n$args" -ForegroundColor Cyan }
@@ -33,8 +49,64 @@ function Write-Ok     { Write-Host "  ✅ $args" -ForegroundColor Green }
 function Write-Warn   { Write-Host "  ⚠️  $args" -ForegroundColor Yellow }
 function Write-Dim    { Write-Host "  $args" -ForegroundColor DarkGray }
 
+function Install-Item-Path ($itemRel, $extractedRoot) {
+    $normRel = $itemRel -replace "\\", "/"
+    $targetPath = Join-Path $extractedRoot ($normRel -replace "/", "\")
+
+    # If not found directly, try searching inside subdirectories
+    if (-not (Test-Path $targetPath)) {
+        if (Test-Path (Join-Path $extractedRoot "plugins\$normRel")) {
+            $targetPath = Join-Path $extractedRoot "plugins\$normRel"
+            $normRel = "plugins/$normRel"
+        } elseif (Test-Path (Join-Path $extractedRoot "rules\$normRel")) {
+            $targetPath = Join-Path $extractedRoot "rules\$normRel"
+            $normRel = "rules/$normRel"
+        } elseif (Test-Path (Join-Path $extractedRoot "rules\$normRel.md")) {
+            $targetPath = Join-Path $extractedRoot "rules\$normRel.md"
+            $normRel = "rules/$normRel.md"
+        } elseif (Test-Path (Join-Path $extractedRoot "agents\$normRel")) {
+            $targetPath = Join-Path $extractedRoot "agents\$normRel"
+            $normRel = "agents/$normRel"
+        } elseif (Test-Path (Join-Path $extractedRoot "agents\$normRel.agent.json")) {
+            $targetPath = Join-Path $extractedRoot "agents\$normRel.agent.json"
+            $normRel = "agents/$normRel.agent.json"
+        } else {
+            $match = Get-ChildItem -Path (Join-Path $extractedRoot "skills") -Directory -Recurse | Where-Object { $_.Name -eq $normRel } | Select-Object -First 1
+            if ($match) {
+                $targetPath = $match.FullName
+                $normRel = "skills/$($match.Name)"
+            }
+        }
+    }
+
+    if (-not (Test-Path $targetPath)) {
+        Write-Warn "Not found: $itemRel"
+        return
+    }
+
+    $baseName = Split-Path $targetPath -Leaf
+    $destSub = ".agents\skills"
+    $typeLabel = "Skill"
+
+    if ($normRel -like "plugins/*") {
+        $destSub = ".agents\plugins"
+        $typeLabel = "Plugin"
+    } elseif ($normRel -like "agents/*") {
+        $destSub = ".agents\agents"
+        $typeLabel = "Agent"
+    } elseif ($normRel -like "rules/*") {
+        $destSub = ".agents\rules"
+        $typeLabel = "Rule"
+    }
+
+    New-Item -ItemType Directory -Force -Path $destSub | Out-Null
+    $finalDest = Join-Path $destSub $baseName
+    Copy-Item -Recurse -Force $targetPath $finalDest
+    Write-Ok "Installed [$typeLabel]: $baseName → $finalDest"
+}
+
 try {
-    Write-Header "📦 Fetching ai-agent-skills catalogue..."
+    Write-Header "📦 Fetching developer-agent-stack catalogue..."
 
     # Download archive
     $ZipPath = Join-Path $env:TEMP "ai-agent-skills.zip"
@@ -42,64 +114,74 @@ try {
     Expand-Archive -Path $ZipPath -DestinationPath $TmpDir -Force
     Remove-Item $ZipPath
 
-    # The zip extracts into a subfolder like "ai-agent-skills-main"
     $ExtractedRoot = Get-ChildItem $TmpDir | Select-Object -First 1 -ExpandProperty FullName
 
-    # Direct install if -Skill was passed
-    if ($Skill -ne "") {
-        $SkillName = Split-Path $Skill -Leaf
-        $SkillSrc  = Join-Path $ExtractedRoot ($Skill -replace "/", "\")
-        $SkillDest = Join-Path $Dest $SkillName
-        New-Item -ItemType Directory -Force -Path $Dest | Out-Null
-        Copy-Item -Recurse -Force $SkillSrc $SkillDest
-        Write-Ok "Installed: $SkillName → $SkillDest"
+    # Direct install if -Target was passed
+    if ($Target -ne "") {
+        if ($Target -eq "all") {
+            Write-Host "🚀 Installing full Developer Agent Stack into .agents\..." -ForegroundColor Cyan
+            New-Item -ItemType Directory -Force -Path ".agents\skills", ".agents\plugins", ".agents\agents", ".agents\rules" | Out-Null
+            Get-ChildItem (Join-Path $ExtractedRoot "skills") -Directory -Recurse -Depth 1 | ForEach-Object {
+                if (Test-Path (Join-Path $_.FullName "SKILL.md")) {
+                    Copy-Item -Recurse -Force $_.FullName (Join-Path ".agents\skills" $_.Name)
+                }
+            }
+            Get-ChildItem (Join-Path $ExtractedRoot "plugins") -Directory | ForEach-Object {
+                Copy-Item -Recurse -Force $_.FullName (Join-Path ".agents\plugins" $_.Name)
+            }
+            Get-ChildItem (Join-Path $ExtractedRoot "agents") -File | ForEach-Object {
+                Copy-Item -Force $_.FullName (Join-Path ".agents\agents" $_.Name)
+            }
+            Get-ChildItem (Join-Path $ExtractedRoot "rules") -File | ForEach-Object {
+                Copy-Item -Force $_.FullName (Join-Path ".agents\rules" $_.Name)
+            }
+            Write-Ok "Full stack installed to .agents\ (Skills, Plugins, Agents, Rules)"
+            return
+        }
+
+        Install-Item-Path $Target $ExtractedRoot
         return
     }
 
     # Interactive menu
     Write-Host ""
-    Write-Host "Available skills:" -ForegroundColor Cyan
+    Write-Host "Available Plugins, Skills, Agents & Rules:" -ForegroundColor Cyan
     Write-Host ""
-    foreach ($k in $Skills.Keys | Sort-Object) {
-        Write-Host "  $k) $($Skills[$k].Label)"
+    foreach ($k in $Catalogue.Keys | Sort-Object) {
+        Write-Host "  $k) $($Catalogue[$k].Label)"
     }
     Write-Host ""
-    Write-Host "  a) Install all skills"
+    Write-Host "  a) Install all items (Full Stack)"
     Write-Host "  q) Quit"
     Write-Host ""
-    $Selection = Read-Host "Select skills to install (comma-separated numbers, or a/q)"
+    $Selection = Read-Host "Select items to install (comma-separated numbers, or a/q)"
 
-    if ($Selection -eq "q") {
+    if ($Selection -eq "q" -or [string]::IsNullOrWhiteSpace($Selection)) {
         Write-Dim "Aborted."
         return
     }
 
-    New-Item -ItemType Directory -Force -Path $Dest | Out-Null
-
     if ($Selection -eq "a") {
-        $Keys = $Skills.Keys | Sort-Object
+        foreach ($k in $Catalogue.Keys | Sort-Object) {
+            Install-Item-Path $Catalogue[$k].Path $ExtractedRoot
+        }
     } else {
         $Keys = $Selection -split "," | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne "" }
-    }
-
-    foreach ($key in $Keys) {
-        $parsed = 0
-        if (-not [int]::TryParse($key, [ref]$parsed) -or -not $Skills.ContainsKey($parsed)) {
-            Write-Warn "Unknown selection: $key — skipping"
-            continue
+        foreach ($key in $Keys) {
+            $parsed = 0
+            if (-not [int]::TryParse($key, [ref]$parsed) -or -not $Catalogue.ContainsKey($parsed)) {
+                Write-Warn "Unknown selection: $key — skipping"
+                continue
+            }
+            Install-Item-Path $Catalogue[$parsed].Path $ExtractedRoot
         }
-        $SkillPath = $Skills[$parsed].Path
-        $SkillName = Split-Path $SkillPath -Leaf
-        $SkillSrc  = Join-Path $ExtractedRoot ($SkillPath -replace "/", "\")
-        $SkillDest = Join-Path $Dest $SkillName
-        Copy-Item -Recurse -Force $SkillSrc $SkillDest
-        Write-Ok "Installed: $SkillName → $SkillDest"
     }
 
     Write-Host ""
-    Write-Host "Done! Skills are in .agents\skills\" -ForegroundColor Cyan
-    Write-Dim "Commit the .agents\ folder to share skills with your team."
+    Write-Host "Done! Items installed under .agents\" -ForegroundColor Cyan
+    Write-Dim "Commit the .agents\ directory to share with your team."
 
 } finally {
     if (Test-Path $TmpDir) { Remove-Item -Recurse -Force $TmpDir }
 }
+
