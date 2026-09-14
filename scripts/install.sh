@@ -4,10 +4,10 @@
 #   Interactive:
 #     curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh | bash
 #   Direct Single Item (checks and creates .agents/* automatically):
-#     curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh | bash -s -- plugins/fullstack-launch
+#     curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh | bash -s -- plugins/fullstack-quality-pack
 #     curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh | bash -s -- skills/web/web-trust-and-compliance
-#     curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh | bash -s -- agents/pr-reviewer.agent.json
-#     curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh | bash -s -- rules/git-safety.md
+#     curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh | bash -s -- agents/code-reviewer
+#     curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh | bash -s -- rules/typescript-strict-guardrails.md
 #     curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh | bash -s -- all
 
 set -euo pipefail
@@ -37,6 +37,34 @@ install_item() {
   local item_type=""
   local dest_dir=""
 
+  # Legacy aliases & normalization
+  case "$target" in
+    "plugins/quality-core"|"quality-core")
+      target="plugins/fullstack-quality-pack" ;;
+    "plugins/fullstack-launch"|"fullstack-launch")
+      target="plugins/production-launch-pack" ;;
+    "plugins/secure-delivery"|"secure-delivery")
+      target="plugins/web-security-pack" ;;
+    "agents/pr-reviewer"|"agents/pr-reviewer.agent.json"|"pr-reviewer"|"pr-reviewer.agent.json")
+      target="agents/code-reviewer" ;;
+    "agents/qa-tester"|"agents/qa-tester.agent.json"|"qa-tester"|"qa-tester.agent.json")
+      target="agents/qa-engineer" ;;
+    "agents/security-auditor.agent.json")
+      target="agents/security-auditor" ;;
+    "agents/code-reviewer.agent.json")
+      target="agents/code-reviewer" ;;
+    "agents/qa-engineer.agent.json")
+      target="agents/qa-engineer" ;;
+    "rules/git-safety"|"rules/git-safety.md"|"git-safety"|"git-safety.md")
+      target="rules/token-efficiency.md" ;;
+    "rules/typescript-strict"|"rules/typescript-strict.md"|"typescript-strict"|"typescript-strict.md")
+      target="rules/typescript-strict-guardrails.md" ;;
+    "rules/web-compliance"|"rules/web-compliance.md"|"web-compliance"|"web-compliance.md")
+      target="rules/clean-architecture-boundaries.md" ;;
+    "rules/secret-hygiene"|"rules/secret-hygiene.md"|"secret-hygiene"|"secret-hygiene.md")
+      target="rules/security-and-secret-hygiene.md" ;;
+  esac
+
   # 1. Exact path match in tmp dir
   if [[ -e "$TMP_DIR/$target" ]]; then
     found_path="$TMP_DIR/$target"
@@ -48,11 +76,13 @@ install_item() {
     found_path="$TMP_DIR/rules/$target"
   elif [[ -f "$TMP_DIR/rules/${target}.md" ]]; then
     found_path="$TMP_DIR/rules/${target}.md"
-  # 4. Search in agents
+  # 4. Search in agents (specialist subagent folders)
+  elif [[ -d "$TMP_DIR/agents/$target" ]]; then
+    found_path="$TMP_DIR/agents/$target"
   elif [[ -f "$TMP_DIR/agents/$target" ]]; then
     found_path="$TMP_DIR/agents/$target"
-  elif [[ -f "$TMP_DIR/agents/${target}.agent.json" ]]; then
-    found_path="$TMP_DIR/agents/${target}.agent.json"
+  elif [[ -d "$TMP_DIR/agents/${target%.agent.json}" ]]; then
+    found_path="$TMP_DIR/agents/${target%.agent.json}"
   # 5. Search in skills (recursive search by folder name)
   else
     local skill_match
@@ -111,7 +141,7 @@ if [[ $# -gt 0 ]]; then
       find "$TMP_DIR/plugins" -mindepth 1 -maxdepth 1 -type d -exec cp -r {} .agents/plugins/ \;
     fi
     if [[ -d "$TMP_DIR/agents" ]]; then
-      find "$TMP_DIR/agents" -mindepth 1 -maxdepth 1 -type f -exec cp -r {} .agents/agents/ \;
+      find "$TMP_DIR/agents" -mindepth 1 -maxdepth 1 -type d -exec cp -r {} .agents/agents/ \;
     fi
     if [[ -d "$TMP_DIR/rules" ]]; then
       find "$TMP_DIR/rules" -mindepth 1 -maxdepth 1 -type f -exec cp -r {} .agents/rules/ \;
@@ -133,9 +163,9 @@ bold "Available Plugins & Skills:"
 echo ""
 
 declare -A CATALOGUE=(
-  [1]="plugins/fullstack-launch"
-  [2]="plugins/secure-delivery"
-  [3]="plugins/quality-core"
+  [1]="plugins/web-security-pack"
+  [2]="plugins/production-launch-pack"
+  [3]="plugins/fullstack-quality-pack"
   [4]="skills/web/production-web-app-launch"
   [5]="skills/web/web-trust-and-compliance"
   [6]="skills/web/developer-console-signature"
@@ -147,19 +177,19 @@ declare -A CATALOGUE=(
   [12]="skills/devops/git-commit-quality"
   [13]="skills/devops/code-review-checklist"
   [14]="skills/devops/dockerfile-best-practices"
-  [15]="agents/pr-reviewer.agent.json"
-  [16]="agents/security-auditor.agent.json"
-  [17]="agents/qa-tester.agent.json"
-  [18]="rules/git-safety.md"
-  [19]="rules/typescript-strict.md"
-  [20]="rules/web-compliance.md"
-  [21]="rules/secret-hygiene.md"
+  [15]="agents/security-auditor"
+  [16]="agents/code-reviewer"
+  [17]="agents/qa-engineer"
+  [18]="rules/token-efficiency.md"
+  [19]="rules/typescript-strict-guardrails.md"
+  [20]="rules/clean-architecture-boundaries.md"
+  [21]="rules/security-and-secret-hygiene.md"
 )
 
 declare -A LABELS=(
-  [1]="📦 [Plugin]  fullstack-launch          — Web launch, trust, QA & commit stack"
-  [2]="📦 [Plugin]  secure-delivery           — Secret hygiene, security audit & Docker"
-  [3]="📦 [Plugin]  quality-core              — TypeScript strict, PR review & tests"
+  [1]="📦 [Plugin]  web-security-pack         — Web trust, secret hygiene, auditor & rules"
+  [2]="📦 [Plugin]  production-launch-pack    — Launch audit, Next.js perf & QA tester"
+  [3]="📦 [Plugin]  fullstack-quality-pack    — TypeScript strict, coverage & PR reviewer"
   [4]="🧠 [Skill]   production-web-app-launch — Production readiness audit"
   [5]="🧠 [Skill]   web-trust-and-compliance  — Legal, privacy, consent & trust audit"
   [6]="🧠 [Skill]   developer-console-signature — Styled author branding & DevTools helpers"
@@ -171,13 +201,13 @@ declare -A LABELS=(
   [12]="🧠 [Skill]  git-commit-quality        — Conventional Commits enforcement"
   [13]="🧠 [Skill]  code-review-checklist     — BLOCKER/MAJOR/MINOR PR review"
   [14]="🧠 [Skill]  dockerfile-best-practices — Secure, minimal container images"
-  [15]="🤖 [Agent]  pr-reviewer               — PR code review specialist"
-  [16]="🤖 [Agent]  security-auditor          — AppSec & vulnerability scanner"
-  [17]="🤖 [Agent]  qa-tester                 — Test plan & edge case generator"
-  [18]="📜 [Rule]   git-safety                — Protected branches & clean history"
-  [19]="📜 [Rule]   typescript-strict         — No 'any', exhaustive types"
-  [20]="📜 [Rule]   web-compliance            — Mandatory trust anchors & legal"
-  [21]="📜 [Rule]   secret-hygiene            — Mandatory .env checks & scan"
+  [15]="🤖 [Agent]  security-auditor          — AppSec & vulnerability scanner"
+  [16]="🤖 [Agent]  code-reviewer             — Principal PR code reviewer"
+  [17]="🤖 [Agent]  qa-engineer               — Test plan & regression generator"
+  [18]="📜 [Rule]   token-efficiency          — Minimal diffs & token optimization"
+  [19]="📜 [Rule]   typescript-strict         — Zero 'any', runtime Zod validation"
+  [20]="📜 [Rule]   clean-architecture        — Layered architecture & separation"
+  [21]="📜 [Rule]   secret-hygiene            — Mandatory .env checks & no secrets"
 )
 
 for i in $(seq 1 ${#CATALOGUE[@]}); do

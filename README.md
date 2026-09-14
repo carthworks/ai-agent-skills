@@ -146,7 +146,7 @@ curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scr
 curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh | bash -s -- skills/web/web-trust-and-compliance
 
 # Install a Subagent directly into .agents/agents/
-curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh | bash -s -- agents/security-auditor.agent.json
+curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh | bash -s -- agents/security-auditor
 
 # Install a Rule preset directly into .agents/rules/
 curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh | bash -s -- rules/security-and-secret-hygiene.md
