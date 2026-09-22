@@ -1,29 +1,6 @@
 {
-  "generated": "2026-09-12T09:13:30.000Z",
+  "generated": "2026-09-22T05:34:15.163Z",
   "agents": [
-    {
-      "name": "code-reviewer",
-      "role": "Principal Code Reviewer & Architecture Guardian",
-      "description": "Rigorous pull request reviewer subagent enforcing correctness, strict typing, error handling, performance regressions, and architectural boundaries.",
-      "category": "review",
-      "path": "agents/code-reviewer",
-      "model": "high-reasoning",
-      "toolsAllowed": [
-        "view_file",
-        "grep_search",
-        "list_dir"
-      ],
-      "license": "Apache-2.0",
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": [
-        "review",
-        "pr",
-        "quality",
-        "clean-code",
-        "refactoring"
-      ]
-    },
     {
       "name": "qa-engineer",
       "role": "Staff QA & Test Automation Specialist",
@@ -46,6 +23,29 @@
         "vitest",
         "playwright",
         "e2e"
+      ]
+    },
+    {
+      "name": "code-reviewer",
+      "role": "Principal Code Reviewer & Architecture Guardian",
+      "description": "Rigorous pull request reviewer subagent enforcing correctness, strict typing, error handling, performance regressions, and architectural boundaries.",
+      "category": "review",
+      "path": "agents/code-reviewer",
+      "model": "high-reasoning",
+      "toolsAllowed": [
+        "view_file",
+        "grep_search",
+        "list_dir"
+      ],
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": [
+        "review",
+        "pr",
+        "quality",
+        "clean-code",
+        "refactoring"
       ]
     },
     {

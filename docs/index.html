@@ -1157,446 +1157,771 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
 
   // __INITIAL_SKILLS_START__
   const INITIAL_SKILLS = [
-    {
-      "name": "code-review-checklist",
-      "description": "Provides a structured, thorough code review checklist covering correctness, security, performance, tests, and maintainability. Use this skill whenever asked to…",
-      "category": "devops",
-      "path": "skills/devops/code-review-checklist",
-      "license": "Apache-2.0",
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": []
-    },
-    {
-      "name": "dockerfile-best-practices",
-      "description": "Guides writing secure, efficient, production-grade Dockerfiles and docker-compose files. Use when creating or reviewing a Dockerfile, docker-compose.yml, or .d…",
-      "category": "devops",
-      "path": "skills/devops/dockerfile-best-practices",
-      "license": "Apache-2.0",
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": []
-    },
-    {
-      "name": "git-commit-quality",
-      "description": "Enforces high-quality git commit messages following Conventional Commits. Use this skill whenever the agent is about to run `git commit`, write a commit messag…",
-      "category": "devops",
-      "path": "skills/devops/git-commit-quality",
-      "license": "Apache-2.0",
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": []
-    },
-    {
-      "name": "env-secret-safety",
-      "description": "Prevents hardcoded secrets, API keys, passwords, and credentials in source code. Use this skill whenever the agent is writing code that connects to external se…",
-      "category": "safety",
-      "path": "skills/safety/env-secret-safety",
-      "license": "Apache-2.0",
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": []
-    },
-    {
-      "name": "test-coverage-guidance",
-      "description": "Guides what, when, and how to test code — choosing between unit, integration, and end-to-end tests. Use when writing tests, deciding test strategy, setting up …",
-      "category": "testing",
-      "path": "skills/testing/test-coverage-guidance",
-      "license": "Apache-2.0",
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": []
-    },
-    {
-      "name": "typescript-strict-mode",
-      "description": "Enforces TypeScript strict mode configuration and type-safe coding patterns. Use when setting up a TypeScript project, reviewing tsconfig.json, fixing type err…",
-      "category": "typescript",
-      "path": "skills/typescript/typescript-strict-mode",
-      "license": "Apache-2.0",
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": []
-    },
-    {
-      "name": "api-design-rest",
-      "description": "Guides designing clean, consistent, and developer-friendly REST APIs. Use when creating new API endpoints, reviewing API contracts, writing OpenAPI/Swagger spe…",
-      "category": "web",
-      "path": "skills/web/api-design-rest",
-      "license": "Apache-2.0",
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": []
-    },
-    {
-      "name": "nextjs-performance",
-      "description": "Optimises Next.js applications for Core Web Vitals, bundle size, and perceived performance. Use when building, auditing, or debugging a Next.js app's performan…",
-      "category": "web",
-      "path": "skills/web/nextjs-performance",
-      "license": "Apache-2.0",
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": []
-    },
-    {
-      "name": "production-web-app-launch",
-      "description": "Audit and fix production-readiness gaps in websites and web apps — accessibility, SEO, metadata, security, forms, errors, mobile, deployment config, and operat…",
-      "category": "web",
-      "path": "skills/web/production-web-app-launch",
-      "license": "Apache-2.0",
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": []
-    },
-    {
-      "name": "web-trust-and-compliance",
-      "description": "Audit web applications and websites for legal compliance, consumer trust, privacy policies, terms of service / terms & conditions, cancellation/refund policies, a…",
-      "category": "web",
-      "path": "skills/web/web-trust-and-compliance",
-      "license": "Apache-2.0",
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": [
-        "compliance",
-        "privacy",
-        "trust",
-        "legal",
-        "accessibility",
-        "web"
-      ]
-    },
-    {
-      "name": "developer-console-signature",
-      "description": "Inject styled developer signatures, author branding, project metadata, ASCII art, easter eggs, security contact info, and interactive DevTools inspection helpers (window.<App>) into the browser console.",
-      "category": "web",
-      "path": "skills/web/developer-console-signature",
-      "license": "Apache-2.0",
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": ["console", "branding", "developer-signature", "devtools", "web"]
-    }
+      {
+          "name": "agent-tool-guardrails",
+          "description": "Guides designing and implementing security guardrails, permission scoping, and execution boundaries for autonomous AI agents and tool use. Covers principle of …",
+          "category": "ai-security",
+          "path": "skills/ai-security/agent-tool-guardrails",
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "agent-security",
+              "tool-use",
+              "blast-radius",
+              "execution-sandbox"
+          ]
+      },
+      {
+          "name": "ai-security-quality-checks",
+          "description": "Build and execute programmatic AI quality and security validation layers for LLM applications using deterministic checks, LLM-as-a-Judge evaluation, context en…",
+          "category": "ai-security",
+          "path": "skills/ai-security/ai-security-quality-checks",
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "ai-security",
+              "llm-evaluation",
+              "quality-checks",
+              "hallucination-detection"
+          ]
+      },
+      {
+          "name": "llm-red-teaming",
+          "description": "Guides adversarial testing and red-teaming of LLM applications. Covers automated jailbreak generation, persona adoption, multi-turn elicitation, safety benchma…",
+          "category": "ai-security",
+          "path": "skills/ai-security/llm-red-teaming",
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "red-teaming",
+              "jailbreak-testing",
+              "ai-security",
+              "adversarial-testing"
+          ]
+      },
+      {
+          "name": "owasp-llm-top-10",
+          "description": "Comprehensive checklist and mitigation strategies for the OWASP Top 10 for Large Language Model Applications (LLM01 to LLM10). Use when conducting security aud…",
+          "category": "ai-security",
+          "path": "skills/ai-security/owasp-llm-top-10",
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "owasp-llm",
+              "ai-security",
+              "compliance",
+              "threat-modeling"
+          ]
+      },
+      {
+          "name": "prompt-injection-defense",
+          "description": "Guides defense against direct and indirect prompt injections in LLM applications. Covers input sanitization, delimiter strategies, dual-LLM architectures, inst…",
+          "category": "ai-security",
+          "path": "skills/ai-security/prompt-injection-defense",
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "prompt-injection",
+              "ai-security",
+              "guardrails",
+              "input-sanitization"
+          ]
+      },
+      {
+          "name": "rag-data-leakage-prevention",
+          "description": "Guides prevention of sensitive data leakage, PII exposure, and unauthorized cross-tenant data access in Retrieval-Augmented Generation (RAG) systems. Covers do…",
+          "category": "ai-security",
+          "path": "skills/ai-security/rag-data-leakage-prevention",
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "rag-security",
+              "data-leakage",
+              "pii-redaction",
+              "vector-database"
+          ]
+      },
+      {
+          "name": "code-review-checklist",
+          "description": "Provides a structured, thorough code review checklist covering correctness, security, performance, tests, and maintainability. Use this skill whenever asked to…",
+          "category": "devops",
+          "path": "skills/devops/code-review-checklist",
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": []
+      },
+      {
+          "name": "dockerfile-best-practices",
+          "description": "Guides writing secure, efficient, production-grade Dockerfiles and docker-compose files. Use when creating or reviewing a Dockerfile, docker-compose.yml, or .d…",
+          "category": "devops",
+          "path": "skills/devops/dockerfile-best-practices",
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": []
+      },
+      {
+          "name": "git-commit-quality",
+          "description": "Enforces high-quality git commit messages following Conventional Commits. Use this skill whenever the agent is about to run `git commit`, write a commit messag…",
+          "category": "devops",
+          "path": "skills/devops/git-commit-quality",
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": []
+      },
+      {
+          "name": "env-secret-safety",
+          "description": "Prevents hardcoded secrets, API keys, passwords, and credentials in source code. Use this skill whenever the agent is writing code that connects to external se…",
+          "category": "safety",
+          "path": "skills/safety/env-secret-safety",
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": []
+      },
+      {
+          "name": "test-coverage-guidance",
+          "description": "Guides what, when, and how to test code — choosing between unit, integration, and end-to-end tests. Use when writing tests, deciding test strategy, setting up …",
+          "category": "testing",
+          "path": "skills/testing/test-coverage-guidance",
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": []
+      },
+      {
+          "name": "typescript-strict-mode",
+          "description": "Enforces TypeScript strict mode configuration and type-safe coding patterns. Use when setting up a TypeScript project, reviewing tsconfig.json, fixing type err…",
+          "category": "typescript",
+          "path": "skills/typescript/typescript-strict-mode",
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": []
+      },
+      {
+          "name": "api-design-rest",
+          "description": "Guides designing clean, consistent, and developer-friendly REST APIs. Use when creating new API endpoints, reviewing API contracts, writing OpenAPI/Swagger spe…",
+          "category": "web",
+          "path": "skills/web/api-design-rest",
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": []
+      },
+      {
+          "name": "developer-console-signature",
+          "description": "Inject styled developer signatures, author branding, project metadata, ASCII art, easter eggs, security contact information, and interactive DevTools inspectio…",
+          "category": "web",
+          "path": "skills/web/developer-console-signature",
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "console",
+              "branding",
+              "developer-signature",
+              "easter-egg",
+              "web",
+              "devtools"
+          ]
+      },
+      {
+          "name": "nextjs-performance",
+          "description": "Optimises Next.js applications for Core Web Vitals, bundle size, and perceived performance. Use when building, auditing, or debugging a Next.js app's performan…",
+          "category": "web",
+          "path": "skills/web/nextjs-performance",
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": []
+      },
+      {
+          "name": "production-web-app-launch",
+          "description": "Audit and fix production-readiness gaps in websites and web apps — accessibility, SEO, metadata, security, forms, errors, mobile, deployment config, and operat…",
+          "category": "web",
+          "path": "skills/web/production-web-app-launch",
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": []
+      },
+      {
+          "name": "web-trust-and-compliance",
+          "description": "Audit web applications and websites for legal compliance, consumer trust, privacy policies, terms of service / terms & conditions, cancellation/refund policies…",
+          "category": "web",
+          "path": "skills/web/web-trust-and-compliance",
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "compliance",
+              "privacy",
+              "trust",
+              "legal",
+              "accessibility",
+              "web"
+          ]
+      }
   ];
   // __INITIAL_SKILLS_END__
 
   // __INITIAL_MCPS_START__
   const INITIAL_MCPS = [
-    {
-      "name": "fetch",
-      "description": "Fetch web content, test REST and GraphQL endpoints, download API schemas, and inspect remote HTTP headers directly inside AI coding workflows.",
-      "category": "api",
-      "path": "mcps/api/fetch",
-      "license": "MIT",
-      "command": "uvx",
-      "args": ["mcp-server-fetch"],
-      "env": {},
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": ["fetch", "http", "api", "curl", "rest"],
-      "runtime": "python",
-      "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/fetch"
-    },
-    {
-      "name": "stripe",
-      "description": "Inspect and manage Stripe resources in test mode: query payments, customers, subscriptions, products, prices, and verify webhook delivery events.",
-      "category": "api",
-      "path": "mcps/api/stripe",
-      "license": "MIT",
-      "command": "npx",
-      "args": ["-y", "@stripe/mcp"],
-      "env": { "STRIPE_SECRET_KEY": "<your-stripe-test-key>" },
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": ["stripe", "payments", "billing", "checkout", "api"],
-      "runtime": "node",
-      "officialUrl": "https://github.com/stripe/agent-toolkit"
-    },
-    {
-      "name": "chrome-devtools",
-      "description": "Inspect live web pages with Chrome DevTools: query DOM elements, capture network traffic, evaluate JavaScript, take screenshots, and troubleshoot UI console errors.",
-      "category": "browser",
-      "path": "mcps/browser/chrome-devtools",
-      "license": "Apache-2.0",
-      "command": "npx",
-      "args": ["-y", "chrome-devtools-mcp"],
-      "env": {},
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": ["browser", "chrome", "devtools", "qa", "frontend"],
-      "runtime": "node",
-      "officialUrl": "https://github.com/carthworks/ai-agent-skills"
-    },
-    {
-      "name": "playwright",
-      "description": "Headless browser automation with Playwright: execute end-to-end clicks, form fills, multi-page user journeys, PDF generation, and automated cross-browser testing.",
-      "category": "browser",
-      "path": "mcps/browser/playwright",
-      "license": "MIT",
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-puppeteer"],
-      "env": {},
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": ["playwright", "puppeteer", "e2e", "testing", "browser"],
-      "runtime": "node",
-      "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/puppeteer"
-    },
-    {
-      "name": "postgres",
-      "description": "Read-only and migration database inspection for PostgreSQL: query schemas, inspect tables, view foreign keys, and run analytical queries without schema hallucinations.",
-      "category": "data",
-      "path": "mcps/data/postgres",
-      "license": "MIT",
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-postgres", "postgresql://user:password@localhost:5432/dbname"],
-      "env": { "DATABASE_URL": "postgresql://user:password@localhost:5432/dbname" },
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": ["postgres", "sql", "database", "data", "schema"],
-      "runtime": "node",
-      "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/postgres"
-    },
-    {
-      "name": "redis",
-      "description": "Inspect and manage Redis instances: query keys, inspect TTLs, view data types (hashes, lists, sets, streams), debug caching layers, and monitor pub/sub messages.",
-      "category": "data",
-      "path": "mcps/data/redis",
-      "license": "MIT",
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-redis", "redis://localhost:6379"],
-      "env": { "REDIS_URL": "redis://localhost:6379" },
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": ["redis", "cache", "kv", "queues", "data"],
-      "runtime": "node",
-      "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/redis"
-    },
-    {
-      "name": "supabase",
-      "description": "Manage and inspect Supabase projects: query Postgres tables, inspect auth users, browse Storage buckets, invoke Edge Functions, and view project logs.",
-      "category": "data",
-      "path": "mcps/data/supabase",
-      "license": "MIT",
-      "command": "npx",
-      "args": ["-y", "@supabase/mcp-server"],
-      "env": { "SUPABASE_ACCESS_TOKEN": "<your-access-token>", "SUPABASE_PROJECT_ID": "<your-project-ref>" },
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": ["supabase", "postgres", "auth", "storage", "database"],
-      "runtime": "node",
-      "officialUrl": "https://github.com/supabase-community/mcp-server-supabase"
-    },
-    {
-      "name": "cloudflare",
-      "description": "Manage Cloudflare resources: query DNS records, inspect Worker deployments, manage KV namespaces, view D1 SQL databases, and inspect R2 storage bucket objects.",
-      "category": "devops",
-      "path": "mcps/devops/cloudflare",
-      "license": "MIT",
-      "command": "npx",
-      "args": ["-y", "@cloudflare/mcp-server-cloudflare"],
-      "env": { "CLOUDFLARE_API_TOKEN": "<your-cloudflare-api-token>", "CLOUDFLARE_ACCOUNT_ID": "<your-cloudflare-account-id>" },
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": ["cloudflare", "dns", "workers", "kv", "d1", "r2", "edge"],
-      "runtime": "node",
-      "officialUrl": "https://github.com/cloudflare/mcp-server-cloudflare"
-    },
-    {
-      "name": "docker",
-      "description": "Inspect and manage Docker containers, images, volumes, and networks: list running containers, tail live logs, and restart crashed services during development.",
-      "category": "devops",
-      "path": "mcps/devops/docker",
-      "license": "MIT",
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-docker"],
-      "env": {},
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": ["docker", "containers", "devops", "compose", "infra"],
-      "runtime": "node",
-      "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/docker"
-    },
-    {
-      "name": "github",
-      "description": "Interact with GitHub repositories: search code, inspect issues, read and create pull requests, review diffs, manage branches, and view commit logs.",
-      "category": "planning",
-      "path": "mcps/planning/github",
-      "license": "MIT",
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-github"],
-      "env": { "GITHUB_PERSONAL_ACCESS_TOKEN": "<your-github-pat>" },
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": ["github", "git", "pr", "issues", "repo", "planning"],
-      "runtime": "node",
-      "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/github"
-    },
-    {
-      "name": "linear",
-      "description": "Query, create, and update Linear project issues, tasks, and roadmaps: sync agent work with sprints, assign tickets, and update issue states automatically.",
-      "category": "planning",
-      "path": "mcps/planning/linear",
-      "license": "MIT",
-      "command": "npx",
-      "args": ["-y", "linear-mcp-server"],
-      "env": { "LINEAR_API_KEY": "<your-linear-api-key>" },
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": ["linear", "issues", "tickets", "planning", "pm"],
-      "runtime": "node",
-      "officialUrl": "https://github.com/jerhadf/linear-mcp-server"
-    },
-    {
-      "name": "sentry",
-      "description": "Retrieve and inspect real-time application crash reports, error stack traces, breadcrumbs, and issue telemetry directly from Sentry projects.",
-      "category": "quality",
-      "path": "mcps/quality/sentry",
-      "license": "MIT",
-      "command": "uvx",
-      "args": ["mcp-server-sentry", "--auth-token", "<your-sentry-auth-token>"],
-      "env": { "SENTRY_AUTH_TOKEN": "<your-sentry-auth-token>" },
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": ["sentry", "monitoring", "errors", "debug", "quality"],
-      "runtime": "python",
-      "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/sentry"
-    }
+      {
+          "name": "fetch",
+          "description": "Fetch web content, test REST and GraphQL endpoints, download API schemas, and inspect remote HTTP headers directly inside AI coding workflows.",
+          "category": "api",
+          "path": "mcps/api/fetch",
+          "license": "MIT",
+          "command": "uvx",
+          "args": [
+              "mcp-server-fetch"
+          ],
+          "env": {},
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "fetch",
+              "http",
+              "api",
+              "curl",
+              "rest"
+          ],
+          "runtime": "python",
+          "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/fetch"
+      },
+      {
+          "name": "stripe",
+          "description": "Inspect and manage Stripe resources in test mode: query payments, customers, subscriptions, products, prices, and verify webhook delivery events.",
+          "category": "api",
+          "path": "mcps/api/stripe",
+          "license": "MIT",
+          "command": "npx",
+          "args": [
+              "-y",
+              "@stripe/mcp"
+          ],
+          "env": {
+              "STRIPE_SECRET_KEY": "<your-stripe-test-key>"
+          },
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "stripe",
+              "payments",
+              "billing",
+              "checkout",
+              "api"
+          ],
+          "runtime": "node",
+          "officialUrl": "https://github.com/stripe/agent-toolkit"
+      },
+      {
+          "name": "chrome-devtools",
+          "description": "Inspect live web pages with Chrome DevTools: query DOM elements, capture network traffic, evaluate JavaScript, take screenshots, and troubleshoot UI console er…",
+          "category": "browser",
+          "path": "mcps/browser/chrome-devtools",
+          "license": "Apache-2.0",
+          "command": "npx",
+          "args": [
+              "-y",
+              "chrome-devtools-mcp"
+          ],
+          "env": {},
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "browser",
+              "chrome",
+              "devtools",
+              "qa",
+              "frontend"
+          ],
+          "runtime": "node",
+          "officialUrl": "https://github.com/carthworks/ai-agent-skills"
+      },
+      {
+          "name": "playwright",
+          "description": "Headless browser automation with Playwright: execute end-to-end clicks, form fills, multi-page user journeys, PDF generation, and automated cross-browser testi…",
+          "category": "browser",
+          "path": "mcps/browser/playwright",
+          "license": "MIT",
+          "command": "npx",
+          "args": [
+              "-y",
+              "@modelcontextprotocol/server-puppeteer"
+          ],
+          "env": {},
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "playwright",
+              "puppeteer",
+              "e2e",
+              "testing",
+              "browser"
+          ],
+          "runtime": "node",
+          "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/puppeteer"
+      },
+      {
+          "name": "postgres",
+          "description": "Read-only and migration database inspection for PostgreSQL: query schemas, inspect tables, view foreign keys, and run analytical queries without schema halluci…",
+          "category": "data",
+          "path": "mcps/data/postgres",
+          "license": "MIT",
+          "command": "npx",
+          "args": [
+              "-y",
+              "@modelcontextprotocol/server-postgres",
+              "postgresql://user:password@localhost:5432/dbname"
+          ],
+          "env": {
+              "DATABASE_URL": "postgresql://user:password@localhost:5432/dbname"
+          },
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "postgres",
+              "sql",
+              "database",
+              "data",
+              "schema"
+          ],
+          "runtime": "node",
+          "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/postgres"
+      },
+      {
+          "name": "redis",
+          "description": "Inspect and manage Redis instances: query keys, inspect TTLs, view data types (hashes, lists, sets, streams), debug caching layers, and monitor pub/sub message…",
+          "category": "data",
+          "path": "mcps/data/redis",
+          "license": "MIT",
+          "command": "npx",
+          "args": [
+              "-y",
+              "@modelcontextprotocol/server-redis",
+              "redis://localhost:6379"
+          ],
+          "env": {
+              "REDIS_URL": "redis://localhost:6379"
+          },
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "redis",
+              "cache",
+              "kv",
+              "queues",
+              "data"
+          ],
+          "runtime": "node",
+          "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/redis"
+      },
+      {
+          "name": "supabase",
+          "description": "Manage Supabase projects: inspect PostgreSQL tables, query Auth users, review Storage buckets, inspect Edge Functions, and check database migrations.",
+          "category": "data",
+          "path": "mcps/data/supabase",
+          "license": "MIT",
+          "command": "npx",
+          "args": [
+              "-y",
+              "@supabase/mcp-server"
+          ],
+          "env": {
+              "SUPABASE_ACCESS_TOKEN": "<your-supabase-access-token>"
+          },
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "supabase",
+              "postgres",
+              "auth",
+              "database",
+              "baas"
+          ],
+          "runtime": "node",
+          "officialUrl": "https://github.com/supabase-community/supabase-mcp"
+      },
+      {
+          "name": "cloudflare",
+          "description": "Manage Cloudflare resources: inspect DNS records, manage Worker scripts, query KV namespaces, D1 databases, and R2 object storage buckets.",
+          "category": "devops",
+          "path": "mcps/devops/cloudflare",
+          "license": "MIT",
+          "command": "npx",
+          "args": [
+              "-y",
+              "@cloudflare/mcp-server-cloudflare"
+          ],
+          "env": {
+              "CLOUDFLARE_API_TOKEN": "<your-cloudflare-api-token>",
+              "CLOUDFLARE_ACCOUNT_ID": "<your-cloudflare-account-id>"
+          },
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "cloudflare",
+              "workers",
+              "dns",
+              "r2",
+              "devops"
+          ],
+          "runtime": "node",
+          "officialUrl": "https://github.com/cloudflare/mcp-server-cloudflare"
+      },
+      {
+          "name": "docker",
+          "description": "Inspect and manage Docker containers, images, volumes, and networks. Tail real-time container logs and troubleshoot docker-compose environments.",
+          "category": "devops",
+          "path": "mcps/devops/docker",
+          "license": "Apache-2.0",
+          "command": "npx",
+          "args": [
+              "-y",
+              "@modelcontextprotocol/server-docker"
+          ],
+          "env": {},
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "docker",
+              "containers",
+              "devops",
+              "infra",
+              "compose"
+          ],
+          "runtime": "node",
+          "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/docker"
+      },
+      {
+          "name": "github",
+          "description": "Interact with GitHub repositories: search and read code, manage pull requests, create and update issues, inspect commits, and manage branches directly from the…",
+          "category": "planning",
+          "path": "mcps/planning/github",
+          "license": "MIT",
+          "command": "npx",
+          "args": [
+              "-y",
+              "@modelcontextprotocol/server-github"
+          ],
+          "env": {
+              "GITHUB_PERSONAL_ACCESS_TOKEN": "<your-github-token>"
+          },
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "git",
+              "github",
+              "prs",
+              "issues",
+              "planning"
+          ],
+          "runtime": "node",
+          "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/github"
+      },
+      {
+          "name": "linear",
+          "description": "Query, create, and update Linear issues, search project roadmaps, track bug cycles, and manage team sprints directly inside development workflows.",
+          "category": "planning",
+          "path": "mcps/planning/linear",
+          "license": "MIT",
+          "command": "npx",
+          "args": [
+              "-y",
+              "linear-mcp-server"
+          ],
+          "env": {
+              "LINEAR_API_KEY": "<your-linear-api-key>"
+          },
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "linear",
+              "issues",
+              "tickets",
+              "planning",
+              "pm"
+          ],
+          "runtime": "node",
+          "officialUrl": "https://github.com/jerhadf/linear-mcp-server"
+      },
+      {
+          "name": "sentry",
+          "description": "Retrieve and inspect real-time application crash reports, error stack traces, breadcrumbs, and issue telemetry directly from Sentry projects.",
+          "category": "quality",
+          "path": "mcps/quality/sentry",
+          "license": "MIT",
+          "command": "uvx",
+          "args": [
+              "mcp-server-sentry",
+              "--auth-token",
+              "<your-sentry-auth-token>"
+          ],
+          "env": {
+              "SENTRY_AUTH_TOKEN": "<your-sentry-auth-token>"
+          },
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "sentry",
+              "monitoring",
+              "errors",
+              "debug",
+              "quality"
+          ],
+          "runtime": "python",
+          "officialUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/sentry"
+      }
   ];
   // __INITIAL_MCPS_END__
 
   // __INITIAL_AGENTS_START__
   const INITIAL_AGENTS = [
-    {
-      "name": "code-reviewer",
-      "role": "Principal Code Reviewer & Architecture Guardian",
-      "description": "Rigorous pull request reviewer subagent enforcing correctness, strict typing, error handling, performance regressions, and architectural boundaries.",
-      "category": "review",
-      "path": "agents/code-reviewer",
-      "model": "high-reasoning",
-      "toolsAllowed": ["view_file", "grep_search", "list_dir"],
-      "license": "Apache-2.0",
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": ["review", "pr", "quality", "clean-code", "refactoring"]
-    },
-    {
-      "name": "qa-engineer",
-      "role": "Staff QA & Test Automation Specialist",
-      "description": "Autonomous Quality Assurance subagent specializing in test pyramid design, edge-case generation, synthetic regression testing, and E2E test suites.",
-      "category": "quality",
-      "path": "agents/qa-engineer",
-      "model": "high-reasoning",
-      "toolsAllowed": ["view_file", "grep_search", "list_dir", "run_command"],
-      "license": "Apache-2.0",
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": ["qa", "testing", "vitest", "playwright", "e2e"]
-    },
-    {
-      "name": "security-auditor",
-      "role": "Senior Security & Vulnerability Auditor",
-      "description": "Specialized subagent for scanning codebases for vulnerabilities, hardcoded secrets, injection flaws, OWASP Top 10 risks, and unsafe dependency patterns.",
-      "category": "security",
-      "path": "agents/security-auditor",
-      "model": "high-reasoning",
-      "toolsAllowed": ["view_file", "grep_search", "list_dir", "run_command"],
-      "license": "Apache-2.0",
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": ["security", "audit", "owasp", "cve", "secrets"]
-    }
+      {
+          "name": "qa-engineer",
+          "role": "Staff QA & Test Automation Specialist",
+          "description": "Autonomous Quality Assurance subagent specializing in test pyramid design, edge-case generation, synthetic regression testing, and E2E test suites.",
+          "category": "quality",
+          "path": "agents/qa-engineer",
+          "model": "high-reasoning",
+          "toolsAllowed": [
+              "view_file",
+              "grep_search",
+              "list_dir",
+              "run_command"
+          ],
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "qa",
+              "testing",
+              "vitest",
+              "playwright",
+              "e2e"
+          ]
+      },
+      {
+          "name": "code-reviewer",
+          "role": "Principal Code Reviewer & Architecture Guardian",
+          "description": "Rigorous pull request reviewer subagent enforcing correctness, strict typing, error handling, performance regressions, and architectural boundaries.",
+          "category": "review",
+          "path": "agents/code-reviewer",
+          "model": "high-reasoning",
+          "toolsAllowed": [
+              "view_file",
+              "grep_search",
+              "list_dir"
+          ],
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "review",
+              "pr",
+              "quality",
+              "clean-code",
+              "refactoring"
+          ]
+      },
+      {
+          "name": "security-auditor",
+          "role": "Senior Security & Vulnerability Auditor",
+          "description": "Specialized subagent for scanning codebases for vulnerabilities, hardcoded secrets, injection flaws, OWASP Top 10 risks, and unsafe dependency patterns.",
+          "category": "security",
+          "path": "agents/security-auditor",
+          "model": "high-reasoning",
+          "toolsAllowed": [
+              "view_file",
+              "grep_search",
+              "list_dir",
+              "run_command"
+          ],
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "security",
+              "audit",
+              "owasp",
+              "cve",
+              "secrets"
+          ]
+      }
   ];
   // __INITIAL_AGENTS_END__
 
   // __INITIAL_RULES_START__
   const INITIAL_RULES = [
-    {
-      "name": "clean-architecture-boundaries",
-      "description": "Architectural separation of concerns separating UI presentation, domain business logic, and infrastructure/data access layers.",
-      "category": "architecture",
-      "path": "rules/clean-architecture-boundaries.md",
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": ["architecture", "clean-code", "boundaries", "domain-driven"]
-    },
-    {
-      "name": "token-efficiency",
-      "description": "Universal rules for minimizing token consumption, enforcing surgical diffs, avoiding redundant reads, and streamlining agent responses.",
-      "category": "efficiency",
-      "path": "rules/token-efficiency.md",
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": ["tokens", "efficiency", "performance", "agent-behavior"]
-    },
-    {
-      "name": "typescript-strict-guardrails",
-      "description": "Strict TypeScript rules prohibiting any, enforcing discriminated unions, runtime schema validation (Zod), and exhaustive type guards.",
-      "category": "quality",
-      "path": "rules/typescript-strict-guardrails.md",
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": ["typescript", "types", "strict", "quality"]
-    },
-    {
-      "name": "security-and-secret-hygiene",
-      "description": "Strict security rules prohibiting hardcoded credentials, enforcing environment variable validation, and preventing sensitive data leaks.",
-      "category": "security",
-      "path": "rules/security-and-secret-hygiene.md",
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": ["security", "secrets", "env", "safety"]
-    }
+      {
+          "name": "clean-architecture-boundaries",
+          "description": "Architectural separation of concerns separating UI presentation, domain business logic, and infrastructure/data access layers.",
+          "category": "architecture",
+          "path": "rules/clean-architecture-boundaries.md",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "architecture",
+              "clean-code",
+              "boundaries",
+              "domain-driven"
+          ]
+      },
+      {
+          "name": "token-efficiency",
+          "description": "Universal rules for minimizing token consumption, enforcing surgical diffs, avoiding redundant reads, and streamlining agent responses.",
+          "category": "efficiency",
+          "path": "rules/token-efficiency.md",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "tokens",
+              "efficiency",
+              "performance",
+              "agent-behavior"
+          ]
+      },
+      {
+          "name": "typescript-strict-guardrails",
+          "description": "Strict TypeScript rules prohibiting any, enforcing discriminated unions, runtime schema validation (Zod), and exhaustive type guards.",
+          "category": "quality",
+          "path": "rules/typescript-strict-guardrails.md",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "typescript",
+              "types",
+              "strict",
+              "quality"
+          ]
+      },
+      {
+          "name": "security-and-secret-hygiene",
+          "description": "Strict security rules prohibiting hardcoded credentials, enforcing environment variable validation, and preventing sensitive data leaks.",
+          "category": "security",
+          "path": "rules/security-and-secret-hygiene.md",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "security",
+              "secrets",
+              "env",
+              "safety"
+          ]
+      }
   ];
   // __INITIAL_RULES_END__
 
   // __INITIAL_PLUGINS_START__
   const INITIAL_PLUGINS = [
-    {
-      "name": "production-launch-pack",
-      "description": "Essential pre-launch bundle covering production readiness audits, trust & compliance checks, edge deployment tools, and browser QA inspectors.",
-      "category": "launch",
-      "path": "plugins/production-launch-pack",
-      "components": {
-        "skills": ["skills/web/production-web-app-launch", "skills/web/web-trust-and-compliance", "skills/web/nextjs-performance"],
-        "mcps": ["mcps/devops/cloudflare", "mcps/browser/chrome-devtools"],
-        "agents": ["agents/qa-engineer"],
-        "rules": ["rules/token-efficiency.md"]
+      {
+          "name": "production-launch-pack",
+          "description": "Essential pre-launch bundle covering production readiness audits, trust & compliance checks, edge deployment tools, and browser QA inspectors.",
+          "category": "launch",
+          "path": "plugins/production-launch-pack",
+          "components": {
+              "skills": [
+                  "skills/web/production-web-app-launch",
+                  "skills/web/web-trust-and-compliance",
+                  "skills/web/nextjs-performance"
+              ],
+              "mcps": [
+                  "mcps/devops/cloudflare",
+                  "mcps/browser/chrome-devtools"
+              ],
+              "agents": [
+                  "agents/qa-engineer"
+              ],
+              "rules": [
+                  "rules/token-efficiency.md"
+              ]
+          },
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "launch",
+              "production",
+              "performance",
+              "deployment",
+              "readiness"
+          ]
       },
-      "license": "Apache-2.0",
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": ["launch", "production", "performance", "deployment", "readiness"]
-    },
-    {
-      "name": "fullstack-quality-pack",
-      "description": "Comprehensive engineering quality stack with strict TypeScript rules, testing pyramid guidance, PR review checklist, and code reviewer subagent.",
-      "category": "quality",
-      "path": "plugins/fullstack-quality-pack",
-      "components": {
-        "skills": ["skills/typescript/typescript-strict-mode", "skills/testing/test-coverage-guidance", "skills/devops/code-review-checklist"],
-        "mcps": ["mcps/quality/sentry"],
-        "agents": ["agents/code-reviewer"],
-        "rules": ["rules/typescript-strict-guardrails.md", "rules/clean-architecture-boundaries.md"]
+      {
+          "name": "fullstack-quality-pack",
+          "description": "Comprehensive engineering quality stack with strict TypeScript rules, testing pyramid guidance, PR review checklist, code reviewer subagent, and clean architec…",
+          "category": "quality",
+          "path": "plugins/fullstack-quality-pack",
+          "components": {
+              "skills": [
+                  "skills/typescript/typescript-strict-mode",
+                  "skills/testing/test-coverage-guidance",
+                  "skills/devops/code-review-checklist"
+              ],
+              "mcps": [
+                  "mcps/quality/sentry"
+              ],
+              "agents": [
+                  "agents/code-reviewer"
+              ],
+              "rules": [
+                  "rules/typescript-strict-guardrails.md",
+                  "rules/clean-architecture-boundaries.md"
+              ]
+          },
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "quality",
+              "typescript",
+              "testing",
+              "code-review",
+              "architecture"
+          ]
       },
-      "license": "Apache-2.0",
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": ["quality", "typescript", "testing", "code-review", "architecture"]
-    },
-    {
-      "name": "web-security-pack",
-      "description": "Complete security bundle combining trust & compliance audits, secret safety enforcement, automated vulnerability scanning subagent, and secret hygiene rules.",
-      "category": "security",
-      "path": "plugins/web-security-pack",
-      "components": {
-        "skills": ["skills/web/web-trust-and-compliance", "skills/safety/env-secret-safety"],
-        "mcps": ["mcps/quality/sentry"],
-        "agents": ["agents/security-auditor"],
-        "rules": ["rules/security-and-secret-hygiene.md"]
-      },
-      "license": "Apache-2.0",
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": ["security", "compliance", "privacy", "secrets", "audit"]
-    }
+      {
+          "name": "web-security-pack",
+          "description": "Complete security bundle combining trust & compliance audits, secret safety enforcement, automated vulnerability scanning subagent, and secret hygiene rules.",
+          "category": "security",
+          "path": "plugins/web-security-pack",
+          "components": {
+              "skills": [
+                  "skills/web/web-trust-and-compliance",
+                  "skills/safety/env-secret-safety"
+              ],
+              "mcps": [
+                  "mcps/quality/sentry"
+              ],
+              "agents": [
+                  "agents/security-auditor"
+              ],
+              "rules": [
+                  "rules/security-and-secret-hygiene.md"
+              ]
+          },
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "security",
+              "compliance",
+              "privacy",
+              "secrets",
+              "audit"
+          ]
+      }
   ];
   // __INITIAL_PLUGINS_END__
 

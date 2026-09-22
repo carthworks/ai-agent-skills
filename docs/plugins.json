@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-12T09:13:30.000Z",
+  "generated": "2026-09-22T05:34:15.169Z",
   "plugins": [
     {
       "name": "production-launch-pack",
@@ -36,7 +36,7 @@
     },
     {
       "name": "fullstack-quality-pack",
-      "description": "Comprehensive engineering quality stack with strict TypeScript rules, testing pyramid guidance, PR review checklist, code reviewer subagent, and clean arch…",
+      "description": "Comprehensive engineering quality stack with strict TypeScript rules, testing pyramid guidance, PR review checklist, code reviewer subagent, and clean architec…",
       "category": "quality",
       "path": "plugins/fullstack-quality-pack",
       "components": {

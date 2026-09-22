@@ -1,6 +1,96 @@
 {
-  "generated": "2026-09-10T03:33:16.789Z",
+  "generated": "2026-09-22T05:34:15.153Z",
   "skills": [
+    {
+      "name": "agent-tool-guardrails",
+      "description": "Guides designing and implementing security guardrails, permission scoping, and execution boundaries for autonomous AI agents and tool use. Covers principle of …",
+      "category": "ai-security",
+      "path": "skills/ai-security/agent-tool-guardrails",
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": [
+        "agent-security",
+        "tool-use",
+        "blast-radius",
+        "execution-sandbox"
+      ]
+    },
+    {
+      "name": "ai-security-quality-checks",
+      "description": "Build and execute programmatic AI quality and security validation layers for LLM applications using deterministic checks, LLM-as-a-Judge evaluation, context en…",
+      "category": "ai-security",
+      "path": "skills/ai-security/ai-security-quality-checks",
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": [
+        "ai-security",
+        "llm-evaluation",
+        "quality-checks",
+        "hallucination-detection"
+      ]
+    },
+    {
+      "name": "llm-red-teaming",
+      "description": "Guides adversarial testing and red-teaming of LLM applications. Covers automated jailbreak generation, persona adoption, multi-turn elicitation, safety benchma…",
+      "category": "ai-security",
+      "path": "skills/ai-security/llm-red-teaming",
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": [
+        "red-teaming",
+        "jailbreak-testing",
+        "ai-security",
+        "adversarial-testing"
+      ]
+    },
+    {
+      "name": "owasp-llm-top-10",
+      "description": "Comprehensive checklist and mitigation strategies for the OWASP Top 10 for Large Language Model Applications (LLM01 to LLM10). Use when conducting security aud…",
+      "category": "ai-security",
+      "path": "skills/ai-security/owasp-llm-top-10",
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": [
+        "owasp-llm",
+        "ai-security",
+        "compliance",
+        "threat-modeling"
+      ]
+    },
+    {
+      "name": "prompt-injection-defense",
+      "description": "Guides defense against direct and indirect prompt injections in LLM applications. Covers input sanitization, delimiter strategies, dual-LLM architectures, inst…",
+      "category": "ai-security",
+      "path": "skills/ai-security/prompt-injection-defense",
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": [
+        "prompt-injection",
+        "ai-security",
+        "guardrails",
+        "input-sanitization"
+      ]
+    },
+    {
+      "name": "rag-data-leakage-prevention",
+      "description": "Guides prevention of sensitive data leakage, PII exposure, and unauthorized cross-tenant data access in Retrieval-Augmented Generation (RAG) systems. Covers do…",
+      "category": "ai-security",
+      "path": "skills/ai-security/rag-data-leakage-prevention",
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": [
+        "rag-security",
+        "data-leakage",
+        "pii-redaction",
+        "vector-database"
+      ]
+    },
     {
       "name": "code-review-checklist",
       "description": "Provides a structured, thorough code review checklist covering correctness, security, performance, tests, and maintainability. Use this skill whenever asked to…",
@@ -72,6 +162,23 @@
       "tags": []
     },
     {
+      "name": "developer-console-signature",
+      "description": "Inject styled developer signatures, author branding, project metadata, ASCII art, easter eggs, security contact information, and interactive DevTools inspectio…",
+      "category": "web",
+      "path": "skills/web/developer-console-signature",
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": [
+        "console",
+        "branding",
+        "developer-signature",
+        "easter-egg",
+        "web",
+        "devtools"
+      ]
+    },
+    {
       "name": "nextjs-performance",
       "description": "Optimises Next.js applications for Core Web Vitals, bundle size, and perceived performance. Use when building, auditing, or debugging a Next.js app's performan…",
       "category": "web",
@@ -93,7 +200,7 @@
     },
     {
       "name": "web-trust-and-compliance",
-      "description": "Audit web applications and websites for legal compliance, consumer trust, privacy policies, terms of service / terms & conditions, cancellation/refund policies, a…",
+      "description": "Audit web applications and websites for legal compliance, consumer trust, privacy policies, terms of service / terms & conditions, cancellation/refund policies…",
       "category": "web",
       "path": "skills/web/web-trust-and-compliance",
       "license": "Apache-2.0",
@@ -105,22 +212,6 @@
         "trust",
         "legal",
         "accessibility",
-        "web"
-      ]
-    },
-    {
-      "name": "developer-console-signature",
-      "description": "Inject styled developer signatures, author branding, project metadata, ASCII art, easter eggs, security contact info, and interactive DevTools inspection helpers (window.<App>) into the browser console.",
-      "category": "web",
-      "path": "skills/web/developer-console-signature",
-      "license": "Apache-2.0",
-      "version": "v1",
-      "publisher": "carthworks",
-      "tags": [
-        "console",
-        "branding",
-        "developer-signature",
-        "devtools",
         "web"
       ]
     }
