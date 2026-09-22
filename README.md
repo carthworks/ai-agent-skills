@@ -11,6 +11,7 @@
 ![License](https://img.shields.io/badge/license-Apache--2.0-green?style=flat-square)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)
 [![Marketplace](https://img.shields.io/badge/marketplace-live-blueviolet?style=flat-square)](https://carthworks.github.io/ai-agent-skills/)
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Donate%20$2-FFDD00?style=flat-square&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/tkarthikeyw)
 
 ![ai-agent-skills banner](ai-skil-set.png)
 
@@ -189,6 +190,16 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 ## License
 
 Apache-2.0 — see [LICENSE](LICENSE).
+
+---
+
+## ☕ Support the Project
+
+If these skills, MCPs, and agent playbooks saved you time or improved your workflow, consider supporting future development with a coffee:
+
+<a href="https://buymeacoffee.com/tkarthikeyw" target="_blank">
+  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="46">
+</a>
 
 ---
 

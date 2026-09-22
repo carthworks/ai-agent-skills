@@ -256,6 +256,19 @@
       background: rgba(139,92,246,0.06);
     }
 
+    .btn-coffee {
+      color: #fbbf24;
+      border-color: rgba(245, 158, 11, 0.4);
+      background: rgba(245, 158, 11, 0.08);
+      font-weight: 500;
+    }
+
+    .btn-coffee:hover {
+      background: rgba(245, 158, 11, 0.18);
+      border-color: #f59e0b;
+      color: #fef08a;
+    }
+
     /* ── App Layout (2 Columns: 1/3 Sidebar + 2/3 Main) ─── */
     .app-layout {
       max-width: 1560px;
@@ -970,6 +983,9 @@
       <a href="https://github.com/carthworks/ai-agent-skills/blob/main/CONTRIBUTING.md" class="btn-ghost" target="_blank" rel="noopener">
         + Contribute
       </a>
+      <a href="https://buymeacoffee.com/tkarthikeyw" class="btn-ghost btn-coffee" target="_blank" rel="noopener" title="Support development with a $2 coffee">
+        ☕ Buy Me a Coffee
+      </a>
     </div>
   </div>
 </header>
@@ -1116,7 +1132,13 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
 
 <!-- Footer -->
 <footer>
-  <div class="header-container" style="justify-content:center; flex-direction:column; gap:4px;">
+  <div class="header-container" style="justify-content:center; flex-direction:column; gap:8px;">
+    <div style="display:flex; align-items:center; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:4px;">
+      <a href="https://buymeacoffee.com/tkarthikeyw" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:6px; background:#ffdd00; color:#000000; padding:6px 14px; border-radius:8px; font-weight:600; font-size:0.82rem; text-decoration:none;">
+        <img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="Coffee" style="width:16px; height:16px;">
+        <span>Buy Me a Coffee ($2)</span>
+      </a>
+    </div>
     <p>
       Built by <a href="https://github.com/carthworks" target="_blank">@carthworks</a> ·
       <a href="https://github.com/carthworks/ai-agent-skills" target="_blank">GitHub</a> ·
