@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-22T05:34:15.169Z",
+  "generated": "2026-10-06T05:57:08.114Z",
   "plugins": [
     {
       "name": "production-launch-pack",
@@ -43,7 +43,8 @@
         "skills": [
           "skills/typescript/typescript-strict-mode",
           "skills/testing/test-coverage-guidance",
-          "skills/devops/code-review-checklist"
+          "skills/devops/code-review-checklist",
+          "skills/web/fullstack-refactor-and-audit"
         ],
         "mcps": [
           "mcps/quality/sentry"

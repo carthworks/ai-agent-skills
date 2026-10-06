@@ -7,7 +7,8 @@
     "skills": [
       "skills/typescript/typescript-strict-mode",
       "skills/testing/test-coverage-guidance",
-      "skills/devops/code-review-checklist"
+      "skills/devops/code-review-checklist",
+      "skills/web/fullstack-refactor-and-audit"
     ],
     "mcps": [
       "mcps/quality/sentry"
