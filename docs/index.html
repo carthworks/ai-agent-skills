@@ -961,10 +961,10 @@
     </a>
     
     <div class="header-stats-strip">
-      <span class="stat-pill">🧠 Skills: <strong id="stat-skills">10</strong></span>
+      <span class="stat-pill">🧠 Skills: <strong id="stat-skills">21</strong></span>
       <span class="stat-pill">🔌 MCPs: <strong id="stat-mcps">12</strong></span>
       <span class="stat-pill">🤖 Agents: <strong id="stat-agents">3</strong></span>
-      <span class="stat-pill">📜 Rules: <strong id="stat-rules">4</strong></span>
+      <span class="stat-pill">📜 Rules: <strong id="stat-rules">5</strong></span>
       <span class="stat-pill">📦 Plugins: <strong id="stat-plugins">3</strong></span>
     </div>
 
@@ -1018,7 +1018,7 @@
     <!-- Tab Navigation (Vertical Menu) -->
     <nav class="tab-nav">
       <button class="tab-btn active" id="tab-skills" onclick="switchTab('skills')">
-        <span>🧠 Skills</span> <span class="tab-count" id="count-skills">10</span>
+        <span>🧠 Skills</span> <span class="tab-count" id="count-skills">21</span>
       </button>
       <button class="tab-btn" id="tab-mcps" onclick="switchTab('mcps')">
         <span>🔌 MCP Servers</span> <span class="tab-count" id="count-mcps">12</span>
@@ -1027,7 +1027,7 @@
         <span>🤖 Specialist Subagents</span> <span class="tab-count" id="count-agents">3</span>
       </button>
       <button class="tab-btn" id="tab-rules" onclick="switchTab('rules')">
-        <span>📜 Behavioral Rules</span> <span class="tab-count" id="count-rules">4</span>
+        <span>📜 Behavioral Rules</span> <span class="tab-count" id="count-rules">5</span>
       </button>
       <button class="tab-btn" id="tab-plugins" onclick="switchTab('plugins')">
         <span>📦 Composite Plugins</span> <span class="tab-count" id="count-plugins">3</span>
@@ -1165,6 +1165,7 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
     browser:      { bg: 'rgba(59,130,246,0.15)', text: '#60a5fa', border: 'rgba(59,130,246,0.3)' },
     quality:      { bg: 'rgba(16,185,129,0.15)', text: '#34d399', border: 'rgba(16,185,129,0.3)' },
     security:     { bg: 'rgba(239,68,68,0.15)',  text: '#f87171', border: 'rgba(239,68,68,0.3)'  },
+    'ai-security':{ bg: 'rgba(239,68,68,0.15)',  text: '#f87171', border: 'rgba(239,68,68,0.3)'  },
     review:       { bg: 'rgba(139,92,246,0.15)', text: '#a78bfa', border: 'rgba(139,92,246,0.3)' },
     architecture: { bg: 'rgba(245,158,11,0.15)', text: '#fbbf24', border: 'rgba(245,158,11,0.3)' },
     efficiency:   { bg: 'rgba(6,182,212,0.15)',  text: '#22d3ee', border: 'rgba(6,182,212,0.3)'  },
@@ -1300,6 +1301,25 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
           "tags": []
       },
       {
+          "name": "git-vibe-checkpoint",
+          "description": "Automates micro-checkpoints, lightweight git stashes, branch snapshots, and one-command rollback points during rapid AI prototyping and vibe coding sessions. U…",
+          "category": "devops",
+          "path": "skills/devops/git-vibe-checkpoint",
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "vibe-coding",
+              "git",
+              "checkpoint",
+              "rollback",
+              "safety",
+              "devops",
+              "version-control",
+              "undo"
+          ]
+      },
+      {
           "name": "env-secret-safety",
           "description": "Prevents hardcoded secrets, API keys, passwords, and credentials in source code. Use this skill whenever the agent is writing code that connects to external se…",
           "category": "safety",
@@ -1375,6 +1395,24 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
           ]
       },
       {
+          "name": "living-blueprint-tracker",
+          "description": "Maintains and synchronizes a lightweight, token-efficient living blueprint (.app-spec.md or ARCHITECTURE.md) during fast-paced AI vibe coding sessions. Use whe…",
+          "category": "web",
+          "path": "skills/web/living-blueprint-tracker",
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "vibe-coding",
+              "blueprint",
+              "spec-driven",
+              "context-retention",
+              "architecture",
+              "state-tracking",
+              "agent-memory"
+          ]
+      },
+      {
           "name": "nextjs-performance",
           "description": "Optimises Next.js applications for Core Web Vitals, bundle size, and perceived performance. Use when building, auditing, or debugging a Next.js app's performan…",
           "category": "web",
@@ -1393,6 +1431,26 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
           "version": "v1",
           "publisher": "carthworks",
           "tags": []
+      },
+      {
+          "name": "vibe-ui-delight",
+          "description": "Inject modern UI/UX polish, micro-interactions, responsive mobile patterns, toast notifications, loading skeletons, empty states, and tactile feedback into rap…",
+          "category": "web",
+          "path": "skills/web/vibe-ui-delight",
+          "license": "Apache-2.0",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "vibe-coding",
+              "ui-polish",
+              "micro-interactions",
+              "toasts",
+              "skeletons",
+              "responsive",
+              "dark-mode",
+              "frontend",
+              "ux"
+          ]
       },
       {
           "name": "web-trust-and-compliance",
@@ -1804,6 +1862,21 @@ uvx mcp-server-sentry --auth-token &lt;YOUR_TOKEN&gt;</code></pre>
 
   // __INITIAL_RULES_START__
   const INITIAL_RULES = [
+      {
+          "name": "anti-bloat-and-modularity",
+          "description": "Prevents monolith file bloat and spaghetti architecture during vibe coding by enforcing file size limits, component splitting, and custom hook extraction.",
+          "category": "architecture",
+          "path": "rules/anti-bloat-and-modularity.md",
+          "version": "v1",
+          "publisher": "carthworks",
+          "tags": [
+              "anti-bloat",
+              "modularity",
+              "refactoring",
+              "component-splitting",
+              "clean-code"
+          ]
+      },
       {
           "name": "clean-architecture-boundaries",
           "description": "Architectural separation of concerns separating UI presentation, domain business logic, and infrastructure/data access layers.",

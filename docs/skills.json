@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-06T05:57:08.091Z",
+  "generated": "2026-10-06T16:40:49.407Z",
   "skills": [
     {
       "name": "agent-tool-guardrails",
@@ -122,6 +122,25 @@
       "tags": []
     },
     {
+      "name": "git-vibe-checkpoint",
+      "description": "Automates micro-checkpoints, lightweight git stashes, branch snapshots, and one-command rollback points during rapid AI prototyping and vibe coding sessions. U…",
+      "category": "devops",
+      "path": "skills/devops/git-vibe-checkpoint",
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": [
+        "vibe-coding",
+        "git",
+        "checkpoint",
+        "rollback",
+        "safety",
+        "devops",
+        "version-control",
+        "undo"
+      ]
+    },
+    {
       "name": "env-secret-safety",
       "description": "Prevents hardcoded secrets, API keys, passwords, and credentials in source code. Use this skill whenever the agent is writing code that connects to external se…",
       "category": "safety",
@@ -197,6 +216,24 @@
       ]
     },
     {
+      "name": "living-blueprint-tracker",
+      "description": "Maintains and synchronizes a lightweight, token-efficient living blueprint (.app-spec.md or ARCHITECTURE.md) during fast-paced AI vibe coding sessions. Use whe…",
+      "category": "web",
+      "path": "skills/web/living-blueprint-tracker",
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": [
+        "vibe-coding",
+        "blueprint",
+        "spec-driven",
+        "context-retention",
+        "architecture",
+        "state-tracking",
+        "agent-memory"
+      ]
+    },
+    {
       "name": "nextjs-performance",
       "description": "Optimises Next.js applications for Core Web Vitals, bundle size, and perceived performance. Use when building, auditing, or debugging a Next.js app's performan…",
       "category": "web",
@@ -215,6 +252,26 @@
       "version": "v1",
       "publisher": "carthworks",
       "tags": []
+    },
+    {
+      "name": "vibe-ui-delight",
+      "description": "Inject modern UI/UX polish, micro-interactions, responsive mobile patterns, toast notifications, loading skeletons, empty states, and tactile feedback into rap…",
+      "category": "web",
+      "path": "skills/web/vibe-ui-delight",
+      "license": "Apache-2.0",
+      "version": "v1",
+      "publisher": "carthworks",
+      "tags": [
+        "vibe-coding",
+        "ui-polish",
+        "micro-interactions",
+        "toasts",
+        "skeletons",
+        "responsive",
+        "dark-mode",
+        "frontend",
+        "ux"
+      ]
     },
     {
       "name": "web-trust-and-compliance",

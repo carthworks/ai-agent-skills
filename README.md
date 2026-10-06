@@ -3,10 +3,10 @@
 > A curated collection of **Skills**, **Model Context Protocol (MCP)** servers, **Specialist Subagents**, **Behavioral Rules**, and **Composite Plugins** for [Antigravity IDE](https://antigravity.dev), Claude Desktop, Cursor, and modern AI coding agents.
 > Drop skills into your workspace to teach your agent specialised workflows, plug in MCP servers for live runtime execution, assign subagents to domain tasks, and enforce strict behavioral guardrails.
 
-![Skills](https://img.shields.io/badge/skills-11-blueviolet?style=flat-square)
+![Skills](https://img.shields.io/badge/skills-21-blueviolet?style=flat-square)
 ![MCPs](https://img.shields.io/badge/MCPs-12-blue?style=flat-square)
 ![Subagents](https://img.shields.io/badge/subagents-3-purple?style=flat-square)
-![Rules](https://img.shields.io/badge/rules-4-teal?style=flat-square)
+![Rules](https://img.shields.io/badge/rules-5-teal?style=flat-square)
 ![Plugins](https://img.shields.io/badge/plugins-3-orange?style=flat-square)
 ![License](https://img.shields.io/badge/license-Apache--2.0-green?style=flat-square)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)
@@ -47,9 +47,12 @@
 | [developer-console-signature](skills/web/developer-console-signature/) | `web` | Inject styled developer signatures, author branding, project metadata & DevTools helpers (`window.<App>`). | `curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh \| bash -s -- skills/web/developer-console-signature` |
 | [nextjs-performance](skills/web/nextjs-performance/) | `web` | Optimise Next.js for Core Web Vitals, bundle size, `next/image`, fonts & App Router caching. | `curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh \| bash -s -- skills/web/nextjs-performance` |
 | [api-design-rest](skills/web/api-design-rest/) | `web` | Design clean, consistent REST APIs — URL naming, HTTP methods, status codes, pagination & errors. | `curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh \| bash -s -- skills/web/api-design-rest` |
+| [vibe-ui-delight](skills/web/vibe-ui-delight/) | `web` | Inject toast notifications, loading skeletons, responsive mobile navigation & tactile micro-interactions into prototypes. | `curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh \| bash -s -- skills/web/vibe-ui-delight` |
+| [living-blueprint-tracker](skills/web/living-blueprint-tracker/) | `web` | Maintain a lightweight, token-efficient `.app-spec.md` to prevent agent amnesia and context drift. | `curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh \| bash -s -- skills/web/living-blueprint-tracker` |
 | [typescript-strict-mode](skills/typescript/typescript-strict-mode/) | `typescript` | Enforce TypeScript strict mode, eliminate `any`, use `unknown` + narrowing & discriminated unions. | `curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh \| bash -s -- skills/typescript/typescript-strict-mode` |
 | [test-coverage-guidance](skills/testing/test-coverage-guidance/) | `testing` | Decide what to unit, integration, and E2E test. Covers testing pyramid, AAA pattern & CI setup. | `curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh \| bash -s -- skills/testing/test-coverage-guidance` |
 | [git-commit-quality](skills/devops/git-commit-quality/) | `devops` | Enforce Conventional Commits. Blocks vague messages like "fix", "wip", "update". | `curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh \| bash -s -- skills/devops/git-commit-quality` |
+| [git-vibe-checkpoint](skills/devops/git-vibe-checkpoint/) | `devops` | Automated micro-checkpoints, lightweight stashes, and one-command rollbacks for fearless vibe coding sessions. | `curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh \| bash -s -- skills/devops/git-vibe-checkpoint` |
 | [code-review-checklist](skills/devops/code-review-checklist/) | `devops` | Structured PR review across correctness, security, performance, tests, and maintainability. | `curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh \| bash -s -- skills/devops/code-review-checklist` |
 | [dockerfile-best-practices](skills/devops/dockerfile-best-practices/) | `devops` | Write secure, minimal Dockerfiles — multi-stage builds, non-root user, layer caching & minimal images. | `curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh \| bash -s -- skills/devops/dockerfile-best-practices` |
 | [env-secret-safety](skills/safety/env-secret-safety/) | `safety` | Prevent hardcoded secrets and API keys. Enforces `.env` hygiene and credential detection. | `curl -fsSL https://raw.githubusercontent.com/carthworks/ai-agent-skills/main/scripts/install.sh \| bash -s -- skills/safety/env-secret-safety` |
@@ -104,6 +107,7 @@
 | [token-efficiency](rules/token-efficiency.md) | `efficiency` | Minimizes token consumption, enforces surgical diffs, avoids redundant reads, and streamlines responses. |
 | [typescript-strict-guardrails](rules/typescript-strict-guardrails.md) | `quality` | Enforces zero `any` policy, discriminated unions, runtime Zod boundary validation, and exhaustive typing. |
 | [clean-architecture-boundaries](rules/clean-architecture-boundaries.md) | `architecture` | Enforces strict separation of UI presentation, domain business logic, and infrastructure/data access layers. |
+| [anti-bloat-and-modularity](rules/anti-bloat-and-modularity.md) | `architecture` | Prevents file bloat (>250 lines) during vibe coding by enforcing component splitting & custom hooks. |
 | [security-and-secret-hygiene](rules/security-and-secret-hygiene.md) | `security` | Prohibits hardcoded credentials, enforces `.env` validation, and prevents client-side secret exposure. |
 
 ---
